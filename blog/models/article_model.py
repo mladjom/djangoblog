@@ -4,11 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from .category_model import Category
 from .tag_model import Tag
 from django.urls import reverse
+from .featured_image_model import FeaturedImage
 
 class Article(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     content = models.TextField(verbose_name=_('Content'))
     slug = models.SlugField(max_length=255, unique=True, verbose_name=_('Slug'))
+    meta_description = models.TextField(blank=True, null=True, verbose_name=_('Meta Description'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles', verbose_name=_('Category'))
     tags = models.ManyToManyField(Tag, related_name='articles', verbose_name=_('Tags'))
     is_published = models.BooleanField(default=False, verbose_name=_('Is Published'))

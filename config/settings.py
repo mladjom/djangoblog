@@ -64,7 +64,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = 'config.urls'
 
 GRAPHENE = {
     "SCHEMA": "blog.schema.schema",  # Path to your GraphQL schema
@@ -88,7 +88,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database

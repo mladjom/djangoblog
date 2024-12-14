@@ -17,6 +17,7 @@ class Category(models.Model):
     name = models.CharField( max_length=255, unique=True, verbose_name=_('Name') )
     description = models.TextField( blank=True, null=True, verbose_name=_('Description') )
     slug = models.SlugField( max_length=255, unique=True, verbose_name=_('Slug'), )
+    meta_description = models.TextField(blank=True, null=True, verbose_name=_('Meta Description'))
     featured_image = models.ImageField( _('Featured Image'), upload_to=category_image_upload_path, blank=True, null=True )
     created_at = models.DateTimeField( _('Created At'), auto_now_add=True )
     updated_at = models.DateTimeField( _('Updated At'), auto_now=True )

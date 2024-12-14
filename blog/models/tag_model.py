@@ -10,7 +10,6 @@ class Tag(FeaturedImage):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('Name'))
     description = models.TextField(blank=True, null=True, verbose_name=_('Description'))
     slug = models.SlugField(max_length=255, unique=True, verbose_name=_('Slug'))
-    #meta_title = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Meta Title'))
     meta_description = models.TextField(blank=True, null=True, verbose_name=_('Meta Description'))
     created_at = models.DateTimeField(_('Created At'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated At'), auto_now=True)
