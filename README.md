@@ -1,14 +1,12 @@
 # Django Blog
 
-
-
 ## What is it about?
- Djangovue, is a project under development.
 
+Django Blog, is a project under development.
 
 ### Setup
 
-```bash
+````bash
 python -m venv ~/.virtualenvs/djangovue
 
 ```bash
@@ -47,3 +45,4 @@ pip freeze > requirements.txt
 # Install npm dependencies
 npm install
 npm build
+````
