@@ -15,7 +15,7 @@ dist/
 *.log
 __pycache__/
 .pytest_cache/
-.package-lock.json
+package-lock.json
 # Other
 # operating system-related files
 # file properties cache/storage on macOS
