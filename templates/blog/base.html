@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Django App
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0" />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <nav class="bg-gray-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <a href="/" class="text-white text-xl font-bold">My Site</a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6">
+          <a href="/" class="text-white hover:text-gray-300">Home</a>
+          <a href="/about" class="text-white hover:text-gray-300">About</a>
+          <a href="/services" class="text-white hover:text-gray-300">Services</a>
+          <a href="/contact" class="text-white hover:text-gray-300">Contact</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-toggle" class="text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-gray-700 p-4">
+        <a href="/" class="block text-white py-2 hover:text-gray-300">Home</a>
+        <a href="/about" class="block text-white py-2 hover:text-gray-300">About</a>
+        <a href="/services" class="block text-white py-2 hover:text-gray-300">Services</a>
+        <a href="/contact" class="block text-white py-2 hover:text-gray-300">Contact</a>
+      </div>
+    </nav>
+
+    <script>
+      // Toggle mobile menu
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
+      const mobileMenu = document.getElementById('mobile-menu')
+      mobileMenuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden')
+      })
+    </script>
+    <div class="container mx-auto">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    <footer class="bg-gray-800 text-white py-6 mt-8">
+      <div class="container mx-auto flex justify-between items-center">
+        <p>&copy; 2024 My Site</p>
+        <div class="space-x-6">
+          <a href="/privacy" class="hover:text-gray-300">Privacy</a>
+          <a href="/terms" class="hover:text-gray-300">Terms</a>
+          <a href="/contact" class="hover:text-gray-300">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+db.sqlite3
+.env
+media/
+static/debug_toolbar/
+static/graphene_django
+
+# Node.js
+node_modules/
+dist/
+*.log
+__pycache__/
+.pytest_cache/
+
+# Other
+# operating system-related files
+# file properties cache/storage on macOS
+*.DS_Store
+# thumbnail cache on Windows
+Thumbs.db
+.idea/
+.vscode/
+git
+todo
