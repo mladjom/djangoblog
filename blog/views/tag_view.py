@@ -1,4 +1,6 @@
 from django.views.generic import ListView
+from django.views.generic import DetailView
+
 from blog.models.tag_model import Tag
 
 class TagListView(ListView):
@@ -6,3 +8,8 @@ class TagListView(ListView):
     template_name = 'blog/tag/tag_list.html'
     context_object_name = 'tag_list'
     paginate_by = 10
+
+class TagDetailView(DetailView):
+    model = Tag
+    template_name = 'blog/tag/tag_detail.html'
+    context_object_name = 'tag'

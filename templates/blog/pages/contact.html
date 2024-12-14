@@ -1,0 +1,21 @@
+<!-- blog/templates/blog/pages/contact.html -->
+{% extends 'blog/base.html' %}
+
+{% block title %}About Page Title{% endblock %}
+{% block meta_description %}About page description.{% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" name="email">
+    <br>
+    <label for="message">Your Message:</label>
+    <textarea id="message" name="message"></textarea>
+    <br>
+    <button type="submit">Send Message</button>
+</form>
+{% endblock %}
