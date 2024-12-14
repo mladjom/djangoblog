@@ -8,7 +8,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path('', include('blog.urls')),  # Include blog URLs here

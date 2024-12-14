@@ -6,6 +6,7 @@ from .views.article_view import ArticleListView, ArticleDetailView
 from .sitemaps import CategorySitemap, TagSitemap, ArticleSitemap
 from django.contrib.sitemaps.views import sitemap
 from .views.pages_view import homepage, about, contact
+
 sitemaps = {
     'categories': CategorySitemap,
     'tags': TagSitemap,
