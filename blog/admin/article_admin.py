@@ -21,14 +21,14 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
         (_('Basic Information'), {
             'fields': ('title', 'slug', 'content', 'category')
         }),
-        ('SEO Metadata', {
+        (_('SEO Metadata'), {
             'fields': ('meta_description',),
             'classes': ('collapse',)  
         }),
-        ('Publication Status', {
+        (_('Publication Status'), {
             'fields': ('is_published', 'is_featured')
         }),
-        ('Timestamps', {
+        (_('Timestamps'), {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

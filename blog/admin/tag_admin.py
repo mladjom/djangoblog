@@ -16,11 +16,11 @@ class TagAdmin( ArticleCountMixin, DeleteWithImageMixin, admin.ModelAdmin):
         (_('Basic Information'), {
             'fields': ('name', 'slug', 'description')
         }),
-        ('SEO Metadata', {
+        (_('SEO Metadata'), {
             'fields': ('meta_description',),
             'classes': ('collapse',)  
         }),
-        ('Timestamps', {
+        (_('Timestamps'), {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
