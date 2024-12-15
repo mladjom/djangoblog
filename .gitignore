@@ -2,6 +2,7 @@
 *.pyc
 *.pyo
 *.pyd
+*.pot
 __pycache__/
 db.sqlite3
 .env
@@ -16,6 +17,7 @@ dist/
 __pycache__/
 .pytest_cache/
 package-lock.json
+
 # Other
 # operating system-related files
 # file properties cache/storage on macOS
@@ -27,3 +29,6 @@ Thumbs.db
 git
 todo
 .coverage
+
+# Django Tailwind
+theme/static/css/dist/

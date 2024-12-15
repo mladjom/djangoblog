@@ -29,7 +29,10 @@ pip -r requirements.txt
 ./manage.py migrate
 ./manage.py createsuperuser
 ./manage.py seed_data
-python manage.py inspectdb
+./manage.py inspectdb
+./manage.py tailwind install
+./manage.py tailwind build
+
 ```bash
 # Run development server
 ./manage.py runserver
@@ -41,6 +44,7 @@ python manage.py inspectdb
 django-admin makemessages -l <language_code> --ignore=templates/*
 django-admin compilemessages -l <language_code>
 pip freeze > requirements.txt
+./manage.py tailwind start
 
 # Install npm dependencies
 npm install

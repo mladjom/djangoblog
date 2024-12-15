@@ -11,6 +11,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path('', include('blog.urls')),  # Include blog URLs here
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 # Add admin URLs with language prefix

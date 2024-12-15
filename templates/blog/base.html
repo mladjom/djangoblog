@@ -1,9 +1,10 @@
-{% load static %}
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>
       {% block title %}Default Page Title{% endblock %} - Django Blog
     </title>
@@ -13,10 +14,7 @@
     Default description for the website.
     {% endblock %}"
     />
-    <link
-      rel="stylesheet"
-      href="{% static 'css/styles.css' %}?v=1.0{{ STATIC_VERSION }}"
-    />
+    {% tailwind_css %}
     <meta name="robots" content="noindex,follow" />
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
   </head>

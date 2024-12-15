@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'debug_toolbar',
     'django.contrib.sitemaps',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
 
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -55,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
 
