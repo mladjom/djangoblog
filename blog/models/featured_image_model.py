@@ -15,19 +15,28 @@ class FeaturedImageModel(models.Model):
     class Meta:
         abstract = True
 
+    def handle_old_featured_image(self):
+        """
+        Handle deletion of the old featured image if it is being replaced or cleared.
+        """
+        if self.pk:
+            old_instance = type(self).objects.get(pk=self.pk)
+            if old_instance.featured_image and old_instance.featured_image != self.featured_image:
+                try:
+                    os.remove(old_instance.featured_image.path)
+                except FileNotFoundError:
+                    pass  # File already removed
+
     def process_featured_image(self):
         """
         Rename, resize, and convert the uploaded image to .webp format.
         """
         if self.featured_image:
             original_image_path = self.featured_image.path
-            
-            # Generate the new filename based on the model name or title
             slug_source = getattr(self, 'name', None) or getattr(self, 'title', None)
             new_filename = f"{slugify(slug_source)}.webp"
             new_image_path = os.path.join(os.path.dirname(original_image_path), new_filename)
 
-            # Resize and compress image
             resize_and_compress_image(original_image_path, new_image_path)
 
             # Remove the original image if the path has changed
@@ -39,29 +48,21 @@ class FeaturedImageModel(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Save the model and process the image.
+        Save the model, process the image, and handle image replacement or clearance.
         """
-        # Check if this is an update (not a new instance)
         is_new_instance = self.pk is None
-        old_featured_image_path = None
 
-        # Handle the replacement of an existing image
+        # Handle old image replacement or clearance
         if not is_new_instance:
-            old_instance = type(self).objects.get(pk=self.pk)
-            old_featured_image_path = old_instance.featured_image.path if old_instance.featured_image else None
+            self.handle_old_featured_image()
 
-        # Save the instance first (to apply `upload_to` logic if new image is uploaded)
+        # Save the instance first to apply `upload_to` logic for new images
         super().save(*args, **kwargs)
 
-        # Process the featured image if it's uploaded or replaced
+        # Process the featured image after the initial save
         if self.featured_image:
             self.process_featured_image()
-            super().save(update_fields=['featured_image'])  # Save again to persist changes
-
-        # Remove the old image file if a new image was uploaded
-        if old_featured_image_path and old_featured_image_path != self.featured_image.path:
-            if os.path.exists(old_featured_image_path):
-                os.remove(old_featured_image_path)
+            super().save(update_fields=['featured_image'])
 
     def delete(self, *args, **kwargs):
         """
