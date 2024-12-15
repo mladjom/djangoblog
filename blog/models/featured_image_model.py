@@ -16,7 +16,9 @@ class FeaturedImage(models.Model):
     def process_featured_image(self):
         if self.featured_image:
             original_image_path = self.featured_image.path
-            new_filename = f"{slugify(self.name)}.webp"
+            # Use the slug source provided by the model
+            slug_source = self.get_slug_source()
+            new_filename = f"{slugify(slug_source)}.webp"
             new_image_path = os.path.join(os.path.dirname(original_image_path), new_filename)
 
             resize_and_compress_image(original_image_path, new_image_path)

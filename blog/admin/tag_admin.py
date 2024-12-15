@@ -1,15 +1,15 @@
 from django.contrib import admin
-from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 from blog.models.tag_model import Tag
 from blog.models.article_model import Article
-from .mixins_admin import ArticleCountMixin
+from .mixins_admin import ArticleCountMixin, DeleteWithImageMixin
 from django.utils.html import format_html
+import os
 
 @admin.register(Tag)
-class TagAdmin( ArticleCountMixin, admin.ModelAdmin):
+class TagAdmin( ArticleCountMixin, DeleteWithImageMixin, admin.ModelAdmin):
     list_display = ('name', 'slug', 'created_at', 'updated_at', 'article_count', 'featured_image_thumbnail')  # Fields displayed in list view
-    search_fields = ('name', 'slug', 'description')
+    search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}  # Auto-generate slug from 'name'
     readonly_fields = ('featured_image_thumbnail', 'created_at', 'updated_at')  # For image preview in the form
        
@@ -18,8 +18,8 @@ class TagAdmin( ArticleCountMixin, admin.ModelAdmin):
             'fields': ('name', 'slug', 'description')
         }),
         ('SEO Metadata', {
-            'fields': ('meta_title', 'meta_description'),
-            'classes': ('collapse',)  # Makes the section collapsible
+            'fields': ('meta_description',),
+            'classes': ('collapse',)  
         }),
         ('Timestamps', {
             'fields': ('created_at', 'updated_at'),
@@ -40,7 +40,7 @@ class TagAdmin( ArticleCountMixin, admin.ModelAdmin):
 
     featured_image_thumbnail.short_description = _('Thumbnail')
 
-    
+
 class TagInline(admin.TabularInline):
     model = Article.tags.through  # Inline Many-to-Many relation for tags
     extra = 1  # Number of empty fields for adding new tags

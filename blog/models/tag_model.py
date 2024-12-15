@@ -22,6 +22,9 @@ class Tag(FeaturedImage):
     def get_absolute_url(self):
         return reverse('tag-detail', args=[self.slug])
 
+    def get_slug_source(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -45,10 +48,6 @@ class Tag(FeaturedImage):
 
             # Save again to persist the updated `featured_image` path
             super().save(update_fields=['featured_image'])
-
-    @property
-    def seo_meta_title(self):
-        return self.meta_title or f"Explore Articles Tagged with {self.name}"
 
     @property
     def seo_meta_description(self):
@@ -76,8 +75,6 @@ class Tag(FeaturedImage):
                 print(f"Image file not found: {image_path}")
 
         super().delete(*args, **kwargs)
-
-
 
     def __str__(self):
         return self.name
