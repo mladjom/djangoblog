@@ -1,16 +1,80 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 
-{% block title %}
-  Article List
+{% block title %}{% trans "Articles" %}{% endblock %} 
+{% block meta_description %}
+{% trans "Discover the latest articles on our blog, covering a variety of topics." %}
 {% endblock %}
 
 {% block content %}
-  <h1>Article List</h1>
-  <ul>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">{% trans "Articles" %}</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for article in article_list %}
-      <li>
-        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-      </li>
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      {% if article.featured_image %}
+      <img
+        src="{{ article.featured_image.url }}"
+        alt="{% trans 'Featured image for' %} {{ article.title }}"
+        class="w-full h-48 object-cover"
+      />
+      {% endif %}
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ article.title }}</h2>
+        <p class="text-gray-700 text-sm mb-4">
+          {{ article.content|truncatewords:20 }}
+        </p>
+        <a
+          href="{% url 'article-detail' article.slug %}"
+          class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        >
+          {% trans "Read more" %}
+        </a>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full text-gray-500 text-center">
+      <p>{% trans "No articles available." %}</p>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
+
+  {% if is_paginated %}
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    {% if page_obj.has_previous %}
+    <a
+      href="?page={{ page_obj.previous_page_number }}"
+      class="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400 transition"
+    >
+      {% trans "Previous" %}
+    </a>
+    {% endif %}
+
+    {% for num in paginator.page_range %}
+    {% if page_obj.number == num %}
+    <span class="bg-blue-500 text-white px-3 py-1 rounded">
+      {{ num }}
+    </span>
+    {% else %}
+    <a
+      href="?page={{ num }}"
+      class="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400 transition"
+    >
+      {{ num }}
+    </a>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a
+      href="?page={{ page_obj.next_page_number }}"
+      class="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400 transition"
+    >
+      {% trans "Next" %}
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

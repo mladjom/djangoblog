@@ -32,6 +32,7 @@ pip -r requirements.txt
 ./manage.py inspectdb
 ./manage.py tailwind install
 ./manage.py tailwind build
+./manage.py tailwind start
 
 ```bash
 # Run development server
