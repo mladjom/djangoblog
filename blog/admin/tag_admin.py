@@ -4,7 +4,6 @@ from blog.models.tag_model import Tag
 from blog.models.article_model import Article
 from .mixins_admin import ArticleCountMixin, DeleteWithImageMixin
 from django.utils.html import format_html
-import os
 
 @admin.register(Tag)
 class TagAdmin( ArticleCountMixin, DeleteWithImageMixin, admin.ModelAdmin):

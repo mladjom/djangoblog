@@ -7,9 +7,9 @@ from django.conf import settings
 from blog.utils.image_utils import resize_and_compress_image
 from django.urls import reverse
 import os
-from .featured_image_model import FeaturedImage
+from .featured_image_model import FeaturedImageModel
 
-class Category(FeaturedImage):
+class Category(FeaturedImageModel):
     name = models.CharField( max_length=255, unique=True, verbose_name=_('Name') )
     description = models.TextField( blank=True, null=True, verbose_name=_('Description') )
     slug = models.SlugField( max_length=255, unique=True, verbose_name=_('Slug'), )

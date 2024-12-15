@@ -4,9 +4,10 @@ from blog.models.article_model import Article
 from blog.admin.tag_admin import TagInline
 from blog.utils.openai_utils import generate_article
 from django.utils.html import format_html
+from .mixins_admin import DeleteWithImageMixin
 
 @admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
+class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
     list_display = ('title', 'category', 'is_published', 'is_featured', 'created_at', 'updated_at', 'featured_image_thumbnail')
     list_filter = ('is_published', 'is_featured', 'category')  # Filters for sidebar
     search_fields = ('title', 'content')  # Searchable by 'title' and 'content'
