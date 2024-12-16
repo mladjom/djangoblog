@@ -7,10 +7,10 @@ Django Blog, is a project under development.
 ### Setup
 
 ````bash
-python -m venv ~/.virtualenvs/djangovue
+python -m venv ~/.virtualenvs/djangoblog
 
 ```bash
-source ~/.virtualenvs/djangovue/bin/activate
+source ~/.virtualenvs/djangoblog/bin/activate
 
 ```bash
 cd backend
@@ -37,7 +37,7 @@ pip -r requirements.txt
 ```bash
 # Run development server
 ./manage.py runserver
-
+./manage.py runserver_plus
 
 
 ```bash
@@ -46,6 +46,8 @@ django-admin makemessages -l <language_code> --ignore=templates/*
 django-admin compilemessages -l <language_code>
 pip freeze > requirements.txt
 ./manage.py tailwind start
+python manage.py shell
+python manage.py show_urls
 
 # Install npm dependencies
 npm install

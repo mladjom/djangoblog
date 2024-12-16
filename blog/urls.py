@@ -20,6 +20,7 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='categories-list'),
     path('tags/', TagListView.as_view(), name='tag-list'),
     path('articles/', ArticleListView.as_view(), name='article-list'),
+    path('articles/page-<int:page>/', ArticleListView.as_view(), name='article-list-paginated'),
     path('categories/<slug:slug>/', CategoryDetailView.as_view(), name='category-detail'),
     path('tags/<slug:slug>/', TagDetailView.as_view(), name='tag-detail'),
     path('articles/<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),

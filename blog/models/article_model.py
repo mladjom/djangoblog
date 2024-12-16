@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from .category_model import Category
 from .tag_model import Tag

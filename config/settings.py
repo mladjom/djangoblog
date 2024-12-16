@@ -27,7 +27,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-
+APPEND_SLASH = True  # Default behavior in Django
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    'django_extensions',
 ]
 
 TAILWIND_APP_NAME = 'theme'

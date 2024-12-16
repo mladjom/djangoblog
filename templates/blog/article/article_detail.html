@@ -1,8 +1,49 @@
 {% extends 'blog/base.html' %}
 
+{% load i18n %}
+
+{% block title %}
+  {{ article.title }} 
+{% endblock %}
+
+{% block meta_description %}
+  {{ article.meta_description|default:_("Discover insights on ")|add:article.title }}
+{% endblock %}
+
 {% block content %}
-  <div class="bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4">{{ article.title }}</h1>
-    <div class="text-gray-700">{{ article.content }}</div>
+<article class="max-w-4xl mx-auto py-8 px-4">
+  <!-- Article Header -->
+  <header class="mb-6">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ article.title }}</h1>
+    <p class="text-gray-500 text-sm">
+      {% trans "Published on" %} {{ article.created_at|date:"F j, Y" }}
+      {% if article.category %}{% trans "in" %} 
+        <a href="{{ article.category.get_absolute_url }}" class="text-blue-600 hover:underline">
+          {{ article.category.name }}
+        </a>
+      {% endif %}
+    </p>
+  </header>
+
+  <!-- Article Content -->
+  <div class="prose prose-lg text-gray-800">
+    {{ article.content|safe }}
   </div>
+
+  <!-- Tags -->
+  {% if article.tags.exists %}
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold mb-4">{% trans "Tags" %}</h2>
+      <ul class="flex flex-wrap gap-2">
+        {% for tag in article.tags.all %}
+          <li>
+            <a href="{{ tag.get_absolute_url }}" class="bg-gray-200 text-sm px-3 py-1 rounded hover:bg-gray-300">
+              {{ tag.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</article>
 {% endblock %}
