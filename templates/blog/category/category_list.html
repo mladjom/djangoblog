@@ -1,0 +1,29 @@
+<!-- blog/category/category_list.html -->
+{% extends 'blog/base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Categories' %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-semibold text-gray-900 mb-6">{% trans 'Categories' %}</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for category in category_list %}
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">
+          <a href="{% url 'category-detail' category.slug %}" class="text-indigo-600 hover:text-indigo-800">
+            {{ category.name }}
+          </a>
+        </h2>
+        <p class="text-gray-600 text-sm mb-4">
+          {% trans 'Created on' %} {{ category.created_at|date:"F j, Y" }}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+
+</div>
+{% endblock %}

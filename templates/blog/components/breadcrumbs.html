@@ -1,0 +1,48 @@
+{% load i18n %}
+<nav class="breadcrumb" aria-label="{% trans 'Breadcrumb navigation' %}">
+    <ol class="list-none flex space-x-2">
+      <li>
+        <a href="/" class="text-gray-500 hover:text-gray-700">
+          {% trans 'Home' %}
+        </a>
+      </li>
+      <li aria-hidden="true" class="text-gray-500">/</li>
+      <li>
+        <a href="{% url 'article-list-paginated' page=1 %}" class="text-gray-500 hover:text-gray-700">
+          {% trans 'Articles' %}
+        </a>
+      </li>
+      {% if page_obj %}
+        <li aria-hidden="true" class="text-gray-500">/</li>
+        <li>
+          <span class="text-gray-700">{% trans 'Page' %} {{ page_obj.number }}</span>
+        </li>
+      {% endif %}
+      <li aria-hidden="true" class="text-gray-500">/</li>
+    <li>
+      <span class="text-gray-700">{{ article.title }}</span>
+    </li>
+    </ol>
+  </nav>
+
+  <!-- blog/components/breadcrumbs.html -->
+<nav aria-label="{% trans 'Breadcrumb' %}">
+    <ol class="flex space-x-2">
+      <li>
+        <a href="/" class="text-indigo-600 hover:text-indigo-800">
+          {% trans 'Home' %}
+        </a>
+      </li>
+      {% if breadcrumbs %}
+        {% for crumb in breadcrumbs %}
+          <li>
+            <a href="{{ crumb.url }}" class="text-indigo-600 hover:text-indigo-800">
+              {{ crumb.name }}
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ol>
+  </nav>
+  
+  

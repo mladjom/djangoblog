@@ -1,9 +1,7 @@
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from blog.models.article_model import Article
-from django.core.paginator import Paginator
-from django.urls import path
-from django.shortcuts import render
+from django.urls import reverse
 
 class ArticleListView(ListView):
     model = Article
@@ -21,6 +19,7 @@ class ArticleListView(ListView):
         context = super().get_context_data(**kwargs)
         page_number = self.kwargs.get('page')  # Getting page from URL
         print(f"Page object: {context['page_obj']}")
+        
         return context
 
 
@@ -32,3 +31,13 @@ class ArticleDetailView(DetailView):
     def get_queryset(self):
         # Filter only published articles
         return Article.objects.filter(is_published=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        article = self.object
+        context['breadcrumbs'] = [
+            {'name': 'Home', 'url': reverse('homepage')},
+            {'name': article.category.name, 'url': reverse('category-detail', args=[article.category.slug])},
+            {'name': article.title, 'url': reverse('article-detail', args=[article.slug])}
+        ]
+        return context

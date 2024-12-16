@@ -1,0 +1,42 @@
+<!-- blog/category/category_detail.html -->
+{% extends 'blog/base.html' %}
+{% load i18n %}
+{% block title %}{{ category.name }} - {% trans 'Category' %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-semibold text-gray-900 mb-6">{{ category.name }}</h1>
+  <p class="text-gray-600 text-lg mb-6">{{ category.description }}</p> <!-- If category has a description -->
+
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">{% trans 'Articles in this Category' %}</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for article in articles %}
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">
+          <a href="{% url 'article-detail' article.slug %}" class="text-indigo-600 hover:text-indigo-800">{{ article.title }}</a>
+        </h3>
+        <p class="text-gray-600 text-sm mb-4">{{ article.created_at|date:"F j, Y" }}</p>
+        <p class="text-gray-700 mb-4">{{ article.content|truncatewords:40 }}</p>
+        <a href="{% url 'article-detail' article.slug %}" class="text-indigo-600 hover:text-indigo-800 font-semibold">{% trans 'Read More' %}</a>
+      </div>
+    </div>
+    {% empty %}
+      <p class="text-gray-600">{% trans 'No articles found in this category.' %}</p>
+    {% endfor %}
+  </div>
+
+  {% if articles.has_previous %}
+    <a href="?page=1" class="text-indigo-600 hover:text-indigo-800">« {% trans 'First' %}</a>
+    <a href="?page={{ articles.previous_page_number }}" class="text-indigo-600 hover:text-indigo-800">{% trans 'Previous' %}</a>
+  {% endif %}
+
+  <span class="text-gray-600">{% trans 'Page' %} {{ articles.number }} {% trans 'of' %} {{ articles.paginator.num_pages }}</span>
+
+  {% if articles.has_next %}
+    <a href="?page={{ articles.next_page_number }}" class="text-indigo-600 hover:text-indigo-800">{% trans 'Next' %}</a>
+    <a href="?page={{ articles.paginator.num_pages }}" class="text-indigo-600 hover:text-indigo-800">{% trans 'Last' %} »</a>
+  {% endif %}
+</div>
+{% endblock %}
