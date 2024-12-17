@@ -15,14 +15,6 @@ class ArticleListView(ListView):
         return Article.objects.filter(is_published=True).order_by(*self.ordering)
 
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        page_number = self.kwargs.get('page')  # Getting page from URL
-        print(f"Page object: {context['page_obj']}")
-        
-        return context
-
-
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'blog/article/article_detail.html'

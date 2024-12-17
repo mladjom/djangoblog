@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Tags" %}{% endblock %}
+{% block meta_description %}
+{% trans "Browse all tags with featured articles." %}
+{% endblock %}
+
+{% block content %}
+<section class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-4">{% trans "Tags" %}</h1>
+  {% include 'blog/components/_item_list.html' with item_list=tag_list %}
+</section>
+{% endblock %}
