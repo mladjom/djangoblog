@@ -4,6 +4,8 @@
 *.pyd
 *.pot
 __pycache__/
+.pytest_cache/
+*.log
 db.sqlite3
 .env
 media/
@@ -12,10 +14,8 @@ static/graphene_django
 
 # Node.js
 node_modules/
-dist/
-*.log
-__pycache__/
-.pytest_cache/
+theme/node_modules/
+theme/package-lock.json
 package-lock.json
 
 # Other

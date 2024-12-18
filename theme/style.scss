@@ -1,0 +1,49 @@
+// Import Bootstrap SCSS
+// Bootstrap Functions and Variables
+@import "scss/functions";
+@import "scss/variables";
+@import "scss/variables-dark";
+@import "scss/_custom-variables"; // Overrides
+@import "scss/maps";
+@import "scss/mixins";
+@import "scss/utilities";
+
+// Bootstrap Components (split for modular control)
+// Layout & Grid
+@import "scss/root";
+@import "scss/reboot";
+@import "scss/type";
+@import "scss/images";
+@import "scss/containers";
+@import "scss/grid";
+
+// Content
+@import "scss/tables";
+@import "scss/forms";
+@import "scss/buttons";
+
+// Components
+@import "scss/transitions";
+@import "scss/dropdown";
+@import "scss/button-group";
+@import "scss/nav";
+@import "scss/navbar";
+@import "scss/card";
+@import "scss/accordion";
+@import "scss/breadcrumb";
+@import "scss/pagination";
+@import "scss/badge";
+@import "scss/alert";
+@import "scss/progress";
+@import "scss/list-group";
+@import "scss/close";
+@import "scss/toasts";
+@import "scss/modal";
+@import "scss/tooltip";
+@import "scss/popover";
+@import "scss/carousel";
+@import "scss/spinners";
+
+// Helpers & Utilities
+@import "scss/helpers";
+@import "scss/utilities/api";

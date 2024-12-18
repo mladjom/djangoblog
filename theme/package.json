@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "build-css": "sass scss/styles.scss ../static/css/styles.css --style=compressed",
-  "watch-css": "sass --watch theme/scss/styles.scss:../static/css/styles.css"
-},
+  "scripts": {
+    "build-css": "sass style.scss:../static/css/style.css --style=expanded",
+    "watch-css": "sass --watch style.scss:static/css/style.css",
+    "prefix-css": "postcss ../static/css/style.css --replace --use autoprefixer -b 'defaults'",
+    "prod": "npm run build-css && npm run prefix-css",
+    "dev": "npm run build-css && npm run prefix-css"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "autoprefixer": "^10.4.20",
+    "bootstrap": "^5.3.3",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0"
   },
   "devDependencies": {
     "sass": "^1.83.0"

@@ -1,0 +1,26 @@
+// Override Bootstrap Variables
+// Colors
+// Typography
+$font-family-sans-serif: 'Inter', sans-serif; // Matches OpenAI documentation font
+$font-size-base: 1rem; // Default font size for body text
+$font-weight-base: 400; // Regular weight for base text
+$headings-font-weight: 600; // Semi-bold headings
+$line-height-base: 1.6; // Increased for better readability
+
+// Colors
+$primary: #10a37f; // OpenAI's green
+$secondary: #5865f2; // OpenAI's secondary blue
+$body-bg: #ffffff; // White background
+$body-color: #333333; // Darker text color for readability
+
+// Links
+$link-color: $primary;
+$link-hover-color: darken($primary, 10%);
+$link-decoration: none;
+
+// Borders
+$border-radius: 0.25rem; // Subtle rounding for elements
+$border-color: #e6e6e6; // Light border color to match OpenAI's design
+
+// Shadows
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); // Subtle shadows for cards and modals

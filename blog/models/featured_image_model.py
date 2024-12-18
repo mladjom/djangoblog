@@ -3,6 +3,8 @@ from django.conf import settings
 from django.db import models
 from blog.utils.image_utils import resize_and_compress_image, image_upload_path
 from django.utils.text import slugify
+import logging
+logger = logging.getLogger(__name__)
 
 class FeaturedImageModel(models.Model):
     featured_image = models.ImageField(
@@ -33,7 +35,7 @@ class FeaturedImageModel(models.Model):
         """
         if self.featured_image:
             original_image_path = self.featured_image.path
-            slug_source = getattr(self, 'name', None) or getattr(self, 'title', None)
+            slug_source = getattr(self, 'name', None) or getattr(self, 'title', None) or 'default'
             new_filename = f"{slugify(slug_source)}.webp"
             new_image_path = os.path.join(os.path.dirname(original_image_path), new_filename)
 
@@ -74,7 +76,7 @@ class FeaturedImageModel(models.Model):
                 if os.path.exists(image_path):
                     os.remove(image_path)  # Delete the file
             except Exception as e:
-                print(f"Error deleting image: {e}")
-
+                logger.error(f"Error deleting image: {e}")
         # Call the superclass delete method to remove the instance
+        
         super().delete(*args, **kwargs)

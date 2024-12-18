@@ -1,9 +1,74 @@
-<!-- blog/templates/blog/pages/about.html -->
-{% extends 'blog/base.html' %}
+{% load static %}
 
-{% block title %}About Page Title{% endblock %}
-{% block meta_description %}About page description.{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Testing SCSS customizations with Bootstrap">
+  <title>Bootstrap SCSS Customization Test</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    </style>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v">
 
-{% block content %}
-    <!-- Page content goes here -->
-{% endblock %}
+</head>
+<body>
+    <header class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="#">OpenAI Docs</a>
+          <nav class="navbar-nav ms-auto">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="#">API Reference</a>
+            <a class="nav-link" href="#">Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="col-md-9 col-lg-10 content p-4">
+        <h1>Welcome to the Documentation</h1>
+        <p>
+          Explore the guides and references to get the most out of this platform. Start with the overview
+          or jump into specific sections like API reference or examples.
+        </p>
+
+        <!-- Section -->
+        <section>
+          <h2>Key Features</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Feature 1</h5>
+                  <p class="card-text">Description of the first feature. Learn more about how this feature works and its benefits.</p>
+                  <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Feature 2</h5>
+                  <p class="card-text">Description of the second feature. Understand the use case and implementation.</p>
+                  <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer py-3">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2024 My Documentation. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
