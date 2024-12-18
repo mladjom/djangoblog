@@ -7,7 +7,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'blog/article/article_list.html'
     context_object_name = 'article_list'
-    paginate_by = 2
+    paginate_by = 3
     ordering = ['-created_at'] 
     
     def get_queryset(self):

@@ -1,43 +1,39 @@
 {% load i18n %}
-<article class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+<article class="col article">
+  <div class="card h-100 border-0 shadow-sm">
+    <!-- Featured Image -->
     {% if article.featured_image %}
     <img
       src="{{ article.featured_image.url }}"
-      alt="{% trans 'Featured image for' %} {{ article.title }}"
-      class="w-full h-48 object-cover"
+      class="card-img-top"
+      alt="{{ article.title }}"
     />
+    {% else %}
+    <div class="bg-light" style="height: 180px"></div>
     {% endif %}
-  <div class="p-6">
-    <!-- Article Title -->
-    <h2 class="text-xl font-semibold text-gray-900 mb-2">
-      <a href="{{ article.get_absolute_url }}" class="hover:underline">{{ article.title }}</a>
-    </h2>
 
-    <!-- Article Excerpt -->
-    <p class="text-gray-700 text-sm">
-      {{ article.content|truncatewords:30 }}
-    </p>
-  </div>
+    <!-- Article Content -->
+    <div class="card-body d-flex flex-column">
+      <!-- Article Title -->
+      <h2 class="h5 card-title mb-2S">
+        <a
+          href="{{ article.get_absolute_url }}"
+          class="text-decoration-none text-dark"
+        >
+          {{ article.title }}
+        </a>
+      </h2>
 
-  {% if article.category %}
-  <div class="p-2 bg-gray-100">
-    <a href="{{ article.category.get_absolute_url }}" class="text-blue-600 text-xs hover:underline">
-      {% trans "Category:" %} {{ article.category.name }}
-    </a>
+      <!-- Article Meta Information -->
+      <p class="card-text text-muted mb-3">
+        <time datetime="{{ article.created_at|date:'Y-m-d' }}">
+          {{ article.created_at|date:'F d, Y' }}
+        </time>
+      </p>
+
+      <!-- Article Excerpt -->
+      <p class="card-text">{{ article.content|truncatechars:150 }}</p>
+    </div>
+
   </div>
-  {% endif %}
-  {% if article.tags.exists %}
-  <section class="mt-8">
-    <h2 class="text-lg font-semibold mb-4">{% trans "Tags" %}</h2>
-    <ul class="flex flex-wrap gap-2">
-      {% for tag in article.tags.all %}
-        <li>
-          <a href="{{ tag.get_absolute_url }}" class="bg-gray-200 text-sm px-3 py-1 rounded hover:bg-gray-300">
-            {{ tag.name }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
-{% endif %}
 </article>

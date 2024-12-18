@@ -16,9 +16,9 @@ Django==5.1.4
 django-browser-reload==1.17.0
 django-cors-headers==4.6.0
 django-debug-toolbar==4.4.6
+django-extensions==3.2.3
 django-modeltranslation==0.19.11
 django-quill-editor==0.1.42
-django-tailwind==3.8.0
 exceptiongroup==1.2.2
 execnet==2.1.1
 Faker==33.1.0

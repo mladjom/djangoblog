@@ -1,35 +1,33 @@
 {% load i18n %}
 
-<nav class="flex justify-center items-center my-12" role="navigation" aria-label="{% trans 'Pagination Navigation' %}">
-  <ul class="inline-flex items-center gap-2">
+<nav aria-label="{% trans 'Pagination Navigation' %}" class="d-flex justify-content-center my-4">
+  <ul class="pagination mb-0">
     <!-- Previous Page -->
     {% if page_obj.has_previous %}
-      <li>
+      <li class="page-item">
         <a href="{% url 'article-list-paginated' page=page_obj.previous_page_number %}" 
-           class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+           class="page-link"
            aria-label="{% trans 'Previous Page' %}">
           {% trans 'Previous' %}
         </a>
       </li>
     {% else %}
-      <li aria-disabled="true">
-        <span class="px-3 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed" aria-hidden="true">
-          {% trans 'Previous' %}
-        </span>
+      <li class="page-item disabled" aria-disabled="true">
+        <span class="page-link" aria-hidden="true">{% trans 'Previous' %}</span>
       </li>
     {% endif %}
 
     <!-- First Page -->
     {% if page_obj.number > 3 %}
-      <li>
+      <li class="page-item">
         <a href="{% url 'article-list-paginated' page=1 %}" 
-           class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+           class="page-link"
            aria-label="{% trans 'First Page' %}">
           1
         </a>
       </li>
-      <li>
-        <span class="px-3 py-2 text-gray-500" aria-hidden="true">…</span>
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">…</span>
       </li>
     {% endif %}
 
@@ -37,15 +35,13 @@
     {% for num in paginator.page_range %}
       {% if num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
         {% if num == page_obj.number %}
-          <li aria-current="page">
-            <span class="px-3 py-2 bg-blue-500 text-white rounded">
-              {{ num }}
-            </span>
+          <li class="page-item active" aria-current="page">
+            <span class="page-link">{{ num }}</span>
           </li>
         {% else %}
-          <li>
+          <li class="page-item">
             <a href="{% url 'article-list-paginated' page=num %}" 
-               class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+               class="page-link"
                aria-label="{% blocktrans with num=num %}Go to page {{ num }}{% endblocktrans %}">
               {{ num }}
             </a>
@@ -56,12 +52,12 @@
 
     <!-- Last Page -->
     {% if page_obj.number < paginator.num_pages|add:"-2" %}
-      <li>
-        <span class="px-3 py-2 text-gray-500" aria-hidden="true">…</span>
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">…</span>
       </li>
-      <li>
+      <li class="page-item">
         <a href="{% url 'article-list-paginated' page=paginator.num_pages %}" 
-           class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+           class="page-link"
            aria-label="{% trans 'Last Page' %}">
           {{ paginator.num_pages }}
         </a>
@@ -70,18 +66,16 @@
 
     <!-- Next Page -->
     {% if page_obj.has_next %}
-      <li>
+      <li class="page-item">
         <a href="{% url 'article-list-paginated' page=page_obj.next_page_number %}" 
-           class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+           class="page-link"
            aria-label="{% trans 'Next Page' %}">
           {% trans 'Next' %}
         </a>
       </li>
     {% else %}
-      <li aria-disabled="true">
-        <span class="px-3 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed" aria-hidden="true">
-          {% trans 'Next' %}
-        </span>
+      <li class="page-item disabled" aria-disabled="true">
+        <span class="page-link" aria-hidden="true">{% trans 'Next' %}</span>
       </li>
     {% endif %}
   </ul>

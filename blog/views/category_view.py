@@ -21,6 +21,7 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'blog/category/category_detail.html'
     context_object_name = 'category'
+    paginate_by = 1
     ordering = ['-created_at'] 
 
     def get_context_data(self, **kwargs):

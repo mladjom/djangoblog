@@ -3,12 +3,19 @@
 
 {% block title %}{% trans "Tags" %}{% endblock %}
 {% block meta_description %}
-{% trans "Browse all tags with featured articles." %}
+{% trans "Browse all available categories with featured articles." %}
 {% endblock %}
 
 {% block content %}
-<section class="container mx-auto py-8">
-  <h1 class="text-3xl font-bold mb-4">{% trans "Tags" %}</h1>
-  {% include 'blog/components/_item_list.html' with item_list=tag_list %}
-</section>
+<h1 class="mb-4">{% trans "Tags" %}</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for item in tag_list %}
+    {% include "blog/components/_item_list.html" with item=item %}
+  {% empty %}
+  <div class="col-12">
+    <p class="text-muted">{% trans "No items available." %}</p>
+  </div>
+  {% endfor %}
+</div>
+
 {% endblock %}
