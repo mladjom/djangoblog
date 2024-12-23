@@ -1,0 +1,40 @@
+// Abstracts 
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+@use 'abstracts/functions';
+@use 'abstracts/utilities';
+
+// Base
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/generic';
+
+// Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+
+// Layout
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/grid';
+@use 'layout/navigation';
+ 
+// Pages
+@use 'pages/home';
+@use 'pages/about';
+
+// Themes
+@use 'themes/light';
+@use 'themes/dark';  
+
+// Vendors
+@use 'vendors/third-party';
+
+footer {
+
+    p {
+        margin: space-lg;
+    }
+}
+  

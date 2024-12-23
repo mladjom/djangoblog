@@ -1,0 +1,12 @@
+@use 'sass:math';
+
+// Strip unit from value
+@function strip-unit($value) {
+    @return math.div($value, $value * 0 + 1);
+  }
+  
+  // Convert px to rem
+  @function rem($pixels) {
+    @return calc($pixels / 16) * 1rem;
+  }
+  

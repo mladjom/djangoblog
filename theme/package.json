@@ -1,25 +1,36 @@
 {
-  "name": "theme",
+  "name": "django-blog-theme",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Theme processing for Django blog",
   "scripts": {
-    "build-css": "sass style.scss:../static/css/style.css --style=expanded",
-    "watch-css": "sass --watch style.scss:static/css/style.css",
-    "prefix-css": "postcss ../static/css/style.css --replace --use autoprefixer -b 'defaults'",
-    "prod": "npm run build-css && npm run prefix-css",
-    "dev": "npm run build-css && npm run prefix-css"
+    "css:dev": "sass src/scss/main.scss:../static/css/main.css --source-map --watch",
+    "css:build": "sass src/scss/main.scss:../static/css/main.css --style=compressed && postcss ../static/css/main.css --replace",
+    "js:dev": "esbuild src/js/main.js --bundle --outfile=../static/js/main.js --sourcemap --watch",
+    "js:build": "esbuild src/js/main.js --bundle --minify --outfile=../static/js/main.js",
+    "watch": "npm-run-all --parallel css:dev js:dev",
+    "build": "npm-run-all --sequential css:build js:build",
+    "clean": "rimraf ../static/css/* ../static/js/*"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
-    "autoprefixer": "^10.4.20",
-    "bootstrap": "^5.3.3",
-    "postcss": "^8.4.49",
-    "postcss-cli": "^11.0.0"
+    "@popperjs/core": "^2.11.8"
   },
   "devDependencies": {
-    "sass": "^1.83.0"
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.2",
+    "esbuild": "^0.19.5",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "postcss-combine-media-query": "^1.0.1",
+    "postcss-import": "^15.1.0",
+    "postcss-preset-env": "^9.3.0",
+    "postcss-sort-media-queries": "^5.2.0",
+    "rimraf": "^5.0.5",
+    "sass": "^1.69.5"
   }
 }

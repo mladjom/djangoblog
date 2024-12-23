@@ -1,74 +1,81 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Testing SCSS customizations with Bootstrap">
-  <title>Bootstrap SCSS Customization Test</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-    </style>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Technical Blog</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS (you'll replace this with your compiled version) -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-    <header class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="#">OpenAI Docs</a>
-          <nav class="navbar-nav ms-auto">
-            <a class="nav-link" href="#">Home</a>
-            <a class="nav-link" href="#">API Reference</a>
-            <a class="nav-link" href="#">Guides</a>
-          </nav>
-        </div>
-      </header>
-
-      <!-- Content -->
-      <main class="col-md-9 col-lg-10 content p-4">
-        <h1>Welcome to the Documentation</h1>
-        <p>
-          Explore the guides and references to get the most out of this platform. Start with the overview
-          or jump into specific sections like API reference or examples.
-        </p>
-
-        <!-- Section -->
-        <section>
-          <h2>Key Features</h2>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title">Feature 1</h5>
-                  <p class="card-text">Description of the first feature. Learn more about how this feature works and its benefits.</p>
-                  <a href="#" class="btn btn-primary">Learn More</a>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white" aria-label="Main Navigation">
+            <div class="container">
+                <a class="navbar-brand" href="#">Technical Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
                 </div>
-              </div>
             </div>
-            <div class="col-md-6">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title">Feature 2</h5>
-                  <p class="card-text">Description of the second feature. Understand the use case and implementation.</p>
-                  <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
-              </div>
-            </div>
-          </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-5">
+        <!-- Typography Section -->
+        <section class="mb-5" aria-labelledby="typography-heading">
+            <h1 id="typography-heading">Typography Example</h1>
+            <h2>Secondary Heading</h2>
+            <h3>Tertiary Heading</h3>
+            <h4>Fourth Level Heading</h4>
+            <p class="lead">This is a lead paragraph. It stands out from regular paragraphs.</p>
+            <p>This is a regular paragraph with <strong>bold text</strong> and <em>italic text</em>. The paragraph contains dummy text to demonstrate typography.</p>
         </section>
-      </main>
-    </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="footer py-3">
-    <div class="container text-center">
-      <p class="mb-0">&copy; 2024 My Documentation. All rights reserved.</p>
-    </div>
-  </footer>
+        <!-- Code Example -->
+        <section class="mb-5" aria-labelledby="code-example-heading">
+            <h2 id="code-example-heading">Code Example</h2>
+            <pre><code>def hello_world():
+    print("Hello, World!")
+    return True
 
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+# Function call
+hello_world()</code></pre>
+        </section>
 
+        <!-- Blog Cards -->
+        <section class="mb-5" aria-labelledby="blog-posts-heading">
+            <h2 id="blog-posts-heading">Blog Posts</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <article class="card blog-card">
+                        <div class="card-body">
+                            <h3 class="card-title">Understanding Python Decorators</h3>
+                            <p class="card-text text-muted">A deep dive into Python decorators and their practical applications in modern development.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

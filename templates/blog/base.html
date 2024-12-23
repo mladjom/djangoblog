@@ -16,12 +16,41 @@
     Default description for the website.
     {% endblock %}"
     />
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
     <meta name="robots" content="noindex,follow" />
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
   </head>
-  <body class="bg-white text-dark">
+  <body>
+    <nav class="nav-container">
+      <a href="/" class="nav-brand">{% trans 'Django Blog' %}</a>
+      <button class="nav-toggler" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a href="{% url 'articles-list' %}" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">About</a>
+        </li>
+        <li class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle" aria-expanded="false">
+            Services
+            <span class="dropdown-icon" aria-hidden="true">▼</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" class="dropdown-link">Web Design</a></li>
+            <li><a href="#" class="dropdown-link">SEO</a></li>
+            <li><a href="#" class="dropdown-link">Content Writing</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+
+
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div class="container">
@@ -83,6 +112,6 @@
       </div>
     </footer>
         <!-- Bootstrap Bundle with Popper.js -->
-        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

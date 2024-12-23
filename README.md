@@ -48,6 +48,9 @@ pip freeze > requirements.txt
 ./manage.py tailwind start
 python manage.py shell
 python manage.py show_urls
+./manage.py runserver --insecure
+
+
 
 # Install npm dependencies
 npm install

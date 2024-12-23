@@ -1,0 +1,113 @@
+@use "../abstracts/variables"as *;
+@use "../abstracts/functions" as *;
+@use 'sass:map';
+
+// Modern mixin for media queries
+@mixin breakpoint($size) {
+  @if map.has-key($breakpoints, $size) {
+    @media screen and (max-width: map.get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$size}";
+  }
+}
+
+// Aspect ratio mixin
+// Fluid Typography
+@mixin fluid-type($min-size, $max-size, $min-vw: 320px, $max-vw: 1200px) {
+  font-size: clamp(#{$min-size}, 
+    calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * 
+    ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})), 
+    #{$max-size});
+}
+
+// Heading styles
+@mixin heading-base {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+// Generate Color Transparency Variants
+@mixin generate-color-variants($color, $prefix) {
+  --#{$prefix}: #{$color};
+  --#{$prefix}-10: #{rgba($color, 0.1)};
+  --#{$prefix}-20: #{rgba($color, 0.2)};
+  --#{$prefix}-30: #{rgba($color, 0.3)};
+}
+
+// Stack (vertical spacing)
+@mixin stack($space: $space-md) {
+  display: flex;
+  flex-direction: column;
+  gap: $space;
+}
+
+// Cluster (horizontal spacing)
+@mixin cluster($space: $space-sm) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space;
+}
+
+// Space children
+@mixin space-children($space: $space-md, $direction: 'vertical') {
+  > * + * {
+    @if $direction == 'vertical' {
+      margin-top: $space;
+    } @else {
+      margin-left: $space;
+    }
+  }
+}
+
+// Section padding
+@mixin section-padding($size: 'md') {
+  @if $size == 'sm' {
+    padding: $section-spacing-sm 0;
+  } @else if $size == 'lg' {
+    padding: $section-spacing-lg 0;
+  } @else {
+    padding: $section-spacing-md 0;
+  }
+}
+
+
+
+
+  // Flex Center
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  // Clearfix
+  @mixin clearfix { 
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+  
+  // Text Truncate
+  @mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  // Transition
+  @mixin transition($property, $duration, $timing: ease) {
+    transition: $property $duration $timing;
+  }
+  
+  // Box Shadow
+  @mixin box-shadow($x, $y, $blur, $color) {
+    box-shadow: $x $y $blur $color;
+  }

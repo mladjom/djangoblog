@@ -1,0 +1,114 @@
+/* General Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove default styles for blockquotes, lists, and headings */
+blockquote,
+dl,
+dd,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set consistent base font styles */
+html {
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%; /* Prevent font size adjustments on iOS */
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
+/* Remove bullets and spacing from lists */
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Normalize images, videos, and canvas */
+img,
+picture,
+video,
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove border on images/links in IE */
+img {
+  border-style: none;
+}
+
+/* Reset forms and inputs */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+/* Ensure buttons inherit font and remove default styles */
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Remove default table styles */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove default fieldset and legend styles */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/* Remove default anchor styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default figure styles */
+figure {
+  margin: 0;
+}
+
+/* Ensure consistent appearance for hr elements */
+hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 1rem 0;
+}
+
+/* Remove default styles for address element */
+address {
+  font-style: normal;
+}

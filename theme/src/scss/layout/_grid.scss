@@ -1,0 +1,92 @@
+@use "../abstracts/mixins"as *;
+@use "../abstracts/variables"as *;
+@use 'sass:map';
+
+// Container
+.container {
+  width: min(100% - 2rem, 75rem);
+  margin-inline: auto;
+}
+
+// Modern Grid System
+.grid {
+  display: grid;
+  gap: map.get($spacing, 'md');
+  
+  // Basic column variants
+  &--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+    
+    @include breakpoint('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+    
+    @include breakpoint('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include breakpoint('md') {
+      grid-template-columns: 1fr;
+    } 
+  }
+  
+  &--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+    
+    @include breakpoint('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include breakpoint('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  // Auto-fit grid with better responsiveness
+  &--auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+  
+  // Gap variations
+  &--gap-sm {
+    gap: map.get($spacing, 'sm');
+  }
+  
+  &--gap-lg {
+    gap: map.get($spacing, 'lg');
+  }
+}
+
+// Layout patterns with improved responsiveness
+.layout {
+  display: grid;
+  gap: map.get($spacing, 'md');
+  
+  &--sidebar {
+    grid-template-columns: 3fr 1fr;
+    
+    @include breakpoint('lg') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &--equal {
+    grid-template-columns: 1fr 1fr;
+    
+    @include breakpoint('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &--featured {
+    grid-template-columns: 2fr 1fr;
+    
+    @include breakpoint('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+}

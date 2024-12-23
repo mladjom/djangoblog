@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-
+ENABLE_DEBUG_TOOLBAR = False
 ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = [
@@ -16,7 +16,7 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE += [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    #"debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
