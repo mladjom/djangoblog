@@ -21,87 +21,49 @@
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
   </head>
   <body>
-    <nav class="nav-container">
+    <nav class="nav-container" role="navigation" aria-label="{% trans 'Main Navigation' %}">
       <a href="/" class="nav-brand">{% trans 'Django Blog' %}</a>
-      <button class="nav-toggler" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <button class="nav-toggler" aria-label="{% trans 'Toggle navigation' %}" aria-expanded="false">☰</button>
       <ul class="nav-links">
         <li class="nav-item">
-          <a href="{% url 'articles-list' %}" class="nav-link active">Home</a>
+          <a href="{% url 'articles-list' %}" class="nav-link">{% trans 'Articles' %}</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">About</a>
+          <a href="{% url 'categories-list' %}" class="nav-link">{% trans 'Categories' %}</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'tags-list' %}" class="nav-link">{% trans 'Tags' %}</a>
         </li>
         <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle" aria-expanded="false">
-            Services
+            {% trans 'Services' %}
             <span class="dropdown-icon" aria-hidden="true">▼</span>
           </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#" class="dropdown-link">Web Design</a></li>
-            <li><a href="#" class="dropdown-link">SEO</a></li>
-            <li><a href="#" class="dropdown-link">Content Writing</a></li>
+          <ul class="dropdown-menu" role="menu" aria-label="{% trans 'Services Menu' %}">
+            <li>
+              <a href="#" class="dropdown-link">{% trans 'Web Design' %}</a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-link">{% trans 'SEO' %}</a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-link">{% trans 'Content Writing' %}</a>
+            </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="/about" class="nav-link">{% trans 'About' %}</a>
+        </li>
+        <li class="nav-item">
+          <a href="/contact" class="nav-link">{% trans 'Contact' %}</a>
         </li>
       </ul>
     </nav>
+    
 
-
-
-
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-      <div class="container">
-        <a class="navbar-brand" href="/"
-          >{% trans 'Django Blog' %}</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="{% trans 'Toggle navigation' %}"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'articles-list' %}"
-                >{% trans 'Articles' %}</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'categories-list' %}"
-                >{% trans 'Categories' %}</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'tags-list' %}"
-                >{% trans 'Tags' %}</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about"
-                >{% trans 'About' %}</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact"
-                >{% trans 'Contact' %}</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
     <!-- Main Content -->
-    <main class="container py-5">{% block content %} {% endblock %}</main>
+    <main>{% block content %} {% endblock %}</main>
 
     <!-- Footer -->
     <footer class="bg-light py-3 mt-5 border-top">

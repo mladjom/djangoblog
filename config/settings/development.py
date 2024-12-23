@@ -10,7 +10,7 @@ INTERNAL_IPS = [
 
 # Additional development-only apps
 INSTALLED_APPS += [
-    "debug_toolbar",
+    #s"debug_toolbar",
     'django_browser_reload',
     'django_extensions',
 ]

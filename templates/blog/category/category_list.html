@@ -7,7 +7,12 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{% trans "Categories" %}</h1>
+<header class="content-section content-section--lg">
+  <div class="container">
+      <h1>{% trans "Categories" %}</h1>
+      <p class="lead">Testing typography, spacing, grid, and navigation systems</p>
+  </div>
+</header>
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   {% for item in category_list %}
     {% include "blog/components/_item_list.html" with item=item %}

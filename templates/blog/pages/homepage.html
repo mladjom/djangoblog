@@ -5,5 +5,160 @@
 {% block meta_description %}This is the description for the home page.{% endblock %}
 
 {% block content %}
-    <!-- Page content goes here -->
+        <!-- Hero Section -->
+        <section class="content-section content-section--sm bg-brand">
+            <div class="container">
+                <div class="layout--equal" style="align-items: center; color: white;">
+                    <div>
+                        <h1>Discover Our Latest Articles</h1>
+                        <p class="lead" style="color: rgba(255,255,255,0.9)">Exploring technology, design, and innovation through carefully curated content.</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <img src="https://placehold.co/600x400" alt="Decorative" style="border-radius: 8px; max-width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </section>
+      
+        <!-- Featured Article -->
+        <section class="content-section content-section--sm">
+            <div class="container">
+                <div class="layout--featured">
+                    <article class="article">
+                        <img src="https://placehold.co/800x500" alt="Featured Article" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <span class="text-small text-brand">Featured</span>
+                        <h2>The Future of Web Development: 2024 and Beyond</h2>
+                        <p class="lead">Discover the emerging trends and technologies that will shape the future of web development in the coming years.</p>
+                        <div class="text-tertiary" style="display: flex; gap: 1rem; align-items: center;">
+                            <img src="https://placehold.co/40x40" alt="Author" style="border-radius: 50%;">
+                            <div>
+                                <strong class="text-primary">Sarah Johnson</strong>
+                                <br>
+                                <small>Dec 20, 2024 · 10 min read</small>
+                            </div>
+                        </div>
+                    </article>
+                    <aside>
+                        <h3>Popular Articles</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <article>
+                                <span class="text-small text-brand">Design</span>
+                                <h4>Design Systems in 2024</h4>
+                                <p class="text-secondary">Essential guide to creating and maintaining design systems.</p>
+                                <small class="text-tertiary">5 min read</small>
+                            </article>
+                            <article>
+                                <span class="text-small text-brand">Development</span>
+                                <h4>Modern CSS Techniques</h4>
+                                <p class="text-secondary">Advanced CSS features you should be using today.</p>
+                                <small class="text-tertiary">8 min read</small>
+                            </article>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+      
+        <!-- Latest Articles Grid -->
+        <section class="content-section content-section--lg bg-background-secondary">
+            <div class="container">
+                <h2>Latest Articles</h2>
+                <p class="lead">Stay updated with our newest content across various topics.</p>
+                
+                <div class="grid grid--3-cols" style="margin-top: 2rem;">
+                    <!-- Article Card 1 -->
+                    <article class="bg-background-primary" style="border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px var(--color-shadow);">
+                        <img src="https://placehold.co/400x250" alt="Article" style="width: 100%;">
+                        <div style="padding: 1.5rem;">
+                            <span class="text-small text-brand">Technology</span>
+                            <h3>Understanding AI in Modern Applications</h3>
+                            <p class="text-secondary">A comprehensive guide to implementing AI in your applications.</p>
+                            <div class="text-tertiary" style="display: flex; justify-content: space-between; align-items: center;">
+                                <small>Dec 19, 2024</small>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+      
+                    <!-- Article Card 2 -->
+                    <article class="bg-background-primary" style="border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px var(--color-shadow);">
+                        <img src="https://placehold.co/400x250" alt="Article" style="width: 100%;">
+                        <div style="padding: 1.5rem;">
+                            <span class="text-small text-brand">Design</span>
+                            <h3>Color Theory in UI Design</h3>
+                            <p class="text-secondary">Learn how to use color effectively in your user interfaces.</p>
+                            <div class="text-tertiary" style="display: flex; justify-content: space-between; align-items: center;">
+                                <small>Dec 18, 2024</small>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+      
+                    <!-- Article Card 3 -->
+                    <article class="bg-background-primary" style="border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px var(--color-shadow);">
+                        <img src="https://placehold.co/400x250" alt="Article" style="width: 100%;">
+                        <div style="padding: 1.5rem;">
+                            <span class="text-small text-brand">Development</span>
+                            <h3>TypeScript Best Practices</h3>
+                            <p class="text-secondary">Essential patterns and practices for TypeScript development.</p>
+                            <div class="text-tertiary" style="display: flex; justify-content: space-between; align-items: center;">
+                                <small>Dec 17, 2024</small>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+      
+        <!-- Categories Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>Browse by Category</h2>
+                <div class="grid grid--4-cols" style="margin-top: 2rem;">
+                    <a href="#" style="text-decoration: none;">
+                        <div class="bg-background-secondary" style="padding: 2rem; border-radius: 8px; text-align: center;">
+                            <h4 class="text-primary">Development</h4>
+                            <p class="text-tertiary">42 articles</p>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="bg-background-secondary" style="padding: 2rem; border-radius: 8px; text-align: center;">
+                            <h4 class="text-primary">Design</h4>
+                            <p class="text-tertiary">38 articles</p>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="bg-background-secondary" style="padding: 2rem; border-radius: 8px; text-align: center;">
+                            <h4 class="text-primary">Technology</h4>
+                            <p class="text-tertiary">27 articles</p>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="bg-background-secondary" style="padding: 2rem; border-radius: 8px; text-align: center;">
+                            <h4 class="text-primary">Tutorial</h4>
+                            <p class="text-tertiary">31 articles</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+      
+        <!-- Newsletter Section -->
+        <section class="content-section bg-brand" style="color: white;">
+            <div class="container">
+                <div class="layout--equal" style="align-items: center;">
+                    <div>
+                        <h2>Stay Updated</h2>
+                        <p>Get the latest articles and insights delivered directly to your inbox.</p>
+                    </div>
+                    <div>
+                        <form style="display: flex; gap: 1rem;">
+                            <input type="email" placeholder="Enter your email" style="padding: 0.75rem 1rem; border-radius: 4px; border: none; flex: 1;">
+                            <button style="padding: 0.75rem 1.5rem; border-radius: 4px; background: white; color: var(--color-brand); border: none; font-weight: 500; cursor: pointer;">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 {% endblock %}
