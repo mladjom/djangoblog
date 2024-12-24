@@ -36,7 +36,7 @@ p {
   
   &.lead {
     font-size: $font-size-lg;
-    color: $color-text-secondary;
+    color:  var(--color-text-secondary);
   }
 }
 
@@ -62,7 +62,7 @@ ul, ol {
 
 // Blockquotes
 blockquote {
-  border-left: 3px solid $color-brand;
+  border-left: 3px solid $color-brand-primary;
   padding-left: 1em;
   margin: 2em 0;
   font-style: italic;
@@ -77,8 +77,8 @@ small, .text-small {
 
 // Selection
 ::selection {
-  background-color: rgba($color-brand, 0.1);
-  color: $color-brand;
+  background-color: rgba($color-brand-primary, 0.1);
+  color: $color-brand-primary;
 }
 
 // Article specific styles
@@ -95,10 +95,10 @@ small, .text-small {
   // Article links
   .content a:not([class]) {
     color: $color-text-primary;
-    text-decoration-color: $color-brand;
+    text-decoration-color: $color-brand-primary;
     
     &:hover {
-      color: $color-brand;
+      color: $color-brand-primary;
     }
   }
 }
@@ -145,26 +145,7 @@ small, .text-small {
 }
 
 
-// Text utility classes
-.text-brand { color: $color-brand; }
-.bg-brand { background-color: $color-brand; }
-.border-brand { border-color: $color-brand; }
-.text-primary { color: $color-text-primary; }
-.text-secondary { color: $color-text-secondary; }
-.text-tertiary { color: $color-text-tertiary; }
-.text-disabled { color: $color-text-disabled; }
-.text-brand { color: $color-brand; }
 
-// Emphasis classes
-.text-emphasis {
-  color: $color-text-primary;
-  font-weight: $font-weight-medium;
-}
-
-.text-success { color: $color-success; }
-.text-error { color: $color-error; }
-.text-warning { color: $color-warning; }
-.text-info { color: $color-info; }
 
 
 // // Responsive Adjustments

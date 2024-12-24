@@ -28,7 +28,7 @@ class ArticleDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         article = self.object
         context['breadcrumbs'] = [
-            {'name': 'Home', 'url': reverse('homepage')},
+            {'name': 'Home', 'url': reverse('home')},
             {'name': article.category.name, 'url': reverse('category-detail', args=[article.category.slug])},
             {'name': article.title, 'url': reverse('article-detail', args=[article.slug])}
         ]

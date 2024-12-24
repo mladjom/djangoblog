@@ -1,46 +1,65 @@
+@use 'sass:color';
 //Colors
 //
 // Brand Colors
-$color-brand: #e34449;
-$color-brand-dark: #cc001f;  // For hover states
-$color-brand-light: #ff1a1a; // For highlights
+$color-brand-primary: #e34449; 
+$color-brand-primary-light: color.scale($color-brand-primary, $lightness: 20%);
+$color-brand-primary-dark: color.scale($color-brand-primary, $lightness: -10%);
 
 // Neutral Colors
-// Subtle warm undertones to complement the red
-$color-neutral-50: #fafafa;
-$color-neutral-100: #f5f5f5;
-$color-neutral-200: #e5e5e5;
-$color-neutral-300: #d4d4d4;
-$color-neutral-400: #a3a3a3;
-$color-neutral-500: #737373;
-$color-neutral-600: #525252;
-$color-neutral-700: #404040;
-$color-neutral-800: #262626;
-$color-neutral-900: #171717;
+$color-neutral-100: #ffffff;
+$color-neutral-200: #f8f9fa;
+$color-neutral-300: #e9ecef;
+$color-neutral-400: #ced4da;
+$color-neutral-500: #adb5bd;
+$color-neutral-600: #6c757d;
+$color-neutral-700: #495057;
+$color-neutral-800: #343a40;
+$color-neutral-900: #212529;
 
 // Semantic Colors
+$color-success: #28a745;
+$color-warning: #ffc107;
+$color-error: #dc3545;
+$color-info: #17a2b8;
+
+// Text Colors
 $color-text-primary: $color-neutral-900;
 $color-text-secondary: $color-neutral-600;
 $color-text-tertiary: $color-neutral-500;
-$color-text-disabled: $color-neutral-400;
 
-$color-link: $color-brand;
-$color-link-hover: $color-brand-dark;
+// Link Colors
+$color-link: $color-brand-primary;
+$color-link-hover: $color-brand-primary-dark;
 
-$color-background-primary: #ffffff;
-$color-background-secondary: $color-neutral-50;
-$color-background-tertiary: $color-neutral-100;
+// Background Colors
+$color-background-primary: $color-neutral-100;
+$color-background-secondary: $color-neutral-200;
+$color-background-tertiary: $color-neutral-300;
 
-// Feedback Colors
-$color-success: #10b981; // Green
-$color-error: $color-brand; // Using brand red for errors
-$color-warning: #f59e0b; // Amber
-$color-info: #3b82f6; // Blue
+// Border Colors
+$color-border-light: $color-neutral-300;    // Subtle borders
+$color-border-default: $color-neutral-400;   // Standard borders
+$color-border-dark: $color-neutral-500; 
 
-// Theme Colors
-$color-accent: $color-brand;
-$color-border: $color-neutral-200;
-$color-shadow: rgb(0 0 0 / 0.1);
+
+// Shadow Colors & Definitions
+$color-shadow: rgba($color-neutral-900, 0.1);
+$shadow-sm: 0 1px 2px 0 $color-shadow;
+$shadow-md: 0 4px 6px -1px $color-shadow;
+$shadow-lg: 0 10px 15px -3px $color-shadow;
+
+// Disabled State Colors
+$color-disabled-background: $color-neutral-200;
+$color-disabled-text: $color-neutral-500;
+$color-disabled-border: $color-neutral-300;
+
+// Inverse Colors 
+$color-inverse-text: $color-neutral-100;
+$color-inverse-background: $color-brand-primary;
+
+// Accessibility Adjustments
+
 
 
 // Typography
