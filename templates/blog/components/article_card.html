@@ -1,5 +1,5 @@
-{% load i18n %}
-
+{% load blog_filters %}
+{% load i18n %} 
 <!-- Article Card 3 -->
 <article
   class="bg-background-primary"
@@ -9,42 +9,42 @@
     box-shadow: 0 2px 4px var(--color-shadow);
   "
 >
-     <!-- Featured Image -->
-    {% if article.featured_image %}
-    <img
-      src="{{ article.featured_image.url }}"
-      class="card-img-top"
-      alt="{{ article.title }}"
-    />
-    {% else %}
-    <img src="https://placehold.co/400x250" alt="Article" style="width: 100%" />
-    {% endif %} 
+  <!-- Featured Image -->
+  {% if article.featured_image %}
+  <img
+    src="{{ article.featured_image.url }}"
+    class="card-img-top"
+    alt="{{ article.title }}"
+  />
+  {% else %}
+  <img src="https://placehold.co/400x250" alt="Article" style="width: 100%" />
+  {% endif %}
 
   <div style="padding: 1.5rem">
-    <span class="text-small text-brand">{{ article.category}}</span>
+    {% if article.category %}
+    <a href="{{ article.category.get_absolute_url }}" class="text-small text-brand">
+      {{ article.category.name }}
+    </a>
+    {% endif %}
     <h3>
       <a
-          href="{{ article.get_absolute_url }}"
-          class="text-decoration-none text-dark"
-        >
-          {{ article.title }}
-        </a>
+        href="{{ article.get_absolute_url }}"
+        class="text-decoration-none text-dark"
+      >
+        {{ article.title }}
+      </a>
     </h3>
-    <p class="text-secondary">
-      {{ article.content|truncatechars:150 }}
-    </p>
+    <p class="text-secondary">{{ article.content|truncatechars:100 }}</p>
     <div
       class="text-tertiary"
       style="display: flex; justify-content: space-between; align-items: center"
     >
       <small>
         <time datetime="{{ article.created_at|date:'Y-m-d' }}">
-        {{ article.created_at|date:'F d, Y' }}
-      </time>
-    </small>
-      <span>6 min read</span>
+          {{ article.created_at|relative_date }}
+        </time>
+      </small>
+      <span>{{ article.content|reading_time }}</span>
     </div>
   </div>
 </article>
-
-
