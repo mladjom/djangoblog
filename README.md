@@ -22,7 +22,7 @@ cd backend
 
 ```bash
 # Install Python dependencies
-pip -r requirements.txt
+pip install -r requirements.txt
 
 ```bash
 ./manage.py makemigrations

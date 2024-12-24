@@ -5,7 +5,7 @@ from .views.tag_view import TagListView, TagDetailView
 from .views.article_view import ArticleListView, ArticleDetailView
 from .sitemaps import CategorySitemap, TagSitemap, ArticleSitemap
 from django.contrib.sitemaps.views import sitemap
-from .views.pages_view import homepage, about, contact
+from .views.pages_view import home, about, contact
 
 sitemaps = {
     'categories': CategorySitemap,
@@ -14,7 +14,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('', homepage, name='homepage'),
+    path('', home, name='home'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('categories/', CategoryListView.as_view(), name='categories-list'),

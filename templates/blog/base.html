@@ -1,4 +1,4 @@
-{% load i18n static %} {% load static %}
+{% load i18n static %} {% load static %} {% load navigation_tags %}
 
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
@@ -22,17 +22,17 @@
   </head>
   <body>
     <nav class="nav-container" role="navigation" aria-label="{% trans 'Main Navigation' %}">
-      <a href="/" class="nav-brand">{% trans 'Django Blog' %}</a>
+      <a href="{% url 'home' %}" class="nav-brand">{% trans 'Django Blog' %}</a>
       <button class="nav-toggler" aria-label="{% trans 'Toggle navigation' %}" aria-expanded="false">☰</button>
       <ul class="nav-links">
         <li class="nav-item">
-          <a href="{% url 'articles-list' %}" class="nav-link">{% trans 'Articles' %}</a>
+          <a href="{% url 'articles-list' %}" class="nav-link {% is_active 'articles-list' %}">{% trans 'Articles' %}</a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'categories-list' %}" class="nav-link">{% trans 'Categories' %}</a>
+          <a href="{% url 'categories-list' %}" class="nav-link {% is_active 'categories-list' %}">{% trans 'Categories' %}</a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'tags-list' %}" class="nav-link">{% trans 'Tags' %}</a>
+          <a href="{% url 'tags-list' %}" class="nav-link {% is_active 'tags-list' %}">{% trans 'Tags' %}</a>
         </li>
         <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle" aria-expanded="false">
@@ -52,10 +52,10 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="/about" class="nav-link">{% trans 'About' %}</a>
+          <a href="{% url 'about' %}" class="nav-link {% is_active 'about' %}">{% trans 'About' %}</a>
         </li>
         <li class="nav-item">
-          <a href="/contact" class="nav-link">{% trans 'Contact' %}</a>
+          <a href="{% url 'contact' %}" class="nav-link {% is_active 'contact' %}">{% trans 'Contact' %}</a>
         </li>
       </ul>
     </nav>

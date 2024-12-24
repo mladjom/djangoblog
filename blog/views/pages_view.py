@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def homepage(request):
+def home(request):
     # Add any logic for the homepage if necessary
     return render(request, 'blog/pages/homepage.html')
 
