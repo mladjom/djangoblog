@@ -1,0 +1,34 @@
+// themes/_default.scss
+@use '../abstracts/variables' as vars;
+
+:root {
+  // Neutral Colors
+  @each $key, $value in vars.$colors-neutral {
+    --color-neutral-#{$key}: #{$value};
+  }
+
+  // Utility Colors
+  @each $key, $value in vars.$colors-utility {
+    --color-#{$key}: #{$value};
+  }
+
+
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-500);
+  
+  --color-background-primary: var(--color-neutral-100);
+  --color-background-secondary: var(--color-neutral-200);
+  --color-background-tertiary: var(--color-neutral-300);
+  
+  // --color-border-light: var(--color-neutral-300);
+  // --color-border-default: var(--color-neutral-400);
+  // --color-border-dark: var(--color-neutral-500);
+  
+  // --color-shadow: #{rgba(33, 37, 41, 0.1)};
+  
+  // --color-disabled-background: var(--color-neutral-200);
+  // --color-disabled-text: var(--color-neutral-500);
+  // --color-disabled-border: var(--color-neutral-300);
+
+}

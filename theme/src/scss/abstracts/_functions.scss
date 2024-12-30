@@ -1,12 +1,14 @@
-@use 'sass:math';
+@use "sass:math";
+@use "sass:meta";
 
-// Strip unit from value
 @function strip-unit($value) {
+  @if meta.type-of($value) == "number" and not math.is-unitless($value) {
     @return math.div($value, $value * 0 + 1);
   }
-  
-  // Convert px to rem
-  @function rem($pixels) {
-    @return calc($pixels / 16) * 1rem;
-  }
+  @return $value;
+}
+
+@function rem($pixels) {
+  @return math.div($pixels, 16) * 1rem;
+}
   

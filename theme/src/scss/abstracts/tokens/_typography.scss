@@ -1,0 +1,48 @@
+// abstracts/tokens/_typography.scss
+
+// Font Families
+$font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+$font-family-heading: 'Plus Jakarta Sans', $font-family-base;
+
+// Font Families Configuration
+$font-families: (
+  'base': $font-family-base,
+  'headings': $font-family-heading,
+  'mono': ('JetBrains Mono', 'Cascadia Code', Menlo, Monaco, Consolas, monospace),
+);
+
+// Base size for relative units (16px browser default)
+$base-size: 1rem;
+
+// Type scale with perfect fourth ratio (1.333)
+$font-sizes: (
+  'xs': calc($base-size * 0.75),    // 12px
+  'sm': calc($base-size * 0.875),   // 14px
+  'base': $base-size,               // 16px
+  'lg': calc($base-size * 1.333),   // 21.33px
+  'xl': calc($base-size * 1.777),   // 28.43px
+  '2xl': calc($base-size * 2.369),  // 37.89px
+  '3xl': calc($base-size * 3.157)   // 50.52px
+);
+
+// Line heights
+$line-heights: (
+  'tight': 1.2,
+  'base': 1.5,
+  'relaxed': 1.75
+);
+
+// Font weights
+$font-weights: (
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700
+);
+
+// Letter spacing
+$letter-spacing: (
+  'tight': -0.025em,
+  'normal': 0,
+  'wide': 0.025em
+);

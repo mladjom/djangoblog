@@ -1,0 +1,26 @@
+// themes/_dark.scss
+@use '../abstracts/variables' as vars;
+
+%theme-dark {
+  --color-text-primary: var(--color-neutral-100);
+  --color-text-secondary: var(--color-neutral-300);
+  --color-text-tertiary: var(--color-neutral-400);
+  
+  --color-background-primary: var(--color-neutral-900);
+  --color-background-secondary: var(--color-neutral-800);
+  --color-background-tertiary: var(--color-neutral-700);
+  
+  --color-border-light: var(--color-neutral-700);
+  --color-border-default: var(--color-neutral-600);
+  --color-border-dark: var(--color-neutral-500);
+  
+  --color-shadow: #{rgba(0, 0, 0, 0.2)};
+  
+  --color-disabled-background: var(--color-neutral-800);
+  --color-disabled-text: var(--color-neutral-600);
+  --color-disabled-border: var(--color-neutral-700);
+}
+
+body[data-theme="dark"] {
+  @extend %theme-dark;
+}

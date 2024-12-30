@@ -1,38 +1,42 @@
-@use "variables"as *;
-@use "mixins"as *;
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins" as mixin ;
+@use "sass:map";
 
-// Text colors
-.text-primary { color: var(--color-text-primary); }
-.text-secondary { color: var(--color-text-secondary); }
-.text-tertiary { color: var(--color-text-tertiary); }
-.text-inverse { color: var(--color-inverse-text)!important; }
-
-// Background colors
-.bg-primary { background-color: var(--color-background-primary); }
-.bg-secondary { background-color: var(--color-background-secondary); }
-.bg-tertiary { background-color: var(--color-background-tertiary); }
-.bg-inverse { background-color: var(--color-inverse-background); }
-.bg-brand { background-color: #{$color-brand-primary}; }
-
-// Border utilities
-.border-light { border-color: var(--color-border-light); }
-.border-default { border-color: var(--color-border-default); }
-.border-dark { border-color: var(--color-border-dark); }
-
-// Shadow utilities
-.shadow-sm { box-shadow: #{$shadow-sm}; }
-.shadow-md { box-shadow: #{$shadow-md}; }
-.shadow-lg { box-shadow: #{$shadow-lg}; }
-
-// State utilities
-.disabled {
-  background-color: #{$color-disabled-background};
-  color: #{$color-disabled-text};
-  border-color: #{$color-disabled-border};
-}
-
-// Semantic colors (these don't change with theme)
-.text-success { color: #{$color-success}; }
-.text-warning { color: #{$color-warning}; }
-.text-error { color: #{$color-error}; }
-.text-info { color: #{$color-info}; }
+// .responsive-section-padding {
+//     @include mixin.responsive-section-padding('lg');
+//     //@include mixin.responsive-section-padding('lg');
+//   }
+  
+//   // Content sections
+//   .section-padding {
+  
+//     @include mixin.section-padding;
+//     &--md {
+//       @include mixin.section-padding('md');
+//     }
+    
+//     &--lg {
+//       @include mixin.section-padding('lg');
+//     }
+//   }
+  
+  
+  
+//   // Fixed stack example
+//   .stack {
+//     @include mixin.stack(2rem);
+//     //margin-bottom: 2rem;
+//   }
+  
+//   // Example usage with different spacings at different breakpoints
+//   .responsive-stack {
+//     // Start with xs spacing, then increase at each breakpoint
+//     @include mixin.responsive-stack(
+//       map.get(vars.$spacing, 'xs'),  // Default/mobile spacing
+//       (
+//         'sm': map.get(vars.$spacing, 'sm'),
+//         'md': map.get(vars.$spacing, 'lg'),
+//         'lg': map.get(vars.$spacing, 'xl'),
+//       )
+//     );
+//   }

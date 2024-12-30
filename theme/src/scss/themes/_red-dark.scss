@@ -1,0 +1,16 @@
+// themes/_red-dark.scss
+@use 'sass:map';
+@use '../abstracts/variables' as vars;
+
+body[data-theme="red-dark"] {
+  @extend %theme-dark !optional;
+  
+  --color-primary: #{map.get(vars.$colors-red, 'primary')};
+  --color-primary-light: #{map.get(vars.$colors-red, 'light')};
+  --color-primary-dark: #{map.get(vars.$colors-red, 'dark')};
+  
+  --color-link: var(--color-primary-light);
+  --color-link-hover: var(--color-primary);
+  --color-inverse-text: var(--color-neutral-900);
+  --color-inverse-background: var(--color-primary-light);
+}

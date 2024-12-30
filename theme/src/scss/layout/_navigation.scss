@@ -2,42 +2,38 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-// Navigation variables
-$nav-height: 5rem;
-$nav-bg: $color-background-secondary;
-$nav-text-color: $color-text-primary;
-$nav-hover-color: $color-link;
-$transition-speed: 0.3s;
-$dropdown-z-index: 1000;
-
 // Navigation styles
-.nav-container {
+.navigation {
+  --nav-background: var(--color-background-secondary);
+  --nav-text: var(--color-text-primary);
+  --nav-link: var(--color-link);
+  --nav-link-hover: var(--color-link-hover);
+  --nav-border: var(--color-border-light);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: $nav-height;
-  background-color: $nav-bg;
-  color: $nav-text-color;
-  padding: 0 $space-md;
-  
-  // Brand
-  .nav-brand {
+  background-color: var(--nav-background);
+  color: var(--nav-text);
+
+  // Logo
+  .logo {
     font-size: $h5;
     font-weight: $font-weight-bold;
     text-decoration: none;
     color: inherit;
     z-index: $dropdown-z-index + 1;
     transition: color $transition-speed ease;
-    
+    color: var(--color-link);
     &:hover {
-      color: $nav-hover-color;
+      color: var(--nav-link-hover);
     }
   }
 
-  // Navigation toggle button
-  .nav-toggler {
-    display: none;
+  // Menu toggle button (hamburger menu)
+  .menu-toggle {
+    display: block; // Default to block for mobile-first
     background: none;
     border: none;
     font-size: $h5;
@@ -45,28 +41,37 @@ $dropdown-z-index: 1000;
     padding: $space-xs;
     color: inherit;
     transition: color $transition-speed ease;
-    
+
     &:hover {
-      color: $nav-hover-color;
+      color: var(--nav-link-hover);
     }
-    
+
     &:focus {
-      outline: 2px solid $nav-hover-color;
+      outline: 2px solid var(--nav-link-hover);
       outline-offset: 2px;
     }
   }
 
   // Navigation links
-  .nav-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: $space-xs;
-    transition: transform $transition-speed ease;
+  .navigation-links {
+    display: none; // Default to hidden for mobile
+    flex-direction: column; // Stack vertically on mobile
+    position: absolute;
+    top: $nav-height;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--nav-background);
+    padding: $space-sm;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    margin-bottom: 0;
 
-    .nav-item {
-      position: relative;
+    &.show {
+      display: flex;
+    }
+
+    .nav-list-item {
+      margin: $space-xs 0;
 
       .nav-link,
       .dropdown-toggle {
@@ -79,16 +84,16 @@ $dropdown-z-index: 1000;
         align-items: center;
         gap: $space-xs;
         transition: all $transition-speed ease;
-        
+
         &:hover,
         &:focus,
         &.active {
-          color: $nav-hover-color;
+          color: var(--nav-link-hover);
           outline: none;
         }
 
         &:focus-visible {
-          outline: 2px solid $nav-hover-color;
+          outline: 2px solid var(--nav-link-hover);
           outline-offset: 2px;
         }
       }
@@ -100,58 +105,50 @@ $dropdown-z-index: 1000;
           border: none;
           cursor: pointer;
           font: inherit;
-          
+
           .dropdown-icon {
             font-size: 0.8em;
             transition: transform $transition-speed ease;
           }
-          
+
           &[aria-expanded="true"] .dropdown-icon {
             transform: rotate(180deg);
           }
         }
 
-        .dropdown-menu {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          min-width: 200px;
-          background-color: $nav-bg;
-          padding: $space-sm;
-          margin: 0;
-          list-style: none;
-          border: 1px solid $color-border-default;
-          border-radius: 4px;
-          box-shadow: 0 2px 8px $color-shadow;
-          opacity: 0;
-          visibility: hidden;
-          transform: translateY(-10px);
-          transition: all $transition-speed ease;
-          z-index: $dropdown-z-index;
+        .submenu {
+          position: static;
+          width: 100%;
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+          display: none;
+          padding-left: $space-md;
+          box-shadow: none;
+          border: none;
+          margin-bottom: 0 !important;
 
           &.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            display: block;
           }
 
-          .dropdown-link {
+          .submenu-link {
             text-decoration: none;
             color: inherit;
             padding: $space-xs $space-sm;
             display: block;
             border-radius: 2px;
             transition: all $transition-speed ease;
-            
+
             &:hover,
             &:focus {
-              background-color: $nav-hover-color;
+              background-color: var(--nav-link-hover);
               color: #fff;
               outline: none;
             }
 
             &:focus-visible {
-              outline: 2px solid $nav-hover-color;
+              outline: 2px solid var(--nav-link-hover);
               outline-offset: -2px;
             }
           }
@@ -160,49 +157,79 @@ $dropdown-z-index: 1000;
     }
   }
 
-  // Mobile styles
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-    
-    .nav-toggler {
-      display: block;
-      z-index: $dropdown-z-index + 1;
+  // For screens larger than 'md' (tablet and above)
+  @include respond-to("lg") {
+    .menu-toggle {
+      display: none; // Hide the toggle button on larger screens
     }
 
-    .nav-links {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: $nav-height;
-      left: 0;
-      right: 0;
-      width: 100%;
-      background-color: $nav-bg;
-      padding: $space-sm;
-      box-shadow: 0 4px 6px rgba($color-shadow, 0.1);
-      
-      &.show {
-        display: flex;
-      }
+    .navigation-links {
+      display: flex; // Show links as a horizontal row on medium screens
+      flex-direction: row;
+      position: static;
+      width: auto;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      align-items: center;
 
-      .nav-item {
-        margin: $space-xs 0;
+      .nav-list-item {
+        margin: 0 $space-xs;
 
         &.dropdown {
-          .dropdown-menu {
-            position: static;
-            width: 100%;
+          position: relative;
+
+          .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background-color: var(--nav-background);
+            padding: $space-sm;
+            margin: 0;
+            list-style: none;
+            border: 1px solid var(--nav-border);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px var(--color-shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all $transition-speed ease;
+            z-index: $dropdown-z-index;
+
+            &.show {
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(0);
+            }
+
+            .submenu-link {
+              text-decoration: none;
+              color: inherit;
+              padding: $space-xs $space-sm;
+              display: block;
+              border-radius: 2px;
+              transition: all $transition-speed ease;
+
+              &:hover,
+              &:focus {
+                background-color: var(--nav-link-hover);
+                color: #fff;
+                outline: none;
+              }
+
+              &:focus-visible {
+                outline: 2px solid var(--nav-link-hover);
+                outline-offset: -2px;
+              }
+            }
+          }
+
+          &:hover .submenu,
+          &:focus-within .submenu {
             opacity: 1;
             visibility: visible;
-            transform: none;
-            display: none;
-            padding-left: $space-md;
-            box-shadow: none;
-            border: none;
-            
-            &.show {
-              display: block;
-            }
+            transform: translateY(0);
           }
         }
       }

@@ -8,22 +8,26 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{{ category.name }}</h1>
-<p class="text-muted mb-4">{{ category.description }}</p>
+<section class="category">
+  <div class="container">
+    <header class="category__header">
+      <h1 class="category__title">{{ category.name }}</h1>
+      <p class="category__description">{{ category.description }}</p>
+    </header>
 
-<h2 class="mb-4">{% trans "Articles in this Category" %}</h2>
+    <h2 class="category__section-title">{% trans "Articles in this Category" %}</h2>
 
-<!-- Articles Grid -->
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  {% for article in articles %}
-    {% include "blog/components/article_card.html" with article=article %}
-  {% empty %}
-    <div class="col-12">
-      <p class="text-muted">{% trans "No articles found in this category." %}</p>
-    </div>
-  {% endfor %}
-</div>
+    {% if articles %}
+      <div class="article-grid">
+        {% for article in articles %}
+          {% include "blog/components/article_card.html" with article=article %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-secondary">{% trans "No articles found in this category." %}</p>
+    {% endif %}
 
-{% include "blog/components/pagination.html" %}
-
+    {% include "blog/components/pagination.html" %}
+  </div>
+</section>
 {% endblock %}

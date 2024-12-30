@@ -1,0 +1,10 @@
+// abstracts/_mixins/_spacing.scss
+@use 'sass:map';
+@use '../variables' as *;
+
+@mixin flow-spacing($property: 'margin-bottom', $space: '4') {
+    & > * + * { // Targets only adjacent siblings
+      #{$property}: map.get($spacing, $space); // Applies the spacing from the $spacing map
+    }
+  }
+  

@@ -5,78 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Technical Blog</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
     
     <!-- Bootstrap CSS (you'll replace this with your compiled version) -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 </head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white" aria-label="Main Navigation">
-            <div class="container">
-                <a class="navbar-brand" href="#">Technical Blog</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <header class="nav-container">
+        <a href="#" class="nav-brand">Brand</a>
+        <button class="nav-toggler" aria-label="Toggle navigation">☰</button>
+        <ul class="nav-links">
+            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item dropdown">
+                <button class="dropdown-toggle" aria-expanded="false">Services <span class="dropdown-icon">▼</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" class="dropdown-link">Web Design</a></li>
+                    <li><a href="#" class="dropdown-link">SEO</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+        </ul>
     </header>
 
-    <!-- Main Content -->
-    <main class="container py-5">
-        <!-- Typography Section -->
-        <section class="mb-5" aria-labelledby="typography-heading">
-            <h1 id="typography-heading">Typography Example</h1>
-            <h2>Secondary Heading</h2>
-            <h3>Tertiary Heading</h3>
-            <h4>Fourth Level Heading</h4>
-            <p class="lead">This is a lead paragraph. It stands out from regular paragraphs.</p>
-            <p>This is a regular paragraph with <strong>bold text</strong> and <em>italic text</em>. The paragraph contains dummy text to demonstrate typography.</p>
+    <main class="container">
+        <section class="content-section">
+            <h1 class="h1">Heading 1</h1>
+            <h2 class="h2">Heading 2</h2>
+            <h3 class="h3">Heading 3</h3>
+            <h4 class="h4">Heading 4</h4>
+            <h5 class="h5">Heading 5</h5>
+            <h6 class="h6">Heading 6</h6>
+            <p>This is a paragraph. <a href="#">This is a link</a>.</p>
+            <p class="lead">This is a lead paragraph.</p>
+            <blockquote>This is a blockquote.</blockquote>
+            <ul>
+                <li>Unordered list item 1</li>
+                <li>Unordered list item 2</li>
+            </ul>
+            <ol>
+                <li>Ordered list item 1</li>
+                <li>Ordered list item 2</li>
+            </ol>
+            <small>This is small text.</small>
         </section>
 
-        <!-- Code Example -->
-        <section class="mb-5" aria-labelledby="code-example-heading">
-            <h2 id="code-example-heading">Code Example</h2>
-            <pre><code>def hello_world():
-    print("Hello, World!")
-    return True
-
-# Function call
-hello_world()</code></pre>
+        <section class="content-section--sm">
+            <div class="grid grid--2-cols">
+                <div class="bg-primary text-inverse">Grid Item 1</div>
+                <div class="bg-secondary text-inverse">Grid Item 2</div>
+            </div>
         </section>
 
-        <!-- Blog Cards -->
-        <section class="mb-5" aria-labelledby="blog-posts-heading">
-            <h2 id="blog-posts-heading">Blog Posts</h2>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <article class="card blog-card">
-                        <div class="card-body">
-                            <h3 class="card-title">Understanding Python Decorators</h3>
-                            <p class="card-text text-muted">A deep dive into Python decorators and their practical applications in modern development.</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </article>
-                </div>
+        <section class="content-section--lg">
+            <div class="layout layout--sidebar">
+                <div class="bg-tertiary">Main Content</div>
+                <div class="bg-secondary">Sidebar</div>
             </div>
         </section>
     </main>
+
+    <footer>
+        <p class="text-secondary">Footer content goes here.</p>
+    </footer>
+
+
 </body>
 </html>

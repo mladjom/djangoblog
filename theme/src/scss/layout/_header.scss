@@ -1,0 +1,205 @@
+// components/_header.scss
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:map";
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-background-primary);
+  border-bottom: 1px solid var(--color-border);
+
+  &__inner {
+    @include flex-between;
+    padding: map.get($spacing, "4") 0;
+  }
+
+  &__logo {
+    @include text-style("xl", "bold", "tight", "tight", "headings");
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+}
+
+.nav-toggle {
+  @include flex-center;
+  gap: map.get($spacing, "2");
+  padding: map.get($spacing, "2");
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  @include respond-to("md") {
+    display: none;
+  }
+
+  &__icon {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text-primary);
+    transition: background-color 0.2s;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-text-primary);
+      transition: transform 0.2s;
+    }
+
+    &::before {
+      transform: translateY(-8px);
+    }
+    &::after {
+      transform: translateY(8px);
+    }
+  }
+
+  &[aria-expanded="true"] {
+    .nav-toggle__icon {
+      background-color: transparent;
+
+      &::before {
+        transform: translateY(0) rotate(45deg);
+      }
+      &::after {
+        transform: translateY(0) rotate(-45deg);
+      }
+    }
+  }
+
+  &__label {
+    @include text-style("sm", "medium");
+  }
+}
+
+.main-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-background-primary);
+  border-top: 1px solid var(--color-border);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+
+  @include respond-to("md") {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    border: none;
+  }
+
+  &[aria-expanded="true"] {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__list {
+    @include flex-column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include respond-to("md") {
+      flex-direction: row;
+      gap: map.get($spacing, "6");
+    }
+  }
+
+  &__item {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+
+  &__link {
+    @include flex-between;
+    @include text-style("base", "medium");
+    padding: map.get($spacing, "4");
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+
+    @include respond-to("md") {
+      padding: map.get($spacing, "2");
+    }
+
+    &:hover,
+    &.active,
+    &[aria-expanded="true"] {
+      color: var(--color-primary);
+    }
+
+    // Links with dropdowns
+    &[aria-expanded] {
+      &::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border: 2px solid currentColor;
+        border-left: 0;
+        border-top: 0;
+        margin-left: map.get($spacing, "2");
+        transform: translateY(-2px) rotate(45deg);
+        transition: transform 0.2s ease;
+      }
+
+      &[aria-expanded="true"]::after {
+        transform: translateY(2px) rotate(-135deg);
+      }
+    }
+  }
+
+  &__submenu {
+    display: none;
+    list-style: none;
+    padding: map.get($spacing, "2");
+    margin-top: 0!important;
+    background-color: var(--color-background-secondary);
+
+    @include respond-to("md") {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      padding: map.get($spacing, "2");
+      border: 1px solid var(--color-border);
+      border-radius: map.get($spacing, "1");
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    &.show {
+      display: block;
+    }
+
+    //   .main-nav__item:hover & {
+    //     display: block;
+    //   }
+  }
+
+  &__submenu-link {
+    @include text-style("sm", "normal");
+    display: block;
+    padding: map.get($spacing, "3") map.get($spacing, "4");
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border-radius: map.get($spacing, "1");
+
+    &:hover,
+    &:focus {
+      background-color: var(--color-background-hover);
+      color: var(--color-primary);
+    }
+  }
+}

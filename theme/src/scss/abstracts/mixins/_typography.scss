@@ -1,0 +1,53 @@
+// abstracts/mixins/_typography.scss
+@use 'sass:map';
+@use '../variables' as *;
+
+@mixin font-family($family) {
+    font-family: map.get($font-families, $family);
+  }
+  
+  @mixin font-size($size) {
+    font-size: map.get($font-sizes, $size);
+  }
+  
+  @mixin font-weight($weight) {
+    font-weight: map.get($font-weights, $weight);
+  }
+  
+  @mixin line-height($height) {
+    line-height: map.get($line-heights, $height);
+  }
+  
+  @mixin letter-spacing($spacing) {
+    letter-spacing: map.get($letter-spacing, $spacing);
+  }
+
+  @mixin text-style($size: 'base', $weight: 'normal', $height: 'base', $spacing: 'normal', $family: 'base') {
+    @include font-size($size);
+    @include font-weight($weight);
+    @include line-height($height);
+    @include letter-spacing($spacing);
+    @include font-family($family);
+  }
+
+  @mixin heading($level) {
+    @if $level == 1 {
+      @include text-style('3xl', 'bold', 'tight', 'tight', 'headings');
+    } @else if $level == 2 {
+      @include text-style('2xl', 'bold', 'tight', 'tight', 'headings');
+    } @else if $level == 3 {
+      @include text-style('xl', 'semibold', 'tight', 'tight', 'headings');
+    } @else if $level == 4 {
+      @include text-style('lg', 'semibold', 'tight', 'tight', 'headings');
+    } @else if $level == 5 {
+      @include text-style('base', 'semibold', 'tight', 'tight', 'headings');
+    } @else if $level == 6 {
+      @include text-style('sm', 'semibold', 'tight', 'tight', 'headings');
+    }
+  }
+
+//   @mixin fluid-type($max-size) {
+//     $scale-factor: 1.333; // Major third scale factor
+//     $min-size: math.div($max-size, $scale-factor); // Scale down the max size by the factor
+//     font-size: clamp(#{$min-size}, 5vw, #{$max-size});
+//   }

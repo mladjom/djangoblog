@@ -1,151 +1,47 @@
-@use 'sass:color';
-//Colors
-//
-// Brand Colors
-$color-brand-primary: #e34449; 
-$color-brand-primary-light: color.scale($color-brand-primary, $lightness: 20%);
-$color-brand-primary-dark: color.scale($color-brand-primary, $lightness: -10%);
+@use 'sass:math';
+@forward 'tokens/colors';
+@forward 'tokens/typography';
+@forward 'tokens/spacing';
 
-// Neutral Colors
-$color-neutral-100: #ffffff;
-$color-neutral-200: #f8f9fa;
-$color-neutral-300: #e9ecef;
-$color-neutral-400: #ced4da;
-$color-neutral-500: #adb5bd;
-$color-neutral-600: #6c757d;
-$color-neutral-700: #495057;
-$color-neutral-800: #343a40;
-$color-neutral-900: #212529;
+// Border Radius
+// $border-radius: (
+//   'md': 4px,
+//   'lg': 8px
+// );
 
-// Semantic Colors
-$color-success: #28a745;
-$color-warning: #ffc107;
-$color-error: #dc3545;
-$color-info: #17a2b8;
-
-// Text Colors
-$color-text-primary: $color-neutral-900;
-$color-text-secondary: $color-neutral-600;
-$color-text-tertiary: $color-neutral-500;
-
-// Link Colors
-$color-link: $color-brand-primary;
-$color-link-hover: $color-brand-primary-dark;
-
-// Background Colors
-$color-background-primary: $color-neutral-100;
-$color-background-secondary: $color-neutral-200;
-$color-background-tertiary: $color-neutral-300;
-
-// Border Colors
-$color-border-light: $color-neutral-300;    // Subtle borders
-$color-border-default: $color-neutral-400;   // Standard borders
-$color-border-dark: $color-neutral-500; 
-
-
-// Shadow Colors & Definitions
-$color-shadow: rgba($color-neutral-900, 0.1);
-$shadow-sm: 0 1px 2px 0 $color-shadow;
-$shadow-md: 0 4px 6px -1px $color-shadow;
-$shadow-lg: 0 10px 15px -3px $color-shadow;
-
-// Disabled State Colors
-$color-disabled-background: $color-neutral-200;
-$color-disabled-text: $color-neutral-500;
-$color-disabled-border: $color-neutral-300;
-
-// Inverse Colors 
-$color-inverse-text: $color-neutral-100;
-$color-inverse-background: $color-brand-primary;
-
-// Accessibility Adjustments
+// // $shadow-sm: 0 1px 2px 0 $color-shadow;
+// // $shadow-md: 0 4px 6px -1px $color-shadow;
+// // $shadow-lg: 0 10px 15px -3px $color-shadow;
 
 
 
-// Typography
-// Font Families, Weights, and Sizes, Line Heights, and Spacing, 
-//
-// Font Families
-$font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
-$font-family-heading: 'Plus Jakarta Sans', $font-family-base;
+// // Breakpoints Map
+// $breakpoints: (
+//   'sm': 36em,  // 576px
+//   'md': 48em,  // 768px
+//   'lg': 62em,  // 992px
+//   'xl': 75em,  // 1200px
+//   '2xl': 87.5em // 1400px
+// );
 
-// Font Sizes (using 16px base)
-$font-size-base: 1rem;
-$font-size-scale: 1.25; // Major third scale
+// // Section spacing
+// $section-spacing-sm: $space-sm;    // 16px
+// $section-spacing-md: $space-lg;   // 64px
+// $section-spacing-lg: $space-xl;   // 96px
 
-// Font sizes using the scale
-$font-size-sm: calc($font-size-base / $font-size-scale);    // 12.8px
-$font-size-lg: calc($font-size-base * $font-size-scale);    // 20px
-$h6: calc($font-size-base * $font-size-scale);              // 20px
-$h5: calc($h6 * $font-size-scale);                          // 25px
-$h4: calc($h5 * $font-size-scale);                          // 31.25px
-$h3: calc($h4 * $font-size-scale);                          // 39.06px
-$h2: calc($h3 * $font-size-scale);                          // 48.83px
-$h1: calc($h2 * $font-size-scale);                          // 61.04px
+// // Component specific spacing
+// $component-padding: $space-md;     // 24px
+// $component-gap: $space-sm;         // 16px
+// $component-margin: $space-lg;      // 32px
 
-// Line Heights
-$line-height-tight: 1.2;
-$line-height-base: 1.5;
-$line-height-loose: 1.7;
+// // Layout spacing
+// $layout-gutter: $space-md;         // 24px
+// $layout-margin: $space-lg;         // 32px
 
-// Font Weights
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
 
-// Letter Spacing
-$letter-spacing-tight: -0.02em;
-$letter-spacing-base: 0;
-$letter-spacing-loose: 0.02em;
 
-// Base spacing unit (based on typography)
-$space-unit: 1rem; // 16px
+// // Navigation variables
+// $nav-height: 5rem;
 
-// Spacing scale
-$space-3xs: calc($space-unit * 0.25);  // 4px
-$space-2xs: calc($space-unit * 0.5);   // 8px
-$space-xs: calc($space-unit * 0.75);   // 12px
-$space-sm: $space-unit;                // 16px
-$space-md: calc($space-unit * 1.5);    // 24px
-$space-lg: calc($space-unit * 2);      // 32px
-$space-xl: calc($space-unit * 3);      // 48px
-$space-2xl: calc($space-unit * 4);     // 64px
-$space-3xl: calc($space-unit * 6);     // 96px
-
-// Common spacing map (for consistent use)
-$spacing: (
-  '3xs': $space-3xs,
-  '2xs': $space-2xs,
-  'xs': $space-xs,
-  'sm': $space-sm,
-  'md': $space-md,
-  'lg': $space-lg,
-  'xl': $space-xl,
-  '2xl': $space-2xl,
-  '3xl': $space-3xl 
-);
-
-// Section spacing
-$section-spacing-sm: $space-xl;    // 48px
-$section-spacing-md: $space-2xl;   // 64px
-$section-spacing-lg: $space-3xl;   // 96px
-
-// Component specific spacing
-$component-padding: $space-md;     // 24px
-$component-gap: $space-sm;         // 16px
-$component-margin: $space-lg;      // 32px
-
-// Layout spacing
-$layout-gutter: $space-md;         // 24px
-$layout-margin: $space-lg;         // 32px
-
-// Breakpoints Map
-$breakpoints: (
-  'sm': 36em,  // 576px
-  'md': 48em,  // 768px
-  'lg': 62em,  // 992px
-  'xl': 75em,  // 1200px
-  '2xl': 87.5em // 1400px
-);
-
+// $transition-speed: 0.3s;
+// $dropdown-z-index: 1000;

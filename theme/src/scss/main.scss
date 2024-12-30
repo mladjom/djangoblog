@@ -5,29 +5,41 @@
 @use 'abstracts/utilities';
 
 // Base
-@use 'base/root';
+//@use 'base/root';
 @use 'base/reset';
 @use 'base/typography';
 @use 'base/generic';
-
-// Components
-@use 'components/buttons';
-@use 'components/cards';
-@use 'components/forms';
-
 // Layout
 @use 'layout/header';
 @use 'layout/footer';
 @use 'layout/grid';
-@use 'layout/navigation';
+@use 'layout/flex';
+//@use 'layout/navigation';
+
+// Components
+// @use 'components/article-grid';
+// @use 'components/article-card';
+// @use 'components/item_card';
+@use 'components/buttons';
+@use 'components/forms';
+
+
  
 // Pages
 @use 'pages/home';
 @use 'pages/about';
+//@use 'pages/category';
 
 // Themes
+// main.scss
+@use 'themes/default';
 @use 'themes/light';
-@use 'themes/dark';  
+@use 'themes/dark';
+@use 'themes/blue-light';
+@use 'themes/blue-dark';
+@use 'themes/red-light';
+@use 'themes/red-dark';
+
 
 // Vendors
 @use 'vendors/third-party';

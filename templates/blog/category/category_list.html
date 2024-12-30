@@ -7,20 +7,19 @@
 {% endblock %}
 
 {% block content %}
-<header class="content-section content-section--lg">
-  <div class="container">
-      <h1>{% trans "Categories" %}</h1>
+<section class="responsive-section-padding">
+  <h1>{% trans "Categories" %}</h1>
       <p class="lead">Testing typography, spacing, grid, and navigation systems</p>
-  </div>
-</header>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  {% for item in category_list %}
-    {% include "blog/components/_item_list.html" with item=item %}
-  {% empty %}
-  <div class="col-12">
-    <p class="text-muted">{% trans "No items available." %}</p>
-  </div>
+</section>
+<section class="responsive-section-padding">
+<div class="grid grid--4-cols grid--gap-lg">
+    {% for item in category_list %}
+        {% include "blog/components/_item_list.html" with item=item %}
+    {% empty %}
+    <div class="grid">
+      <p class="text-muted">{% trans "No items available." %}</p>
+    </div>
   {% endfor %}
 </div>
-
+</section>
 {% endblock %}

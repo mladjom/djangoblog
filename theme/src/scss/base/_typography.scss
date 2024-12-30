@@ -1,156 +1,106 @@
-@use "../abstracts/mixins"as *;
-@use "../abstracts/variables"as *;
-@use "../abstracts/functions" as *;
-@use 'sass:map';
+// base/_typography.scss
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
+@use "sass:map";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
+.flow {
+  @include flow-spacing;
+}
 body {
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
-  font-weight: $font-weight-regular;
-  color: $color-text-primary;
-  background-color: $color-background-primary; 
+  @include text-style();
+  color: var(--color-text-primary);
+  background-color: var(--color-background-primary);
 }
 
-// Headings
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  @include heading-base;
-  color: $color-text-primary;
-}
+@each $level in (1, 2, 3, 4, 5, 6) {
+  h#{$level} {
+    @include heading($level);
+    margin-top: map.get($spacing, "6");
+    margin-bottom: map.get($spacing, "4");
 
-// Headings
-h1, .h1 { @include fluid-type(rem(40), $h1); @include heading-base; }
-h2, .h2 { @include fluid-type(rem(32), $h2); @include heading-base; }
-h3, .h3 { @include fluid-type(rem(28), $h3); @include heading-base; }
-h4, .h4 { @include fluid-type(rem(24), $h4); @include heading-base; }
-h5, .h5 { @include fluid-type(rem(20), $h5); @include heading-base; }
-h6, .h6 { @include fluid-type(rem(16), $h6); @include heading-base; }
-
-// Paragraphs
-p {
-  margin-bottom: 1.5em;
-  max-width: 70ch;
-  
-  &.lead {
-    font-size: $font-size-lg;
-    color:  var(--color-text-secondary);
+    &:first-child {
+      margin-top: 0;
+    }
   }
 }
 
-// Links
+code {
+  @include text-style("sm", "normal", "base", "normal", "mono");
+}
+
+small {
+  @include text-style("xs", "normal", "base");
+  color: var(--color--text-tertiary);
+}
+
+// Paragraph styles
+p {
+  margin-bottom: map.get($spacing, "4");
+  max-width: 70ch;
+  color: var(--color-text-secondary);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Link styles
 a {
-  color: $color-link;
+  color: var(--color-link);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   transition: all 0.2s ease;
-  
+
   &:hover {
-    color: $color-link-hover;
+    color: var(--color-link-hover);
     text-decoration-thickness: 2px;
   }
 }
 
-// Lists
-ul, ol {
-  padding-left: 1.5em;
-  margin-bottom: 1.5em;
-  color: $color-text-primary;
+// Groups
+* + h2 {
+  margin-top: map.get($spacing, '8');
 }
 
-// Blockquotes
+* + h3, 
+* + h4, 
+* + h5, 
+* + h6 {
+  margin-top: map.get($spacing, '6');
+}
+
+// Lists maintain rhythm
+ul, ol {
+  margin-top: map.get($spacing, '4');
+  margin-bottom: map.get($spacing, '4');
+  padding-left: map.get($spacing, '5');
+  
+  li + li {
+    margin-top: map.get($spacing, '2');
+  }
+}
+
+// Maintain rhythm in nested lists
+ul ul, 
+ul ol, 
+ol ul, 
+ol ol {
+  margin-top: map.get($spacing, '2');
+  margin-bottom: 0;
+}
+
+
+// Blockquote styles
 blockquote {
-  border-left: 3px solid $color-brand-primary;
+  border-left: 3px solid var(--color--primary);
   padding-left: 1em;
   margin: 2em 0;
   font-style: italic;
-  color: $color-text-secondary;
+  color: var(--color--text-secondary);
 }
 
-// Meta text elements
-small, .text-small {
-  font-size: $font-size-sm;
-  color: $color-text-tertiary;
-}
-
-// Selection
+// Selection styles
 ::selection {
-  background-color: rgba($color-brand-primary, 0.1);
-  color: $color-brand-primary;
+  background-color: rgba(var(--color--primary, 0.1));
+  color: var(--color--primary);
 }
-
-// Article specific styles
-.article {
-  h1 {
-    color: $color-text-primary;
-    
-    + .article-meta {
-      color: $color-text-tertiary;
-      margin-bottom: 2em;
-    }
-  }
-  
-  // Article links
-  .content a:not([class]) {
-    color: $color-text-primary;
-    text-decoration-color: $color-brand-primary;
-    
-    &:hover {
-      color: $color-brand-primary;
-    }
-  }
-}
-
-// Article typography spacing
-.article {
-  @include stack($space-lg);
-  
-  h1, h2, h3, h4, h5, h6 {
-    margin-top: $space-xl;
-    margin-bottom: $space-xs;
-  }
-  
-  p {
-    margin-bottom: $space-md;
-  }
-  
-  ul, ol {
-    margin: $space-md 0;
-    padding-left: $space-lg;
-    
-    li + li {
-      margin-top: $space-xs;
-    }
-  }
-  
-  blockquote {
-    margin: $space-lg 0;
-    padding: $space-md $space-lg;
-  }
-}
-
-// Content sections
-.content-section {
-  @include section-padding;
-  
-  &--sm {
-    @include section-padding('sm');
-  }
-  
-  &--lg {
-    @include section-padding('lg');
-  }
-}
-
-
-
-
-
-// // Responsive Adjustments
-// @include respond-to(sm) {
-//   h1 { font-size: $h2; margin-bottom: map.get($spacing-scale, sm); }
-//   h2 { font-size: $h3; }
-//   p { font-size: $font-size-sm; margin-bottom: map.get($spacing-scale, sm); }
-// }

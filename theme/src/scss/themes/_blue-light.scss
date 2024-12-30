@@ -1,0 +1,14 @@
+// themes/_blue-light.scss
+@use 'sass:map';
+@use '../abstracts/variables' as vars;
+
+body[data-theme="blue-light"] {
+  --color-primary: #{map.get(vars.$colors-blue, 'primary')};
+  --color-primary-light: #{map.get(vars.$colors-blue, 'light')};
+  --color-primary-dark: #{map.get(vars.$colors-blue, 'dark')};
+  
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-dark);
+  --color-inverse-text: var(--color-neutral-100);
+  --color-inverse-background: var(--color-primary);
+}

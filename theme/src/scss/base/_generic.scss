@@ -1,14 +1,6 @@
-// Utility Classes
-// Alignment Utilities
-.align-center {
-  justify-items: center;
-  align-items: center;
-}
-.align-start {
-  justify-items: start;
-  align-items: start;
-}
-.align-end {
-  justify-items: end;
-  align-items: end;
-}
+// base/_generic.scss
+
+html {
+    font-size: 1rem;
+  }
+  

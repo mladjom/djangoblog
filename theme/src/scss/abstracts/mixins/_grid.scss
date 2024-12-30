@@ -1,0 +1,16 @@
+// abstracts/mixins/_grid.scss
+@use 'sass:map';
+@use '../variables' as *;
+
+@mixin grid-base {
+  display: grid;
+  gap: map.get($spacing, '4');
+}
+
+@mixin grid-columns($cols: 12) {
+  grid-template-columns: repeat($cols, minmax(0, 1fr));
+}
+
+@mixin grid-area($start, $end) {
+  grid-column: #{$start} / #{$end};
+}
