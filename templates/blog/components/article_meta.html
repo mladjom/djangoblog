@@ -1,5 +1,5 @@
 {% load blog_filters %} 
-<div class="section-header__meta article__meta">
+<p class="article__meta">
     <time datetime="{{ article.created_at|date:'Y-m-d' }}" class="article__date">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
         <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
@@ -13,4 +13,4 @@
     </a>
     {% endif %}
     <span class="article__reading-time">{{ article.content|reading_time }}</span>
-  </div>
+</p>
