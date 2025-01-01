@@ -1,45 +1,57 @@
+@use "../abstracts/tokens/spacing" as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+
 .pagination {
-    display: flex;
+  margin: map.get($spacing, '6') 0 map.get($spacing, '8') 0;
+
+  &__list {
+    @include flex-center;
+    gap: map.get($spacing, '2');
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 0.5rem; // Horizontal spacing between items
-  
-    // Page Links
-    .page-item {
-      &.disabled {
-        pointer-events: none;
-        opacity: 0.5; // Disabled state styling
-      }
-  
-      &.active {
-        .page-link {
-          font-weight: bold;
-          background-color: var(--primary-color);
-          color: var(--light-color);
-          border: 1px solid var(--primary-color);
-        }
-      }
-  
-      .page-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem); // Adjusts padding based on viewport
-        font-size: clamp(0.875rem, 2vw, 1rem); // Responsive font size
-        color: var(--text-color);
-        text-decoration: none;
-        border: 1px solid var(--border-color);
-        border-radius: 0.25rem;
-        transition: background-color 0.3s ease, color 0.3s ease;
-  
-        &:hover,
-        &:focus {
-          background-color: var(--primary-color);
-          color: var(--light-color);
-          outline: none;
-        }
+  }
+
+  &__item {
+    &--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &--ellipsis {
+      color: var(--color-text-tertiary);
+    }
+
+    &--current {
+      .pagination__link {
+        background-color: var(--color-link);
+        color: var(--color-neutral-100);
+        border-color: var(--color-link);
       }
     }
   }
-  
+
+  &__link {
+    @include text-style('sm', 'medium');
+    min-width: map.get($spacing, '6');
+    height: map.get($spacing, '6');
+    padding: 0 map.get($spacing, '3');
+    border: 1px solid var(--color-neutral-300);
+    border-radius: map.get($spacing, '1');
+    @include flex-center;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover:not([aria-disabled="true"]) {
+      background-color: var(--color-neutral-200);
+      border-color: var(--color-neutral-400);
+    }
+
+    &--prev,
+    &--next {
+      padding: 0 map.get($spacing, '4');
+    }
+  }
+}

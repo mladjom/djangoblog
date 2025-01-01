@@ -1,6 +1,11 @@
 @use "../abstracts/variables" as vars;
 @use "../abstracts/mixins" as mixin ;
 @use "sass:map";
+@forward 'utilities/alerts';
+@forward 'utilities/buttons';
+@forward 'utilities/spacing';
+@forward 'utilities/typography';
+@forward 'utilities/layout';
 
 // .responsive-section-padding {
 //     @include mixin.responsive-section-padding('lg');

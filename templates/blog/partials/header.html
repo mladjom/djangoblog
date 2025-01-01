@@ -1,0 +1,51 @@
+{% load i18n static %} {% load navigation_tags %}
+    <header class="site-header" role="banner">
+        <div class="site-header__inner">
+          <a href="/" class="site-header__logo" aria-label="{% trans 'Home' %}">
+            {% trans 'Django Blog' %}
+          </a>   
+          <button 
+            class="nav-toggle" 
+            aria-controls="main-nav" 
+            aria-expanded="false" 
+            type="button">
+            <span class="nav-toggle__icon" aria-hidden="true"></span>
+            <span class="nav-toggle__label">{% trans 'Menu' %}</span>
+          </button>    
+          <nav class="main-nav" id="main-nav" role="navigation" aria-label="{% trans 'Main Navigation' %}">
+            <ul class="main-nav__list">
+              <li class="main-nav__item">
+                <a href="{% url 'articles-list' %}" class="main-nav__link {% is_active 'articles-list' %}">
+                  {% trans 'Articles' %}
+                </a>
+              </li>
+              <li class="main-nav__item">
+                <a href="{% url 'categories-list' %}" class="main-nav__link {% is_active 'categories-list' %}">
+                  {% trans 'Categories' %}
+                </a>
+              </li>
+              <li class="main-nav__item">
+                <a href="{% url 'tags-list' %}" class="main-nav__link {% is_active 'tags-list' %}">
+                  {% trans 'Tags' %}
+                </a>
+              </li>
+              <li class="main-nav__item">
+                <a href="#" class="main-nav__link">
+                  {% trans 'Services' %}
+                </a>
+                <ul class="main-nav__submenu" aria-label="{% trans 'Services Submenu' %}">
+                  <li class="main-nav__submenu-item">
+                    <a href="#" class="main-nav__submenu-link">{% trans 'Web Design' %}</a>
+                  </li>
+                  <li class="main-nav__submenu-item">
+                    <a href="#" class="main-nav__submenu-link">{% trans 'SEO' %}</a>
+                  </li>
+                  <li class="main-nav__submenu-item">
+                    <a href="#" class="main-nav__submenu-link">{% trans 'Content Writing' %}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </header>

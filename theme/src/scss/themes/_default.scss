@@ -1,17 +1,19 @@
 // themes/_default.scss
-@use '../abstracts/variables' as vars;
+@use '../abstracts/variables' as *;
+@use 'sass:map';
 
 :root {
   // Neutral Colors
-  @each $key, $value in vars.$colors-neutral {
+  @each $key, $value in $colors-neutral {
     --color-neutral-#{$key}: #{$value};
   }
 
-  // Utility Colors
-  @each $key, $value in vars.$colors-utility {
-    --color-#{$key}: #{$value};
+  // State colors
+  @each $state, $shades in $colors-state {
+    --color-#{$state}: #{map.get($shades, 'base')};
+    --color-#{$state}-light: #{map.get($shades, 'light')};
+    --color-#{$state}-dark: #{map.get($shades, 'dark')};
   }
-
 
   --color-text-primary: var(--color-neutral-900);
   --color-text-secondary: var(--color-neutral-600);
@@ -20,15 +22,23 @@
   --color-background-primary: var(--color-neutral-100);
   --color-background-secondary: var(--color-neutral-200);
   --color-background-tertiary: var(--color-neutral-300);
+    
+  --color-border: var(--color-neutral-300);
+  --color-border-hover: var(--color-neutral-400);
   
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-dark);
+
+  --color-inverse-text: var(--color-neutral-100);
+  --color-inverse-background: var(--color-primary);
+
+   --color-disabled-background: var(--color-neutral-200);
+   --color-disabled-text: var(--color-neutral-500);
+   --color-disabled-border: var(--color-neutral-300);
+
+}
   // --color-border-light: var(--color-neutral-300);
   // --color-border-default: var(--color-neutral-400);
   // --color-border-dark: var(--color-neutral-500);
   
   // --color-shadow: #{rgba(33, 37, 41, 0.1)};
-  
-  // --color-disabled-background: var(--color-neutral-200);
-  // --color-disabled-text: var(--color-neutral-500);
-  // --color-disabled-border: var(--color-neutral-300);
-
-}

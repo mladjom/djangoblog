@@ -1,7 +1,5 @@
-<!-- blog/components/article_card.html -->
 {% load blog_filters %}
 {% load i18n %}
-
 <article class="article-card">
   <div class="article-card__media">
     {% if article.featured_image %}
@@ -20,22 +18,18 @@
       />
     {% endif %}
   </div>
-
   <div class="article-card__content">
     {% if article.category %}
       <a href="{{ article.category.get_absolute_url }}" class="article-card__category">
         {{ article.category.name }}
       </a>
     {% endif %}
-
     <h3 class="article-card__title">
       <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
     </h3>
-
     <p class="article-card__excerpt">
       {{ article.content|truncatechars:100 }}
     </p>
-
     <div class="article-card__meta">
       <time datetime="{{ article.created_at|date:'Y-m-d' }}">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">

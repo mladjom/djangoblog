@@ -1,0 +1,22 @@
+{% load i18n %}
+<footer class="site-footer" role="contentinfo">
+      <nav class="site-footer__nav" aria-label="{% trans 'Footer Navigation' %}">
+        <ul class="site-footer__nav-list">
+          <li class="site-footer__nav-item">
+            <a href="{% url 'about' %}" class="site-footer__nav-link">{% trans 'About' %}</a>
+          </li>
+          <li class="site-footer__nav-item">
+            <a href="{% url 'contact' %}" class="site-footer__nav-link">{% trans 'Contact' %}</a>
+          </li>
+          <li class="site-footer__nav-item">
+            <a href="{% url 'privacy' %}" class="site-footer__nav-link">{% trans 'Privacy Policy' %}</a>
+          </li>
+          <li class="site-footer__nav-item">
+            <a href="{% url 'terms' %}" class="site-footer__nav-link">{% trans 'Terms of Service' %}</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="site-footer__credits">
+        <p>{% trans '© 2024 Django Blog. All rights reserved.' %}</p>
+      </div>
+</footer>

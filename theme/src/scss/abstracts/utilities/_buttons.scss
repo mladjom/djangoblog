@@ -1,0 +1,24 @@
+@use '../mixins/buttons' as *;
+
+.btn {
+    @include button-base;
+    
+    // Sizes
+    &--sm { @include button-size('sm'); }
+    &--md { @include button-size('md'); }
+    &--lg { @include button-size('lg'); }
+    
+    // Variants
+    &--primary { @include button-variant('primary'); }
+    &--secondary { @include button-variant('secondary'); }
+    &--outline { @include button-variant('outline'); }
+    
+    // Icon support
+    &__icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+  
+  

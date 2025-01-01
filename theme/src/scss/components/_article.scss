@@ -1,0 +1,74 @@
+@use '../abstracts/tokens/spacing' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+
+.article {
+    &__meta {
+      //@include flex-row(center, flex-start, map.get($spacing, '4'));
+      @include text-style('sm');
+      color: var(--color-text-tertiary);
+      margin-bottom: map.get($spacing, '4');
+    }
+  
+    &__date,
+    &__reading-time,
+    &__category {
+      @include flex-row(center, center, map.get($spacing, '2'));
+    }
+  
+    &__category {
+      color: var(--color-link);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    &__featured-image {
+      margin: map.get($spacing, '6') 0;
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: map.get($spacing, '2');
+      }
+    }
+  
+    &__content {
+      margin: map.get($spacing, '6') auto;
+    }
+  
+    &__footer {
+      margin-top: map.get($spacing, '8');
+      padding-top: map.get($spacing, '6');
+      border-top: 1px solid var(--color-neutral-300);
+    }
+  
+    &__tags-title {
+      @include text-style('lg', 'semibold');
+      margin-bottom: map.get($spacing, '4');
+    }
+  
+    &__tags-list {
+      @include flex-row(center, flex-start, map.get($spacing, '2'));
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+  
+    &__tag-link {
+      display: inline-block;
+      padding: map.get($spacing, '2') map.get($spacing, '3');
+      background-color: var(--color-background-secondary);
+      border-radius: map.get($spacing, '1');
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      @include text-style('sm');
+  
+      &:hover {
+        background-color: var(--color-background-tertiary);
+        color: var(--color-link);
+      }
+    }
+  }
+  

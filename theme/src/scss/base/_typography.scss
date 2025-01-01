@@ -1,6 +1,6 @@
 // base/_typography.scss
 @use "../abstracts/mixins" as *;
-@use "../abstracts/variables" as *;
+@use "../abstracts/tokens/spacing" as *;
 @use "sass:map";
 
 .flow {
@@ -76,7 +76,7 @@ ul, ol {
   padding-left: map.get($spacing, '5');
   
   li + li {
-    margin-top: map.get($spacing, '2');
+    //margin-top: map.get($spacing, '2');
   }
 }
 

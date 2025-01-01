@@ -1,0 +1,19 @@
+// abstracts/mixins/_alerts.scss
+@use '../tokens/spacing' as *;
+@use '../tokens/alerts' as *;
+@use 'sass:map';
+
+@mixin alert-base {
+    position: relative;
+    padding: map.get($spacing, '4');
+    border-radius: map.get($spacing, '2');
+    border-width: 1px;
+    border-style: solid;
+  }
+  
+  @mixin alert-variant($variant) {
+    $config: map.get($alert-variants, $variant);
+    background-color: map.get($config, 'background');
+    border-color: map.get($config, 'border');
+    color: map.get($config, 'color');
+  }

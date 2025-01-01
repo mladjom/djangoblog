@@ -1,0 +1,63 @@
+@use "../mixins" as *;
+@use "../tokens/spacing" as *;
+@use "../tokens/breakpoints" as *;
+@use 'sass:map';
+
+// Container
+.container {
+  width: min(100% - 3rem, 75rem);
+  margin-inline: auto;
+  //padding-inline: map.get(vars.$spacing, 'md');
+}
+
+.content {
+  max-width: 65ch; // For optimal reading length
+}
+
+// layout/_grid.scss
+.grid {
+  @include grid-base;
+  
+  &--cols-1 { @include grid-columns(1); }
+  &--cols-2 { @include grid-columns(2); }
+  &--cols-3 { @include grid-columns(3); }
+  &--cols-4 { @include grid-columns(4); }
+  &--cols-6 { @include grid-columns(6); }
+  &--cols-12 { @include grid-columns(12); }
+  
+  @each $breakpoint, $width in $breakpoints {
+    @include respond-to($breakpoint) {
+      &--#{$breakpoint}\:cols-1 { @include grid-columns(1); }
+      &--#{$breakpoint}\:cols-2 { @include grid-columns(2); }
+      &--#{$breakpoint}\:cols-3 { @include grid-columns(3); }
+      &--#{$breakpoint}\:cols-4 { @include grid-columns(4); }
+      &--#{$breakpoint}\:cols-6 { @include grid-columns(6); }
+      &--#{$breakpoint}\:cols-12 { @include grid-columns(12); }
+    }
+  }
+}
+
+.flex {
+    @include flex-base;
+    
+    &--col { flex-direction: column; }
+    &--wrap { flex-wrap: wrap; }
+    &--center { @include flex-center; }
+    &--between { @include flex-between; }
+    
+    // Alignment
+    &--items-start { align-items: flex-start; }
+    &--items-center { align-items: center; }
+    &--items-end { align-items: flex-end; }
+    
+    &--justify-start { justify-content: flex-start; }
+    &--justify-center { justify-content: center; }
+    &--justify-end { justify-content: flex-end; }
+    &--justify-between { justify-content: space-between; }
+    
+    // Gap utilities
+    @each $key, $value in $spacing {
+      &--gap-#{$key} { gap: $value; }
+    }
+  }
+  

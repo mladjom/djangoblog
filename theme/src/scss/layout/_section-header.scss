@@ -1,0 +1,52 @@
+@use "../abstracts/tokens/spacing" as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+
+.section-header {
+    padding: map.get($spacing, '8') 0;
+    background-color: var(--color-background-secondary);
+  
+    &__intro {
+      @include flex-column;
+      gap: map.get($spacing, '4');
+      max-width: 65ch;
+      margin: 0 auto;
+      text-align: center;
+    }
+  
+    &__title {
+      margin: 0;
+      @include text-style('3xl', 'bold', 'tight');
+    }
+  
+    &__description {
+      @include text-style('lg', 'normal', 'relaxed');
+      color: var(--color-text-secondary);
+    }
+  
+    &--article {
+      background-color: var(--color-background-primary);
+    }
+
+    .article-meta {
+      @include flex-row(center, flex-start, map.get($spacing, '4'));
+      @include text-style('sm');
+      color: var(--color-text-tertiary);
+      margin-top: map.get($spacing, '4');
+    
+      &__date,
+      &__reading-time {
+        @include flex-row(center, center, map.get($spacing, '2'));
+      }
+    
+      &__category {
+        color: var(--color-link);
+        text-decoration: none;
+    
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  

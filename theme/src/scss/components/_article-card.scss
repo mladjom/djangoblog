@@ -1,79 +1,89 @@
 // components/_article-card.scss
-@use "../abstracts/mixins" as mixin;
-@use "../abstracts/variables" as vars;
+@use "../abstracts/tokens/spacing" as *;
+@use "../abstracts/mixins" as *;
 @use "sass:map";
 
 .article-card {
-    @include mixin.stack(map.get(vars.$spacing, 'md'));
-    height: 100%;
-    border-radius: var(--border-radius-lg);
-    background-color: var(--color-background-primary);
-    transition: transform 0.2s ease-in-out;
-  
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-primary);
+  border-radius: map.get($spacing, "2");
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  border: 1px solid var(--color-neutral-300);
+
+  @include respond-to("md") {
     &:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2spx);
     }
-  
-    &__media {
-      position: relative;
-      aspect-ratio: 16 / 10;
-      border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-      overflow: hidden;
+  }
+
+  &__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, "3");
+    padding: map.get($spacing, "4");
+  }
+
+  &__category {
+    @include text-style("xs", "medium");
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &:hover {
+      text-decoration: underline;
     }
-  
-    &__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  
-    &__content {
-      @include mixin.stack(map.get(vars.$spacing, 'sm'));
-      padding: map.get(vars.$spacing, 'md');
-    }
-  
-    &__category {
-      font-size: var(--font-size-sm);
-      color: var(--color-primary);
+  }
+
+  &__title {
+    margin: 0;
+    @include text-style("lg", "semibold", "tight");
+    a {
+      color: var(--color-text-primary);
       text-decoration: none;
-      font-weight: 500;
-  
+
       &:hover {
-        color: var(--color-primary-dark);
-      }
-    }
-  
-    &__title {
-      font-size: var(--font-size-lg);
-      line-height: 1.4;
-      margin: 0;
-  
-      a {
-        color: var(--color-text-primary);
-        text-decoration: none;
-  
-        &:hover {
-          color: var(--color-primary);
-        }
-      }
-    }
-  
-    &__excerpt {
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-      margin: 0;
-    }
-  
-    &__meta {
-      @include mixin.cluster(map.get(vars.$spacing, 'sm'));
-      color: var(--color-text-tertiary);
-      font-size: var(--font-size-sm);
-      margin-top: auto;
-  
-      time {
-        display: inline-flex;
-        align-items: center;
-        gap: map.get(vars.$spacing, 'xs');
+        color: var(--color-link);
       }
     }
   }
+
+  &__excerpt {
+    margin: 0;
+    @include text-style("sm", "normal", "relaxed");
+    color: var(--color-text-secondary);
+  }
+
+  &__meta {
+    @include flex-between;
+    margin-top: auto;
+    color: var(--color-text-tertiary);
+    @include text-style("xs");
+
+    time,
+    span {
+      @include flex-center;
+      gap: map.get($spacing, "2");
+
+      svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+    }
+  }
+}

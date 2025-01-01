@@ -1,0 +1,28 @@
+@use "../abstracts/tokens/spacing" as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+
+.content-grid {
+  padding: map.get($spacing, '8') 0;
+  @include container;
+  &__list {
+    display: grid;
+    gap: map.get($spacing, '6');
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__empty {
+    @include text-style('lg', 'medium');
+    text-align: center;
+    color: var(--color-text-secondary);
+    grid-column: 1 / -1;
+    padding: map.get($spacing, '8') 0;
+  }
+}

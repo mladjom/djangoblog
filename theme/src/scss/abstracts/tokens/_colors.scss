@@ -1,3 +1,4 @@
+// abstracts/tokens/_colors.scss
 $themes: ("light", "dark", "blue-light", "blue-dark", "red-light", "red-dark");
 
 $colors-neutral: (
@@ -13,10 +14,44 @@ $colors-neutral: (
 );
 
 $colors-blue: (
-  primary: #00bcf1,
   light: #33c9f4,
-  dark: #0099c4
+  base: #00bcf1,
+  dark: #0099c4,
+  darker: #007b9e
 );
+
+// $colors-utility: (
+//   success: #28a745,
+//   warning: #ffc107,
+//   error: #dc3545,
+//   info: #17a2b8
+// );
+
+
+// Base colors with variants
+$colors-state: (
+  'info': (
+    'light': #e3f2fd,
+    'base': #2196f3,
+    'dark': #1976d2
+  ),
+  'success': (
+    'light': #e8f5e9,
+    'base': #4caf50,
+    'dark': #388e3c
+  ),
+  'warning': (
+    'light': #fff3e0,
+    'base': #ff9800,
+    'dark': #f57c00
+  ),
+  'error': (
+    'light': #ffebee,
+    'base': #f44336,
+    'dark': #d32f2f
+  )
+);
+
 
 $colors-red: (
   primary: #e34449,
@@ -24,9 +59,3 @@ $colors-red: (
   dark: #d92d32
 );
 
-$colors-utility: (
-  success: #28a745,
-  warning: #ffc107,
-  error: #dc3545,
-  info: #17a2b8
-);

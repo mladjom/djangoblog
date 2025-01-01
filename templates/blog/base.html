@@ -1,5 +1,4 @@
-{% load i18n static %} {% load static %} {% load navigation_tags %}
-
+{% load i18n static %} {% load static %} 
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
   <head>
@@ -17,88 +16,16 @@
     {% endblock %}"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
     <meta name="robots" content="noindex,follow" />
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
   </head>
   <body data-theme="blue-light">
-    <header class="site-header" role="banner">
-      <div class="container">
-        <div class="site-header__inner">
-          <a href="/" class="site-header__logo" aria-label="{% trans 'Home' %}">
-            {% trans 'Django Blog' %}
-          </a>
-    
-          <button 
-            class="nav-toggle" 
-            aria-controls="main-nav" 
-            aria-expanded="false" 
-            type="button">
-            <span class="nav-toggle__icon" aria-hidden="true"></span>
-            <span class="nav-toggle__label">{% trans 'Menu' %}</span>
-          </button>
-    
-          <nav class="main-nav" id="main-nav" role="navigation" aria-label="{% trans 'Main Navigation' %}">
-            <ul class="main-nav__list">
-              <li class="main-nav__item">
-                <a href="{% url 'articles-list' %}" class="main-nav__link {% is_active 'articles-list' %}">
-                  {% trans 'Articles' %}
-                </a>
-              </li>
-              <li class="main-nav__item">
-                <a href="{% url 'categories-list' %}" class="main-nav__link {% is_active 'categories-list' %}">
-                  {% trans 'Categories' %}
-                </a>
-              </li>
-              <li class="main-nav__item">
-                <a href="{% url 'tags-list' %}" class="main-nav__link {% is_active 'tags-list' %}">
-                  {% trans 'Tags' %}
-                </a>
-              </li>
-              <li class="main-nav__item">
-                <a href="#" class="main-nav__link">
-                  {% trans 'Services' %}
-                </a>
-                <ul class="main-nav__submenu" aria-label="{% trans 'Services Submenu' %}">
-                  <li class="main-nav__submenu-item">
-                    <a href="#" class="main-nav__submenu-link">{% trans 'Web Design' %}</a>
-                  </li>
-                  <li class="main-nav__submenu-item">
-                    <a href="#" class="main-nav__submenu-link">{% trans 'SEO' %}</a>
-                  </li>
-                  <li class="main-nav__submenu-item">
-                    <a href="#" class="main-nav__submenu-link">{% trans 'Content Writing' %}</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="main-nav__item">
-                <a href="{% url 'about' %}" class="main-nav__link {% is_active 'about' %}">{% trans 'About' %}</a>
-              </li>
-              <li class="main-nav__item">
-                <a href="{% url 'contact' %}" class="main-nav__link {% is_active 'contact' %}">{% trans 'Contact' %}</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
-    
-
-
-    <!-- Main Content -->
+    {% include "blog/partials/header.html" %}
     <main>{% block content %} {% endblock %}</main>
-
-    <!-- Footer -->
-    <footer class="bg-light py-3 mt-5 border-top">
-      <div class="container text-center">
-        <p class="mb-0">
-          &copy; {% now 'Y' %} {% trans 'Django Blog' %}. {% trans 'All rights reserved.' %}
-        </p>
-      </div>
-    </footer>
-        <!-- Bootstrap Bundle with Popper.js -->
-        <script type="module" src="{% static 'js/main.js' %}"></script>
+    {% include "blog/partials/footer.html" %}
+    <script type="module" src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

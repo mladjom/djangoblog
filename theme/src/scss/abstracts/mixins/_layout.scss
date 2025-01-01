@@ -1,0 +1,66 @@
+// abstracts/mixins/_layout.scss
+@use 'sass:map';
+@use "../tokens/breakpoints" as *;
+@use '../tokens/spacing' as *;
+
+// Mixin for media queries
+@mixin respond-to($size) {
+    @if map.has-key($breakpoints, $size) {
+      @media screen and (min-width: map.get($breakpoints, $size)) {
+       @content;
+      }
+    } @else {
+      @warn "Unknown breakpoint: #{$size}";
+    }
+  }
+
+  @mixin container {
+    width: min(100% - 2rem, 75rem);
+    margin-inline: auto;
+  }
+  
+
+@mixin grid-base {
+  display: grid;
+  gap: map.get($spacing, '4');
+}
+
+@mixin grid-columns($cols: 12) {
+  grid-template-columns: repeat($cols, minmax(0, 1fr));
+}
+
+@mixin grid-area($start, $end) {
+  grid-column: #{$start} / #{$end};
+}
+
+@mixin flex-base {
+  display: flex;
+}
+
+@mixin flex-column {
+  @include flex-base;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  @include flex-base;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  @include flex-base;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-row($align: center, $justify: flex-start, $gap: null) {
+  display: flex;
+  flex-direction: row;
+  align-items: $align;
+  justify-content: $justify;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}

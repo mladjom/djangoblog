@@ -5,22 +5,21 @@
 @use 'abstracts/utilities';
 
 // Base
-//@use 'base/root';
 @use 'base/reset';
 @use 'base/typography';
 @use 'base/generic';
+
 // Layout
 @use 'layout/header';
 @use 'layout/footer';
-@use 'layout/grid';
-@use 'layout/flex';
-//@use 'layout/navigation';
+@use 'layout/section-header';
 
 // Components
-// @use 'components/article-grid';
-// @use 'components/article-card';
+@use 'components/content-grid';
+@use 'components/article';
+@use 'components/article-card';
+@use 'components/pagination';
 // @use 'components/item_card';
-@use 'components/buttons';
 @use 'components/forms';
 
 
@@ -28,10 +27,8 @@
 // Pages
 @use 'pages/home';
 @use 'pages/about';
-//@use 'pages/category';
 
 // Themes
-// main.scss
 @use 'themes/default';
 @use 'themes/light';
 @use 'themes/dark';
@@ -43,11 +40,4 @@
 
 // Vendors
 @use 'vendors/third-party';
-
-footer {
-
-    p {
-        margin: space-lg;
-    }
-}
   

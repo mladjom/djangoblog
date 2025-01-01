@@ -5,50 +5,52 @@
 {% block meta_description %}{% trans "Read the latest articles on our blog." %}{% endblock %}
 
 {% block content %}
-
-        <!-- Hero Section -->
-        <section class="section-padding  bg-inverse">
-          <div class="container">
-              <div class="layout--equal">
-                  <div>
-                      <h1 class="text-inverse">{% trans 'Discover Our Latest' %} {% trans "Articles" %}</h1>
-                      <p class="lead text-inverse">Exploring technology, design, and innovation through carefully curated content.</p>
-                  </div>
-              </div>
-          </div>
-      </section>
-
-      <div class="container">
-        <!-- Fixed Stack Example -->
-        <section class="fixed-stack content-section-responsive">
-            <h2>Fixed Stack Example</h2>
-            <div class="card">Card 1</div>
-            <div class="card">Card 2</div>
-            <div class="card">Card 3</div>
-        </section>
-
-        <!-- Responsive Stack Example -->
-        <section class="responsive-stack content-section-responsive">
-            <h2>Responsive Stack Example</h2>
-            <div class="card">Card 1</div>
-            <div class="card">Card 2</div>
-            <div class="card">Card 3</div>
-        </section>
+  {% include "blog/partials/section_header.html" with section_context="page" title=_('Discover Our Latest Articles') description=_('Exploring technology, design, and innovation through carefully curated content.') %}
+  <section class="content-grid">
+    <div class="container">
+      <div class="content-grid__list">
+        {% for article in article_list %}
+          {% include "blog/components/article_card.html" with article=article %}
+        {% empty %}
+          <p class="content-grid__empty">{% trans "No articles found." %}</p>
+        {% endfor %}
       </div>
-      <section class="content-section content-section--lg bg-secondary">
-        <div class="container">
-            <div class="grid grid--3-cols responsive-stack" style="margin-top: 2rem;">
-              {% for article in article_list %}
-                {% include "blog/components/article_card.html" with article=article %}
-              {% empty %}
-                <div class="col-12">
-                  <p class="text-muted">{% trans "No articles found." %}</p>
-                </div>
-              {% endfor %}
-            </div>
-        </div>
-    </section>
-
-  <!-- Pagination -->
+    </div>
+  </section>
   {% include "blog/components/pagination.html" %}
 {% endblock %}
+
+
+<section class="article-list">
+  <h1 class="article-list__title"></h1>
+  <p class="article-list__description"></p>
+  
+  <div class="content-list__grid">
+    <article class="article-list__item">
+      <picture class="article-list__item-image">
+        <source srcset="image-small.jpg" media="(max-width: 600px)">
+        <source srcset="image-medium.jpg" media="(max-width: 1200px)">
+        <img src="image-large.jpg" alt="Description of the article image">
+      </picture>
+      <span class="article-list__item-category"></span>
+      <h2 class="article-list__item-title"></h2>
+      <p class="article-list__item-excerpt"></p>
+      <time class="article-list__item-date" datetime=""></time>
+      <span class="article-list__item-reading-time"></span>
+    </article>
+    
+    <article class="article-list__item">
+      <picture class="article-list__item-image">
+        <source srcset="image-small.jpg" media="(max-width: 600px)">
+        <source srcset="image-medium.jpg" media="(max-width: 1200px)">
+        <img src="image-large.jpg" alt="Description of the article image">
+      </picture>
+      <span class="article-list__item-category"></span>
+      <h2 class="article-list__item-title"></h2>
+      <p class="article-list__item-excerpt"></p>
+      <time class="article-list__item-date" datetime=""></time>
+      <span class="article-list__item-reading-time"></span>
+    </article>
+  </div>
+</section>
+

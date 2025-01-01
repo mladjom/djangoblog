@@ -1,0 +1,39 @@
+// abstracts/tokens/_buttons.scss
+$button-sizes: (
+  'sm': (
+    'padding': '2' '3',
+    'font': 'sm'
+  ),
+  'md': (
+    'padding': '3' '4',
+    'font': 'base'
+  ),
+  'lg': (
+    'padding': '4' '6',
+    'font': 'lg'
+  )
+);
+
+$button-variants: (
+  'primary': (
+    'background': var(--color-primary),
+    'color': var(--color-neutral-100),
+    'hover': var(--color-primary-dark),
+    'active': var(--color-primary-darker),
+    'disabled': var(--color-primary-light)
+  ),
+  'secondary': (
+    'background': var(--color-neutral-200),
+    'color': var(--color-text-primary),
+    'hover': var(--color-neutral-300),
+    'active': var(--color-neutral-400),
+    'disabled': var(--color-neutral-100)
+  ),
+  'outline': (
+    'background': transparent,
+    'color': var(--color-text-primary),
+    'border': var(--color-neutral-300),
+    'hover-border': var(--color-neutral-400),
+    'hover-bg': var(--color-neutral-100)
+  )
+);

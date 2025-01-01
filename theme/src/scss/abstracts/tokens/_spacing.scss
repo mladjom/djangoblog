@@ -18,45 +18,41 @@ $spacing: (
   '9': $space-unit * 32  // 128px
 );
 
+
+
 // Container widths
-$container: (
-  'sm': 640px,
-  'md': 768px,
-  'lg': 1024px,
-  'xl': 1280px
-);
+// $container: (
+//   'sm': 640px,
+//   'md': 768px,
+//   'lg': 1024px,
+//   'xl': 1280px
+// );
 
 // Breakpoints for responsive design
-$breakpoints: (
-  'sm': 576px,
-  'md': 768px,
-  'lg': 992px,
-  'xl': 1200px,
-  '2xl': 1400px
-);
+
 
 // Section spacing
-$section-spacing: (
-  'sm': map.get($spacing, '6'),
-  'md': map.get($spacing, '7'),
-  'lg': map.get($spacing, '8')
-);
+// $section-spacing: (
+//   'sm': map.get($spacing, '6'),
+//   'md': map.get($spacing, '7'),
+//   'lg': map.get($spacing, '8')
+// );
 
 // Margin and padding utilities
-@each $key, $value in $spacing {
-  .m-#{$key} { margin: $value; }
-  .mx-#{$key} { margin-left: $value; margin-right: $value; }
-  .my-#{$key} { margin-top: $value; margin-bottom: $value; }
-  .mt-#{$key} { margin-top: $value; }
-  .mb-#{$key} { margin-bottom: $value; }
-  .ml-#{$key} { margin-left: $value; }
-  .mr-#{$key} { margin-right: $value; }
+// @each $key, $value in $spacing {
+//   .m-#{$key} { margin: $value; }
+//   .mx-#{$key} { margin-left: $value; margin-right: $value; }
+//   .my-#{$key} { margin-top: $value; margin-bottom: $value; }
+//   .mt-#{$key} { margin-top: $value; }
+//   .mb-#{$key} { margin-bottom: $value; }
+//   .ml-#{$key} { margin-left: $value; }
+//   .mr-#{$key} { margin-right: $value; }
   
-  .p-#{$key} { padding: $value; }
-  .px-#{$key} { padding-left: $value; padding-right: $value; }
-  .py-#{$key} { padding-top: $value; padding-bottom: $value; }
-  .pt-#{$key} { padding-top: $value; }
-  .pb-#{$key} { padding-bottom: $value; }
-  .pl-#{$key} { padding-left: $value; }
-  .pr-#{$key} { padding-right: $value; }
-}
+//   .p-#{$key} { padding: $value; }
+//   .px-#{$key} { padding-left: $value; padding-right: $value; }
+//   .py-#{$key} { padding-top: $value; padding-bottom: $value; }
+//   .pt-#{$key} { padding-top: $value; }
+//   .pb-#{$key} { padding-bottom: $value; }
+//   .pl-#{$key} { padding-left: $value; }
+//   .pr-#{$key} { padding-right: $value; }
+// }

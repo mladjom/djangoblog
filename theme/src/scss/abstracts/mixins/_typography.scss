@@ -1,6 +1,6 @@
 // abstracts/mixins/_typography.scss
 @use 'sass:map';
-@use '../variables' as *;
+@use '../tokens/typography' as *;
 
 @mixin font-family($family) {
     font-family: map.get($font-families, $family);
@@ -23,11 +23,11 @@
   }
 
   @mixin text-style($size: 'base', $weight: 'normal', $height: 'base', $spacing: 'normal', $family: 'base') {
+    @include font-family($family);
     @include font-size($size);
     @include font-weight($weight);
     @include line-height($height);
     @include letter-spacing($spacing);
-    @include font-family($family);
   }
 
   @mixin heading($level) {

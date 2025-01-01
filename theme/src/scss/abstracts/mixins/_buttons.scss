@@ -1,0 +1,69 @@
+// abstracts/mixins/_buttons.scss
+
+@use "../tokens/buttons" as *;
+@use "../tokens/spacing" as *;
+@use "../tokens/typography" as *;
+@use "typography" as *;
+@use "sass:map";
+@use "sass:list";
+
+// Button Mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: map.get($spacing, "2");
+  border-radius: map.get($spacing, "1");
+  font-weight: map.get($font-weights, "medium");
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+@mixin button-size($size) {
+  $config: map.get($button-sizes, $size);
+  $padding-y: map.get($spacing, list.nth(map.get($config, 'padding'), 1));
+  $padding-x: map.get($spacing, list.nth(map.get($config, 'padding'), 2));
+  padding: $padding-y $padding-x;
+  @include text-style(map.get($config, "font"));
+}
+
+@mixin button-variant($variant) {
+  $config: map.get($button-variants, $variant);
+  background-color: map.get($config, "background");
+  color: map.get($config, "color");
+
+  @if map.has-key($config, "border") {
+    border: 1px solid map.get($config, "border");
+  }
+
+  &:hover:not(:disabled) {
+    @if map.has-key($config, "hover-bg") {
+      background-color: map.get($config, "hover-bg");
+    }
+    @if map.has-key($config, "hover-border") {
+      border-color: map.get($config, "hover-border");
+    }
+    @if map.has-key($config, "hover") {
+      background-color: map.get($config, "hover");
+    }
+  }
+
+  &:active:not(:disabled) {
+    @if map.has-key($config, "active") {
+      background-color: map.get($config, "active");
+    }
+  }
+}

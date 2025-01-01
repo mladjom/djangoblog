@@ -1,5 +1,5 @@
 // components/_header.scss
-@use "../abstracts/variables" as *;
+@use "../abstracts/tokens/spacing" as *;
 @use "../abstracts/mixins" as *;
 @use "sass:map";
 
@@ -12,6 +12,7 @@
 
   &__inner {
     @include flex-between;
+    @include container;
     padding: map.get($spacing, "4") 0;
   }
 
