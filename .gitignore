@@ -33,4 +33,4 @@ todo
 # Django Tailwind
 theme/static/css/dist/
 index.html
-templates/admin
+templates/admin/
