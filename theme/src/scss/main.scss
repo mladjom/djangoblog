@@ -12,12 +12,12 @@
 // Layout
 @use 'layout/header';
 @use 'layout/footer';
-@use 'layout/section-header';
 
 // Components
-@use 'components/content-grid';
+@use 'components/page-header';
+@use 'components/articles-list';
 @use 'components/article';
-@use 'components/article-card';
+@use 'components/article-item';
 @use 'components/pagination';
 // @use 'components/item_card';
 @use 'components/forms';

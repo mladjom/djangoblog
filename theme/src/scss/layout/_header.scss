@@ -137,7 +137,7 @@
     &:hover,
     &.active,
     &[aria-expanded="true"] {
-      color: var(--color-primary);
+      color: var(--color-primary-base);
     }
 
     // Links with dropdowns
@@ -200,7 +200,7 @@
     &:hover,
     &:focus {
       background-color: var(--color-background-hover);
-      color: var(--color-primary);
+      color: var(--color-primary-base);
     }
   }
 }

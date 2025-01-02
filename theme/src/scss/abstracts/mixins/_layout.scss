@@ -14,11 +14,17 @@
     }
   }
 
-  @mixin container {
-    width: min(100% - 2rem, 75rem);
-    margin-inline: auto;
-  }
+@mixin container {
+  width: min(100% - 2rem, 75rem);
+  margin-inline: auto;
+}
   
+@mixin content {
+  max-width: 65ch;
+  margin-inline: auto;
+  padding-block: map.get($spacing, '8');
+  padding-inline: map.get($spacing, '4');
+}
 
 @mixin grid-base {
   display: grid;

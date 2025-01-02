@@ -92,7 +92,7 @@ ol ol {
 
 // Blockquote styles
 blockquote {
-  border-left: 3px solid var(--color--primary);
+  border-left: 3px solid var(--color-primary);
   padding-left: 1em;
   margin: 2em 0;
   font-style: italic;
@@ -101,6 +101,6 @@ blockquote {
 
 // Selection styles
 ::selection {
-  background-color: rgba(var(--color--primary, 0.1));
-  color: var(--color--primary);
+  background-color: rgba(var(--color-primary, 0.1));
+  color: var(--color-primary);
 }

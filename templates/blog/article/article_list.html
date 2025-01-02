@@ -5,52 +5,18 @@
 {% block meta_description %}{% trans "Read the latest articles on our blog." %}{% endblock %}
 
 {% block content %}
-  {% include "blog/partials/section_header.html" with section_context="page" title=_('Discover Our Latest Articles') description=_('Exploring technology, design, and innovation through carefully curated content.') %}
-  <section class="content-grid">
-    <div class="container">
-      <div class="content-grid__list">
-        {% for article in article_list %}
-          {% include "blog/components/article_card.html" with article=article %}
-        {% empty %}
-          <p class="content-grid__empty">{% trans "No articles found." %}</p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% include "blog/components/pagination.html" %}
-{% endblock %}
 
-
-<section class="article-list">
-  <h1 class="article-list__title"></h1>
-  <p class="article-list__description"></p>
   
-  <div class="content-list__grid">
-    <article class="article-list__item">
-      <picture class="article-list__item-image">
-        <source srcset="image-small.jpg" media="(max-width: 600px)">
-        <source srcset="image-medium.jpg" media="(max-width: 1200px)">
-        <img src="image-large.jpg" alt="Description of the article image">
-      </picture>
-      <span class="article-list__item-category"></span>
-      <h2 class="article-list__item-title"></h2>
-      <p class="article-list__item-excerpt"></p>
-      <time class="article-list__item-date" datetime=""></time>
-      <span class="article-list__item-reading-time"></span>
-    </article>
-    
-    <article class="article-list__item">
-      <picture class="article-list__item-image">
-        <source srcset="image-small.jpg" media="(max-width: 600px)">
-        <source srcset="image-medium.jpg" media="(max-width: 1200px)">
-        <img src="image-large.jpg" alt="Description of the article image">
-      </picture>
-      <span class="article-list__item-category"></span>
-      <h2 class="article-list__item-title"></h2>
-      <p class="article-list__item-excerpt"></p>
-      <time class="article-list__item-date" datetime=""></time>
-      <span class="article-list__item-reading-time"></span>
-    </article>
+  {% include "blog/components/page_header.html" with title=_('Discover Our Latest Articles') description=_('Exploring technology, design, and innovation through carefully curated content.') %}
+  <div class="articles-list">
+    {% for article in article_list %}
+    {% include "blog/components/article_item.html" with article=article %}
+  {% empty %}
+    <p class="articles-list__empty">{% trans "No articles found." %}</p>
+  {% endfor %}
   </div>
-</section>
 
+
+  {% include "blog/components/pagination.html" %}
+
+{% endblock %}

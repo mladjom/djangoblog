@@ -3,8 +3,11 @@
 @use "../abstracts/tokens/colors" as *;
 
 body[data-theme="blue-light"] {
-  --color-primary-light: #{map.get($colors-blue, "light")};
-  --color-primary: #{map.get($colors-blue, "base")};
-  --color-primary-dark: #{map.get($colors-blue, "dark")};
-  --color-primary-darker: #{map.get($colors-blue, "darker")};
+  @each $key, $value in $colors-blue {
+    --color-primary-#{$key}: #{$value};
+  }
+  --color-link: var(--color-primary-light);
+  --color-link-hover: var(--color-primary-base);
+  --color-inverse-text: var(--color-neutral-900);
+  --color-inverse-background: var(--color-primary-light);
 }

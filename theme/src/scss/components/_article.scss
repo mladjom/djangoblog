@@ -3,60 +3,90 @@
 @use 'sass:map';
 
 .article {
-    &__meta {
-      //@include flex-row(center, flex-start, map.get($spacing, '4'));
+  &__header {
+    padding: map.get($spacing, '8') 0;
+    background-color: var(--color-background-secondary);
+
+    &-content {
+      gap: map.get($spacing, '4');
+      max-width: 65ch;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    &-title {
+      @include text-style('xl', 'bold');
+      margin-bottom: map.get($spacing, '4');
+    }
+
+    &-meta {
+      @include flex-row(center, flex-start, map.get($spacing, '4'));
       @include text-style('sm');
       color: var(--color-text-tertiary);
       margin-bottom: map.get($spacing, '4');
-    }
-  
-    &__date,
-    &__reading-time,
-    &__category {
-      @include flex-row(center, center, map.get($spacing, '2'));
-    }
-  
-    &__category {
-      color: var(--color-link);
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
+
+      & > * {
+        @include flex-row(center, center, map.get($spacing, '2'));
       }
     }
-  
-    &__featured-image {
-      margin: map.get($spacing, '6') 0;
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: map.get($spacing, '2');
-      }
+  }
+
+  &__date,
+  &__reading-time {
+    color: var(--color-text-secondary);
+  }
+
+  &__category {
+    color: var(--color-link);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
-  
-    &__content {
-      margin: map.get($spacing, '6') auto;
+  }
+
+  &__featured-image {
+    @include container;
+    //display: block;
+    //margin: map.get($spacing, '6') 0;
+
+    & > img {
+      width: 100%;
+      height: auto;
+      border-radius: map.get($spacing, '2');
     }
-  
-    &__footer {
-      margin-top: map.get($spacing, '8');
-      padding-top: map.get($spacing, '6');
-      border-top: 1px solid var(--color-neutral-300);
-    }
-  
-    &__tags-title {
+  }
+
+  &__content {
+    margin: map.get($spacing, '6') auto;
+    @include content;
+  }
+
+  &__tags {
+    @include container;
+
+    margin-top: map.get($spacing, '8');
+    padding-top: map.get($spacing, '6');
+    border-top: 1px solid var(--color-neutral-300);
+
+    &-title {
       @include text-style('lg', 'semibold');
       margin-bottom: map.get($spacing, '4');
     }
-  
-    &__tags-list {
+
+    &-list {
       @include flex-row(center, flex-start, map.get($spacing, '2'));
       list-style: none;
       padding: 0;
       margin: 0;
       flex-wrap: wrap;
+
+      &-item {
+        margin-right: map.get($spacing, '2');
+      }
     }
-  
-    &__tag-link {
+
+    &-link {
       display: inline-block;
       padding: map.get($spacing, '2') map.get($spacing, '3');
       background-color: var(--color-background-secondary);
@@ -64,11 +94,11 @@
       color: var(--color-text-secondary);
       text-decoration: none;
       @include text-style('sm');
-  
+
       &:hover {
         background-color: var(--color-background-tertiary);
         color: var(--color-link);
       }
     }
   }
-  
+}

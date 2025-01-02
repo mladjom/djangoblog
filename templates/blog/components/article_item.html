@@ -1,0 +1,37 @@
+{% load blog_filters %}
+{% load i18n %}
+<article class="articles-list__item">
+  {% if article.featured_image %}
+  <div class="articles-list__media">
+    <picture class="articles-list__featured-image">
+      <source srcset="{{ article.featured_image.url }}" media="(min-width: 800px)">
+      <source srcset="{{ article.featured_image.mobile_url }}" media="(max-width: 799px)">
+      <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" loading="lazy">
+    </picture>
+    </div>
+    {% else %}
+    <div class="articles-list__media">
+    <img 
+      src="https://placehold.co/400x250"
+      class="articles-list__featured-image
+      alt="{% trans 'Article placeholder image' %}"
+      loading="lazy"/>
+      </div>
+  {% endif %}
+  <div class="articles-list__content">
+  <a href="{{ article.category.get_absolute_url }}" class="articles-list__category">
+        {{ article.category.name }}
+  </a> 
+  <h2 class="articles-list__title">
+    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+  </h2>
+  <p class="articles-list__excerpt">{{ article.content|truncatechars:100 }}</p>  
+  
+  <div class="articles-list__meta">
+    {% if article.category %}
+    {% endif %}
+    <span class="articles-list__date">{{ article.created_at|date:'F j, Y' }}</span>
+    <span class="articles-list__reading-time">{{ article.content|reading_time }}</span>
+  </div>
+  </div>
+</article>

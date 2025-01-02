@@ -2,10 +2,9 @@
 @use '../abstracts/mixins' as *;
 @use 'sass:map';
 
-.content-grid {
+.articles-list {
   padding: map.get($spacing, '8') 0;
   @include container;
-  &__list {
     display: grid;
     gap: map.get($spacing, '6');
 
@@ -16,7 +15,6 @@
     @include respond-to('lg') {
       grid-template-columns: repeat(3, 1fr);
     }
-  }
 
   &__empty {
     @include text-style('lg', 'medium');

@@ -2,68 +2,47 @@
 {% load blog_filters %} {% load i18n %}
 {% block title %}{{ article.title }} {% endblock %}
 {% block meta_description %}{{ article.meta_description|default:_("Discover insights on ")|add:article.title }}{% endblock %}
+
 {% block content %}
-
-<article>
-  <header class="article-header">
-    <h1>{{ article.title }}</h1>
-    <p class="article-meta">
-      <time datetime="{{ article.created_at|date:'Y-m-d' }}">{{ article.created_at|date:'F j, Y' }}</time> |
-      {% if article.category %}
-        <span class="article-category">{{ article.category.name }}</span> |
-      {% endif %}
-      <span class="article-reading-time">{{ article.content|reading_time }}</span>
-    </p>
-  </header>
-
-  <section class="article-content">
-    {% if article.featured_image %}
-      <picture class="article-content__image">
-        <source srcset="{{ article.featured_image.url }}" media="(max-width: 600px)">
-        <source srcset="{{ article.featured_image.url }}" media="(max-width: 1200px)">
-        <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
-      </picture>
-    {% endif %}
-    <p>{{ article.content|safe }}</p>
-  </section>
-
-  <footer class="article-footer">
-    {% if article.tags.exists %}
-      <p>Tags:</p>
-      <ul class="article-footer__tags">
-        {% for tag in article.tags.all %}
-          <li class="article-footer__tag"><a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a></li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  </footer>
-</article>
-
-{% endblock %}
-
-<article>
-  <header class="article-header">
-    <h1></h1>
-    <p class="article-meta">
-      <time datetime="2025-01-01">January 1, 2025</time> |
-      <span class="article-category">Category Name</span> |
-      <span class="article-reading-time">5 min read</span>
-    </p>
-  </header>
-  <section class="article-content">
-    <picture class="article-content__image">
-      <source srcset="image-small.jpg" media="(max-width: 600px)">
-      <source srcset="image-medium.jpg" media="(max-width: 1200px)">
-      <img src="image-large.jpg" alt="Description of the image">
+<article class="article">
+  <div class="article__header">
+    <div class="article__header-content">
+      <h1 class="article__title">{{ article.title }}</h1>
+      <div class="article__meta">
+        <span class="article__date">{{ article.created_at|date:'F j, Y' }}</span>
+        {% if article.category %}
+          <a href="{{ category.get_absolute_url }}" class="article__category">{{ article.category.name }}</a>
+        {% endif %}
+        <span class="article__reading-time">{{ article.content|reading_time }}</span>
+      </div>
+    </div>
+  </div>
+  {% if article.featured_image %}
+  <div >
+    <picture class="article__featured-image">
+      <source srcset="{{ article.featured_image.url }}" media="(min-width: 800px)">
+      <source srcset="{{ article.featured_image.mobile_url }}" media="(max-width: 799px)">
+      <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
     </picture>
-    <p></p>
-  </section>
-  <footer class="article-footer">
-    <p>Tags:</p>
-    <ul class="article-footer__tags">
-      <li class="article-footer__tag"><a href="#">Tag 1</a></li>
-      <li class="article-footer__tag"><a href="#">Tag 2</a></li>
-      <li class="article-footer__tag"><a href="#">Tag 3</a></li>
+    </div>
+  {% endif %}
+
+  <div class="article__content">
+    {{ article.content|safe }}
+  </div>
+
+  {% if article.tags.exists %}
+  <div class="article__tags">
+    <h3 class="article__tags-title">{% trans "Tags:" %}</h3>
+    <ul class="article__tags-list">
+      {% for tag in article.tags.all %}
+        <li class="article__tags-item">
+          <a href="{{ tag.get_absolute_url }}" class="article__tag-link">{{ tag.name }}</a>
+        </li>
+      {% endfor %}
     </ul>
-  </footer>
+  </div>
+{% endif %}
 </article>
+{% include "blog/components/pagination.html" %}
+{% endblock %}
