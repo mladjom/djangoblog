@@ -120,27 +120,7 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
         return format_html(''.join(html))
     image_variants_preview.short_description = _('Image Variants') 
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom.css',)
-        }
-        js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/jquery.init.js', 'admin/js/actions.js')
 
-        js = (
-            'admin/js/jquery.init.js',
-            'admin/js/core.js',
-        )
-
-
-        def get_form(self, request, obj=None, **kwargs):
-            form = super().get_form(request, obj, **kwargs)
-            if 'featured_image' in form.base_fields:
-                form.base_fields['featured_image'].widget.attrs.update({
-                'accept': 'image/*',
-                'class': 'clearablefileinput',
-                'data-direct-upload': 'true',
-                })
-            return form
 
 
     # actions = ['generate_article_content']
