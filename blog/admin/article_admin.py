@@ -4,7 +4,6 @@ from django.utils.html import format_html
 from blog.models.article_model import Article
 from blog.admin.tag_admin import TagInline
 from blog.utils.openai_utils import generate_article
-from blog.utils.image_utils import calculate_height
 from .mixins_admin import DeleteWithImageMixin
 
 @admin.register(Article)
@@ -95,49 +94,53 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
             return _('Processing image variants...')
 
         html = ['<div style="margin-top: 20px;"><h3>Image Variants</h3>']
+        
+        # Create a table for variants
         html.append('<table style="border-collapse: collapse; width: 100%; max-width: 800px;">')
         html.append('<tr style="background: #f5f5f5;">'
                    '<th style="padding: 8px; border: 1px solid #ddd;">Size</th>'
                    '<th style="padding: 8px; border: 1px solid #ddd;">Preview</th>'
-                   '<th style="padding: 8px; border: 1px solid #ddd;">URL</th></tr>')
+                   '<th style="padding: 8px; border: 1px solid #ddd;">Path</th></tr>')
 
+        # Sort variants by width
         for width in sorted(variants.keys()):
             variant = variants[width]
-            height = calculate_height(width)
             html.append(
                 f'<tr style="border: 1px solid #ddd;">'
-                f'<td style="padding: 8px; border: 1px solid #ddd;">{width}x{height}</td>'
+                f'<td style="padding: 8px; border: 1px solid #ddd;">{width}px</td>'
                 f'<td style="padding: 8px; border: 1px solid #ddd;">'
                 f'<img src="{variant["url"]}" style="max-width: 150px; height: auto;" />'
                 f'</td>'
-                f'<td style="padding: 8px; border: 1px solid #ddd; font-size: 12px; word-break: break-all;">'
+                f'<td style="padding: 8px; border: 1px solid #ddd; font-size: 12px;">'
                 f'{variant["url"]}</td></tr>'
             )
 
         html.append('</table></div>')
+        
         return format_html(''.join(html))
     image_variants_preview.short_description = _('Image Variants') 
 
-    #class Media:
-        # css = {
-        #     'all': ('admin/css/custom.css',)
-        # }
-        #js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/jquery.init.js', 'admin/js/actions.js')
+    class Media:
+        css = {
+            'all': ('admin/css/custom.css',)
+        }
+        js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/jquery.init.js', 'admin/js/actions.js')
 
-        # js = (
-        #     'admin/js/jquery.init.js',
-        #     'admin/js/core.js',
-        # )
+        js = (
+            'admin/js/jquery.init.js',
+            'admin/js/core.js',
+        )
 
 
-        # def get_form(self, request, obj=None, **kwargs):
-        #     form = super().get_form(request, obj, **kwargs)
-        #     if 'featured_image' in form.base_fields:
-        #         form.base_fields['featured_image'].widget.attrs.update({
-        #             'accept': 'image/*',
-        #             'class': 'vFileField',
-        #         })
-        #     return form
+        def get_form(self, request, obj=None, **kwargs):
+            form = super().get_form(request, obj, **kwargs)
+            if 'featured_image' in form.base_fields:
+                form.base_fields['featured_image'].widget.attrs.update({
+                'accept': 'image/*',
+                'class': 'clearablefileinput',
+                'data-direct-upload': 'true',
+                })
+            return form
 
 
     # actions = ['generate_article_content']
