@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django blog admin') }}{% endblock %}
+
+{% block branding %}
+{{ block.super }}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('DjangoBlog administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block extrahead %}    <link rel="icon" href="{% static 'favicon.ico' %}">{% endblock %}
+
+
+{% block nav-global %}
+  {{ block.super }}
+  {% include "admin/language_switch.html" %}
+{% endblock %}

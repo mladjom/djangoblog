@@ -29,8 +29,4 @@ Thumbs.db
 git
 todo
 .coverage
-
-# Django Tailwind
-theme/static/css/dist/
-index.html
-templates/admin/
+branch

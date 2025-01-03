@@ -30,12 +30,15 @@ class CategoryAdmin(ArticleCountMixin, DeleteWithImageMixin, admin.ModelAdmin):
             'description': _('Upload an image with a maximum size of 800x800 pixels. The image will be resized and compressed automatically.')
         }),
     )
-    
-    def featured_image_thumbnail(self, obj):
-        """Display a thumbnail of the featured image in the admin interface."""
-        if obj.featured_image:
-            return format_html('<img src="{}" style="width: 80px; height: 80px; object-fit: cover;" />', obj.featured_image.url)
-        return _('No Image')
 
+    def featured_image_thumbnail(self, obj):
+        """Display a small thumbnail in the list view"""
+        if obj.featured_image:
+            return format_html(
+                '<img src="{}" style="width: 80px; height: 50px; object-fit: cover;" />',
+                obj.featured_image.url
+            )
+        return _('No Image')
     featured_image_thumbnail.short_description = _('Thumbnail')
+
 
