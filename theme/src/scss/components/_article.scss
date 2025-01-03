@@ -4,26 +4,29 @@
 
 .article {
   &__header {
-    padding: map.get($spacing, '8') 0;
+    //padding: map.get($spacing, '8') 0;
     background-color: var(--color-background-secondary);
+    margin-bottom: map.get($spacing, '6');
 
-    &-content {
-      gap: map.get($spacing, '4');
-      max-width: 65ch;
+    &-inner {
+    @include content;
+    gap: map.get($spacing, '4');
+      max-width: 65ch; 
       margin: 0 auto;
       text-align: center;
     }
 
     &-title {
       @include text-style('xl', 'bold');
-      margin-bottom: map.get($spacing, '4');
+      //margin-bottom: map.get($spacing, '4');
+      margin: 0;
     }
 
     &-meta {
       @include flex-row(center, flex-start, map.get($spacing, '4'));
       @include text-style('sm');
       color: var(--color-text-tertiary);
-      margin-bottom: map.get($spacing, '4');
+      //margin-bottom: map.get($spacing, '4');
 
       & > * {
         @include flex-row(center, center, map.get($spacing, '2'));
@@ -31,10 +34,10 @@
     }
   }
 
-  &__date,
-  &__reading-time {
-    color: var(--color-text-secondary);
-  }
+  // &__date,
+  // &__reading-time {
+  //   color: var(--color-text-secondary);
+  // }
 
   &__category {
     color: var(--color-link);
@@ -45,25 +48,58 @@
     }
   }
 
-  &__featured-image {
-    @include container;
-    //display: block;
-    //margin: map.get($spacing, '6') 0;
+  &__category {
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    //font-weight: map.get($font-weights, 'medium');
 
-    & > img {
-      width: 100%;
-      height: auto;
-      border-radius: map.get($spacing, '2');
+    &:hover {
+      color: var(--color-link-hover);
     }
   }
 
+  &__media {
+    @include container;
+    margin-bottom: map.get($spacing, '6');
+    border-radius: 0.5rem;
+    overflow: hidden;
+     aspect-ratio: 16 / 10;
+    // width: 100%; /* Ensure the container width is 100% */
+    background: red ;
+ }
+
+  &__featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  // &__featured-image {
+  //   @include container;
+  //   //display: block;
+  //   //margin: map.get($spacing, '6') 0;
+
+  //   & > img {
+  //     width: 100%;
+  //     height: auto;
+  //     border-radius: map.get($spacing, '2');
+  //   }
+  // }
+
   &__content {
-    margin: map.get($spacing, '6') auto;
-    @include content;
+    @include flex-column;
+    gap: map.get($spacing, '4');
+    max-width: 65ch;
+    margin: 0 auto;
   }
 
   &__tags {
-    @include container;
+    //@include flex-column;
+    //gap: map.get($spacing, '4');
+    max-width: 65ch;
+    margin: 0 auto;
 
     margin-top: map.get($spacing, '8');
     padding-top: map.get($spacing, '6');

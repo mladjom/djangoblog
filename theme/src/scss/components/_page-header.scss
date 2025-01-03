@@ -6,7 +6,7 @@
     padding: map.get($spacing, '8') 0;
     background-color: var(--color-background-secondary);
   
-    &__content {
+    &__inner {
       @include flex-column;
       gap: map.get($spacing, '4');
       max-width: 65ch;
@@ -23,7 +23,7 @@
       @include text-style('lg', 'normal', 'relaxed');
       color: var(--color-text-secondary);
     }
-  
+  }
     // &--article {
     //   background-color: var(--color-background-primary);
     // }
@@ -48,5 +48,5 @@
     //     }
     //   }
     // }
-  }
+  
   

@@ -101,6 +101,6 @@ blockquote {
 
 // Selection styles
 ::selection {
-  background-color: rgba(var(--color-primary, 0.1));
-  color: var(--color-primary);
+  background-color: rgba(var(--color-primary-base, 0.1));
+  color: var(--color-primary-base);
 }

@@ -22,7 +22,9 @@
 
   &__media {
     aspect-ratio: 16 / 10;
+    width: 100%; /* Ensure the container width is 100% */
     overflow: hidden;
+    
   }
 
   &__featured-image {
@@ -31,7 +33,7 @@
     object-fit: cover;
   }
 
-  &__content {
+  &__inner {
     display: flex;
     flex-direction: column;
     gap: map.get($spacing, '3'); // 16px consistent gap between elements

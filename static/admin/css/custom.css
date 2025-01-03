@@ -1,0 +1,16 @@
+.field-featured_image_preview img,
+.field-image_variants_preview img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.field-image_variants_preview table {
+    margin-top: 10px;
+    background: white;
+}
+
+.field-image_variants_preview th {
+    font-weight: bold;
+    text-align: left;
+}

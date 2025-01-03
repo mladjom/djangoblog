@@ -6,7 +6,7 @@
 {% block content %}
 <article class="article">
   <div class="article__header">
-    <div class="article__header-content">
+    <div class="article__header-inner">
       <h1 class="article__title">{{ article.title }}</h1>
       <div class="article__meta">
         <span class="article__date">{{ article.created_at|date:'F j, Y' }}</span>
@@ -17,8 +17,8 @@
       </div>
     </div>
   </div>
-  {% if article.featured_image %}
-  <div >
+  {% if article.featured_image %} 
+  <div class="article__media">
     <picture class="article__featured-image">
       <source srcset="{{ article.featured_image.url }}" media="(min-width: 800px)">
       <source srcset="{{ article.featured_image.mobile_url }}" media="(max-width: 799px)">

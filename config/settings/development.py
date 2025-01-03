@@ -10,13 +10,13 @@ INTERNAL_IPS = [
 
 # Additional development-only apps
 INSTALLED_APPS += [
-    #s"debug_toolbar",
+    "debug_toolbar",
     'django_browser_reload',
     'django_extensions',
 ]
 
 MIDDLEWARE += [
-    #"debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
