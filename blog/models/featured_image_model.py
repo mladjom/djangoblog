@@ -82,13 +82,13 @@ class FeaturedImageModel(models.Model):
         slug_source = getattr(self, 'name', None) or getattr(self, 'title', None) or 'default'
         base_filename = slugify(slug_source)
         
-        # Ensure we keep the full slug without truncating at first dash
         original_path = self.featured_image.path
         base_path = os.path.dirname(original_path)
         
         results = resize_and_compress_images(
             image_path=original_path,
             base_path=base_path,
+            new_base_filename=base_filename,  # Pass the slugified title as the new base filename
             sizes=self.image_sizes,
             quality=85,
             aspect_ratio=(16, 10)

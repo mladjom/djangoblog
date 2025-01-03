@@ -9,13 +9,14 @@ def calculate_height(width, aspect_ratio=(16, 10)):
     """Calculate height based on width and aspect ratio"""
     return int(width * (aspect_ratio[1] / aspect_ratio[0]))
 
-def resize_and_compress_images(image_path, base_path, sizes=None, quality=85, aspect_ratio=(16, 10)):
+def resize_and_compress_images(image_path, base_path, new_base_filename, sizes=None, quality=85, aspect_ratio=(16, 10)):
     """
     Resize and compress an image to multiple sizes while maintaining aspect ratio
     
     Args:
         image_path: Original image path
         base_path: Base path for saving resized images
+        new_base_filename: New base filename (typically slugified site title)
         sizes: List of widths to resize to
         quality: WebP compression quality (1-100)
         aspect_ratio: Tuple of (width, height) ratio
@@ -26,10 +27,8 @@ def resize_and_compress_images(image_path, base_path, sizes=None, quality=85, as
     try:
         logger.info(f"Processing image: {image_path}")
         
-        # Get base filename without dimensions and extension
-        filename = os.path.basename(image_path)
-        # Keep the full filename except dimensions and extension
-        base_filename = '-'.join(filename.split('-')[:-1]) if '-' in filename else filename.split('.')[0]
+        # Use the provided new_base_filename instead of extracting from original
+        base_filename = new_base_filename
         
         # Open and convert image if necessary
         with Image.open(image_path) as img:
