@@ -75,41 +75,6 @@ class FeaturedImageModel(models.Model):
             except type(self).DoesNotExist:
                 pass
 
-
-    # def create_thumbnail(self, width=576):
-    #     """Create a thumbnail from the featured image"""
-    #     if not self.featured_image:
-    #         return None
-
-    #     try:
-    #         base_path = os.path.dirname(self.featured_image.path)
-    #         slug_source = getattr(self, 'name', None) or getattr(self, 'title', None) or 'default'
-    #         base_filename = slugify(slug_source)
-            
-    #         height = calculate_height(width)
-    #         thumbnail_filename = f"{base_filename}-{width}x{height}.webp"
-    #         thumbnail_path = os.path.join(base_path, thumbnail_filename)
-            
-    #         success = process_single_image(
-    #             image_path=self.featured_image.path,
-    #             output_path=thumbnail_path,
-    #             target_width=width,
-    #             quality=85,
-    #             aspect_ratio=(16, 10)
-    #         )
-            
-    #         if success:
-    #             return {
-    #                 'url': f"{settings.MEDIA_URL}{os.path.relpath(thumbnail_path, settings.MEDIA_ROOT)}",
-    #                 'path': thumbnail_path
-    #             }
-                
-    #     except Exception as e:
-    #         logger.error(f"Error creating thumbnail: {e}")
-        
-    #     return None
-
-
     def process_featured_image(self):
         """Process the featured image and create all required sizes"""
         if not self.featured_image:
