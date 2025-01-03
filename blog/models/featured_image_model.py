@@ -63,7 +63,7 @@ class FeaturedImageModel(models.Model):
                         if os.path.exists(old_instance.featured_image.path):
                             os.remove(old_instance.featured_image.path)
                     except Exception as e:
-                        logger.error(f"Error removing original image: {e}")
+                        logger.error(f"Error removing original image: {e}") 
 
                     # Remove all variants
                     for variant in old_instance.get_image_variants().values():
