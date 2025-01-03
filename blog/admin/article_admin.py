@@ -8,7 +8,7 @@ from .mixins_admin import DeleteWithImageMixin
 
 @admin.register(Article)
 class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
-    list_display = (
+    list_display = ( 
         'title',
         'category',
         'is_published',
