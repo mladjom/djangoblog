@@ -24,18 +24,28 @@ class DeleteWithImageMixin:
     """
     def delete_queryset(self, request, queryset):
         """
-        Deletes associated images for models before removing them from the database.
+        Deletes all associated image variants for models before removing them from the database.
         """
         for obj in queryset:
-            # Check if the model instance has a `featured_image` field
+            # Check if the model instance has a featured_image field
             if hasattr(obj, 'featured_image') and obj.featured_image:
-                image_path = obj.featured_image.path
-                if os.path.exists(image_path):
-                    try:
-                        os.remove(image_path)  # Delete the associated file
-                        self.message_user(request, f"Deleted featured image for: {obj}")
-                    except Exception as e:
-                        self.message_user(request, f"Error deleting featured image for {obj}: {e}", level="error")
+                # Delete all image variants
+                if hasattr(obj, 'get_image_variants'):
+                    for variant in obj.get_image_variants().values():
+                        try:
+                            if os.path.exists(variant['path']):
+                                os.remove(variant['path'])
+                                self.message_user(request, f"Deleted image variant: {variant['path']}")
+                        except Exception as e:
+                            self.message_user(request, f"Error deleting image variant for {obj}: {e}", level="error")
+
+                # Delete the original image
+                try:
+                    if os.path.exists(obj.featured_image.path):
+                        os.remove(obj.featured_image.path)
+                        self.message_user(request, f"Deleted original image for: {obj}")
+                except Exception as e:
+                    self.message_user(request, f"Error deleting original image for {obj}: {e}", level="error")
 
         # Call the parent method to delete the objects
         super().delete_queryset(request, queryset)
