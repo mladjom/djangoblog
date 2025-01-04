@@ -10,6 +10,7 @@ from blog.utils.image_utils import (
     calculate_height,
     process_single_image
 )
+from blog.settings import IMAGE_SETTINGS
 
 logger = logging.getLogger(__name__)
 
@@ -27,9 +28,7 @@ class FeaturedImageModel(models.Model):
     @property
     def image_sizes(self):
         """Define the required image sizes"""
-        return [576, 768, 992, 1200, 1400]
-
-
+        return IMAGE_SETTINGS['SIZES']
 
     def get_image_variants(self):
         """Get all image variants paths"""
@@ -43,7 +42,7 @@ class FeaturedImageModel(models.Model):
         base_name = '-'.join(original_name.split('-')[:-1]) if '-' in original_name else original_name.split('.')[0]
         
         for width in self.image_sizes:
-            height = calculate_height(width)
+            height = calculate_height(width, IMAGE_SETTINGS['ASPECT_RATIO'])
             filename = f"{base_name}-{width}x{height}.webp"
             relative_path = os.path.join(os.path.dirname(self.featured_image.name), filename)
             variants[width] = {
@@ -97,13 +96,13 @@ class FeaturedImageModel(models.Model):
             base_path=base_path,
             new_base_filename=base_filename,  # Pass the slugified title as the new base filename
             sizes=self.image_sizes,
-            quality=85,
-            aspect_ratio=(16, 10)
+            quality=IMAGE_SETTINGS['WEBP_QUALITY'],
+            aspect_ratio=IMAGE_SETTINGS['ASPECT_RATIO']
         )
         
         if results:
             largest_size = max(self.image_sizes)
-            largest_height = calculate_height(largest_size)
+            largest_height = calculate_height(largest_size, IMAGE_SETTINGS['ASPECT_RATIO'])
             main_filename = f"{base_filename}-{largest_size}x{largest_height}.webp"
             new_main_path = os.path.join(base_path, main_filename)
             

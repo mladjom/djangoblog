@@ -5,6 +5,10 @@ from blog.models.article_model import Article
 from blog.admin.tag_admin import TagInline
 from blog.utils.openai_utils import generate_article
 from .mixins_admin import DeleteWithImageMixin
+import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 @admin.register(Article)
 class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
@@ -82,10 +86,11 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
                 obj.featured_image.name
             )
         return _('No image uploaded')
+
     featured_image_preview.short_description = _('Main Image Preview')
 
     def image_variants_preview(self, obj):
-        """Display previews of all image variants"""
+        """Display previews of all image variants."""
         if not obj.featured_image:
             return _('No image variants available')
 
@@ -94,31 +99,48 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
             return _('Processing image variants...')
 
         html = ['<div style="margin-top: 20px;"><h3>Image Variants</h3>']
-        
+
         # Create a table for variants
         html.append('<table style="border-collapse: collapse; width: 100%; max-width: 800px;">')
         html.append('<tr style="background: #f5f5f5;">'
-                   '<th style="padding: 8px; border: 1px solid #ddd;">Size</th>'
-                   '<th style="padding: 8px; border: 1px solid #ddd;">Preview</th>'
-                   '<th style="padding: 8px; border: 1px solid #ddd;">Path</th></tr>')
+                    '<th style="padding: 8px; border: 1px solid #ddd;">Size</th>'
+                    '<th style="padding: 8px; border: 1px solid #ddd;">Preview</th>'
+                    '<th style="padding: 8px; border: 1px solid #ddd;">Path</th></tr>')
 
-        # Sort variants by width
-        for width in sorted(variants.keys()):
-            variant = variants[width]
-            html.append(
-                f'<tr style="border: 1px solid #ddd;">'
-                f'<td style="padding: 8px; border: 1px solid #ddd;">{width}px</td>'
-                f'<td style="padding: 8px; border: 1px solid #ddd;">'
-                f'<img src="{variant["url"]}" style="max-width: 150px; height: auto;" />'
-                f'</td>'
-                f'<td style="padding: 8px; border: 1px solid #ddd; font-size: 12px;">'
-                f'{variant["url"]}</td></tr>'
-            )
+        for width, variant in sorted(variants.items()):
+            try:
+                # Ensure the variant file exists
+                if os.path.exists(variant['path']):
+                    html.append(
+                        f'<tr>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd;">{width}px</td>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd;">'
+                        f'<img src="{variant["url"]}" style="max-width: 150px; height: auto;" />'
+                        f'</td>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd; font-size: 12px;">'
+                        f'{variant["url"]}</td></tr>'
+                    )
+                else:
+                    html.append(
+                        f'<tr>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd;">{width}px</td>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd; color: red;">File missing</td>'
+                        f'<td style="padding: 8px; border: 1px solid #ddd; font-size: 12px;">'
+                        f'{variant["url"]}</td></tr>'
+                    )
+            except Exception as e:
+                logger.error(f"Error loading variant {variant['path']}: {e}")
+                html.append(
+                    f'<tr>'
+                    f'<td style="padding: 8px; border: 1px solid #ddd;">{width}px</td>'
+                    f'<td colspan="2" style="padding: 8px; border: 1px solid #ddd; color: red;">Error loading variant</td>'
+                    f'</tr>'
+                )
 
         html.append('</table></div>')
-        
+
         return format_html(''.join(html))
-    image_variants_preview.short_description = _('Image Variants') 
+
 
 
 

@@ -2,27 +2,21 @@ from PIL import Image
 from datetime import datetime
 import os
 import logging
+from blog.settings import IMAGE_SETTINGS
 
 logger = logging.getLogger(__name__)
 
-def calculate_height(width, aspect_ratio=(16, 10)):
+def calculate_height(width, aspect_ratio=None):
     """Calculate height based on width and aspect ratio"""
+    if aspect_ratio is None:
+        aspect_ratio = IMAGE_SETTINGS['ASPECT_RATIO']
     return int(width * (aspect_ratio[1] / aspect_ratio[0]))
 
-def resize_and_compress_images(image_path, base_path, new_base_filename, sizes=None, quality=85, aspect_ratio=(16, 10)):
-    """
-    Resize and compress an image to multiple sizes while maintaining aspect ratio
-    
-    Args:
-        image_path: Original image path
-        base_path: Base path for saving resized images
-        new_base_filename: New base filename (typically slugified site title)
-        sizes: List of widths to resize to
-        quality: WebP compression quality (1-100)
-        aspect_ratio: Tuple of (width, height) ratio
-    """
-    if sizes is None:
-        sizes = [576, 768, 992, 1200, 1400]  # Default breakpoint widths
+def resize_and_compress_images(image_path, base_path, new_base_filename, sizes=None, quality=None, aspect_ratio=None):
+    """Resize and compress an image to multiple sizes while maintaining aspect ratio"""
+    sizes = sizes or IMAGE_SETTINGS['SIZES']
+    quality = quality or IMAGE_SETTINGS['WEBP_QUALITY']
+    aspect_ratio = aspect_ratio or IMAGE_SETTINGS['ASPECT_RATIO']
     
     try:
         logger.info(f"Processing image: {image_path}")
@@ -71,16 +65,22 @@ def resize_and_compress_images(image_path, base_path, new_base_filename, sizes=N
         return []
 
 def image_upload_path(instance, filename):
-    """
-    Generate a dynamic path for uploading images based on the model name and current date.
-    """
-    today = datetime.now().strftime('%Y/%m/%d')
+    """Generate a dynamic path for uploading images"""
+    date_format = datetime.now().strftime('%Y/%m/%d')
     model_name = instance.__class__.__name__.lower()
-    base_path = f'{model_name}s/{today}'
-    return os.path.join(base_path, filename)
+    path_format = IMAGE_SETTINGS['UPLOAD_PATH_FORMAT'].format(
+        model_name=model_name,
+        year=datetime.now().strftime('%Y'),
+        month=datetime.now().strftime('%m'),
+        day=datetime.now().strftime('%d')
+    )
+    return os.path.join(path_format, filename)
 
-def process_single_image(image_path, output_path, target_width, quality=85, aspect_ratio=(16, 10)):
+def process_single_image(image_path, output_path, target_width, quality=None, aspect_ratio=None):
     """Process a single image to specific dimensions"""
+    quality = quality or IMAGE_SETTINGS['WEBP_QUALITY']
+    aspect_ratio = aspect_ratio or IMAGE_SETTINGS['ASPECT_RATIO']
+    
     try:
         with Image.open(image_path) as img:
             if img.mode != 'RGB':

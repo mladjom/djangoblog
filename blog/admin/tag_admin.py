@@ -32,11 +32,13 @@ class TagAdmin( ArticleCountMixin, DeleteWithImageMixin, admin.ModelAdmin):
     
     
     def featured_image_thumbnail(self, obj):
-        """Display a thumbnail of the featured image in the admin interface."""
+        """Display a small thumbnail in the list view"""
         if obj.featured_image:
-            return format_html('<img src="{}" style="width: 80px; height: 80px; object-fit: cover;" />', obj.featured_image.url)
+            return format_html(
+                '<img src="{}" style="width: 80px; height: 50px; object-fit: cover;" />',
+                obj.featured_image.url
+            )
         return _('No Image')
-
     featured_image_thumbnail.short_description = _('Thumbnail')
 
 
