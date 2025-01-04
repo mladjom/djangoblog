@@ -1,6 +1,12 @@
 # blog/settings.py
 from django.conf import settings
 
+SPACY_SETTINGS = {
+    'EXCERPT_MAX_WORDS': 25,
+    'META_DESCRIPTION_MAX_CHARS': 160,
+    'MODEL_NAME': 'en_core_web_sm'
+}
+
 # Image Processing Settings
 IMAGE_SETTINGS = {
     # Default image sizes for responsive images

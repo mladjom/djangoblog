@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class BaseModelWithSlug(models.Model):
     slug = models.SlugField(max_length=255, unique=True, verbose_name=_('Slug'))
-    meta_description = models.TextField(blank=True, null=True, verbose_name=_('Meta Description'))
+    meta_description = models.TextField(max_length=160, blank=True, verbose_name=_('Meta Description'))
     created_at = models.DateTimeField(_('Created At'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated At'), auto_now=True)
 
