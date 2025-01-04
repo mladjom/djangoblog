@@ -5,6 +5,7 @@ from .tag_model import Tag
 from django.urls import reverse
 from .featured_image_model import FeaturedImageModel
 from .base_model import BaseModelWithSlug
+from django.utils.text import Truncator
 
 class Article(BaseModelWithSlug, FeaturedImageModel):
     title = models.CharField(max_length=255, unique=True, verbose_name=_('Title'))
@@ -23,6 +24,10 @@ class Article(BaseModelWithSlug, FeaturedImageModel):
 
     def get_absolute_url(self):
         return reverse('article-detail', args=[self.slug])
+
+    def update_search_index(self):
+        # Logic to update search index goes here
+        pass
 
     @property
     def seo_meta_description(self):
