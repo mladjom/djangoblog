@@ -37,7 +37,7 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
 
     fieldsets = (
         (_('Basic Information'), {
-            'fields': ('title', 'slug', 'content', 'category')
+            'fields': ('title', 'slug','content', 'excerpt', 'category')
         }),
         (_('SEO Metadata'), {
             'fields': ('meta_description',),

@@ -26,5 +26,7 @@ package-lock.json
 Thumbs.db
 .idea/
 .vscode/
-todo
 .coverage
+.git
+
+todos/

@@ -8,7 +8,8 @@ from .base_model import BaseModelWithSlug
 
 class Article(BaseModelWithSlug, FeaturedImageModel):
     title = models.CharField(max_length=255, unique=True, verbose_name=_('Title'))
-    content = models.TextField(verbose_name=_('Content'))
+    content = models.TextField(blank=True, null=True,verbose_name=_('Content'))
+    excerpt = models.TextField(blank=True, null=True,verbose_name=_('Excerpt'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles', verbose_name=_('Category'))
     tags = models.ManyToManyField(Tag, related_name='articles', verbose_name=_('Tags'))
     is_published = models.BooleanField(default=False, verbose_name=_('Is Published'))
