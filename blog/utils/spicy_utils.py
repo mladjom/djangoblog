@@ -2,11 +2,12 @@
 import spacy
 from django.core.cache import cache
 from functools import lru_cache
+from blog.settings import SPACY_SETTINGS
 
 @lru_cache(maxsize=1)
 def get_spacy_model():
     """Get or load spaCy model with caching"""
-    return spacy.load('en_core_web_sm')
+    return spacy.load(SPACY_SETTINGS['MODEL_NAME'])
 
 def get_sentence_importance(doc):
     """Calculate importance score for each sentence based on token importance"""

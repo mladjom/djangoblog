@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 import re
 from html import unescape
 from blog.settings import SPACY_SETTINGS
+from blog.utils.content_suggestions import ContentSuggestionSystem
 
 class Article(BaseModelWithSlug, FeaturedImageModel):
     title = models.CharField(max_length=255, unique=True, verbose_name=_('Title'))
@@ -59,7 +60,7 @@ class Article(BaseModelWithSlug, FeaturedImageModel):
         
         return text
 
-    def generate_excerpt(self, max_words=55):
+    def generate_excerpt(self, max_words=SPACY_SETTINGS['EXCERPT_MAX_WORDS']):
         """Generate excerpt using spaCy"""
         if not self.content:
             return ""
@@ -96,7 +97,7 @@ class Article(BaseModelWithSlug, FeaturedImageModel):
         except Exception as e:
             raise ValidationError(f"Error generating excerpt: {str(e)}")
 
-    def generate_meta_description(self, max_chars=160):
+    def generate_meta_description(self, max_chars=SPACY_SETTINGS['META_DESCRIPTION_MAX_CHARS']):
         """Generate meta description using spaCy"""
         if not self.content:
             return ""
@@ -131,6 +132,49 @@ class Article(BaseModelWithSlug, FeaturedImageModel):
 
         except Exception as e:
             raise ValidationError(f"Error generating meta description: {str(e)}")
+
+    def suggest_content_tags_and_categories(self):
+        """Get suggestions for tags and categories"""
+        suggestion_system = ContentSuggestionSystem(
+            content=f"{self.title}\n\n{self.content}",
+            existing_tags=list(self.tags.all()),
+            existing_categories=[self.category] if self.category else []
+        )
+        
+        suggested_tags = suggestion_system.suggest_tags()
+        suggested_categories = suggestion_system.suggest_categories()
+        
+        return {
+            'tags': suggested_tags,
+            'categories': suggested_categories
+        }
+
+    def auto_generate_tags_and_category(self, max_tags=5, create_new=False):
+        """Automatically generate and optionally create tags and category"""
+        suggestions = self.suggest_content_tags_and_categories()
+        
+        # Handle tags
+        for tag_type, tag_info in suggestions['tags'][:max_tags]:
+            if tag_type == 'existing':
+                self.tags.add(tag_info)
+            elif tag_type == 'new' and create_new:
+                new_tag = Tag.objects.create(
+                    name=tag_info['name'],
+                    slug=tag_info['slug']
+                )
+                self.tags.add(new_tag)
+        
+        # Handle category if not already set
+        if not self.category and suggestions['categories']:
+            cat_type, cat_info = suggestions['categories'][0]
+            if cat_type == 'existing':
+                self.category = cat_info
+            elif cat_type == 'new' and create_new:
+                self.category = Category.objects.create(
+                    name=cat_info['name'],
+                    slug=cat_info['slug'],
+                    description=cat_info['description']
+                )
 
     def save(self, *args, **kwargs):
         # Generate excerpt if not provided

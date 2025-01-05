@@ -1,0 +1,9 @@
+{% load i18n %}
+<div id="suggestion-area">
+    <input type="hidden" id="article_id" value="{{ article_id }}">
+    <button type="button" class="button" onclick="getSuggestionsForArticle()">
+        {% translate 'Get Suggestions' %}
+    </button>
+    <div id="tag-suggestions"></div>
+    <div id="category-suggestions"></div>
+</div>
