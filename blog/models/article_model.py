@@ -32,6 +32,13 @@ class Article(BaseModelWithSlug, FeaturedImageModel):
     def get_absolute_url(self):
         return reverse('article-detail', args=[self.slug])
 
+    # def save_articles(data):
+    #     articles = [
+    #         Article(title=item['title'], url=item['link'])
+    #         for item in data
+    #     ]
+    #     Article.objects.bulk_create(articles, ignore_conflicts=True)
+
     def update_search_index(self):
         # Logic to update search index goes here
         pass
