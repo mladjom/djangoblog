@@ -10,7 +10,7 @@ from blog.settings import SPACY_SETTINGS
 
 class ContentSuggestionSystem:
     def __init__(self, content, existing_tags=None, existing_categories=None):
-        self.nlp = spacy.load('en_core_web_sm')
+        self.nlp = spacy.load(SPACY_SETTINGS['MODEL_NAME'])
         self.content = content
         self.existing_tags = existing_tags or []
         self.existing_categories = existing_categories or []
