@@ -261,7 +261,7 @@ class ArticleAdmin(DeleteWithImageMixin, admin.ModelAdmin):
 
     class Media:
         css = {
-            #'all': ('admin/css/article_suggestions.css',)
+            'all': ('admin/css/article_suggestions.css',)
         }
         js = ('admin/js/article_suggestions.js',)
 

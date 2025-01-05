@@ -1,9 +1,21 @@
 {% load i18n %}
 <div id="suggestion-area">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" id="article_id" value="{{ article_id }}">
+
     <button type="button" class="button" onclick="getSuggestionsForArticle()">
         {% translate 'Get Suggestions' %}
     </button>
-    <div id="tag-suggestions"></div>
-    <div id="category-suggestions"></div>
+
+    <!-- Tag Suggestions Section -->
+    <div id="tag-suggestions">
+        <h3>{% translate 'Tag Suggestions' %}</h3>
+        <ul id="tag-suggestions-list"></ul>
+    </div>
+
+    <!-- Category Suggestions Section -->
+    <div id="category-suggestions">
+        <h3>{% translate 'Category Suggestions' %}</h3>
+        <ul id="category-suggestions-list"></ul>
+    </div>
 </div>

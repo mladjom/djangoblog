@@ -1,0 +1,77 @@
+/* General Container for suggestion area */
+#suggestion-area {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* Button to get suggestions */
+#suggestion-area button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+/* Button hover effect */
+#suggestion-area button:hover {
+    background-color: #0056b3;
+}
+
+/* Title for tag and category suggestions */
+#suggestion-area h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Container for the tag and category suggestion lists */
+#tag-suggestions, #category-suggestions {
+    margin-top: 20px;
+}
+
+/* Suggestions list styled as a flex container */
+#tag-suggestions-list, #category-suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Individual suggestion items styled as buttons */
+#tag-suggestions-list li button, #category-suggestions-list li button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+/* Tag button styles */
+#tag-suggestions-list li button {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Category button styles */
+#category-suggestions-list li button {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Hover effect for buttons */
+#tag-suggestions-list li button:hover, #category-suggestions-list li button:hover {
+    background-color: #0056b3;
+}
+
+/* Loading state - you can use this if you want to show a loading message or spinner */
+#tag-suggestions-list.loading, #category-suggestions-list.loading {
+    opacity: 0.5;
+}

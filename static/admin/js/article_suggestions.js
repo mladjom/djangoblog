@@ -38,8 +38,8 @@ function getSuggestionsForArticle() {
 
 function displaySuggestions(data) {
     // Update the UI with the suggestions
-    const tagDiv = document.getElementById('tag-suggestions');
-    const categoryDiv = document.getElementById('category-suggestions');
+    const tagDiv = document.getElementById('tag-suggestions-list');
+    const categoryDiv = document.getElementById('category-suggestions-list');
     
     // Clear previous suggestions
     tagDiv.innerHTML = '';
