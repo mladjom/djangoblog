@@ -57,7 +57,7 @@ function displaySuggestions(data) {
                 console.error('Invalid tag data:', tag);
                 return;
             }
-            
+            const listItem = document.createElement('li');            
             const button = document.createElement('button');
             button.className = 'btn btn-secondary';
             button.textContent = tag.info.name;
@@ -69,7 +69,8 @@ function displaySuggestions(data) {
                     addExistingTag(tag.info.id);
                 }
             };
-            tagDiv.appendChild(button);
+            listItem.appendChild(button);
+            tagDiv.appendChild(listItem);
         });
     }
 
@@ -81,6 +82,7 @@ function displaySuggestions(data) {
                 return;
             }
 
+            const listItem = document.createElement('li');
             const button = document.createElement('button');
             button.className = 'btn btn-secondary';
             button.textContent = category.info.name;
@@ -91,7 +93,8 @@ function displaySuggestions(data) {
                     setCategory(category.info.id);
                 }
             };
-            categoryDiv.appendChild(button);
+            listItem.appendChild(button);
+            categoryDiv.appendChild(listItem);
         });
     }
 }
@@ -128,6 +131,10 @@ function createTag(tagName) {
     .then(data => {
         console.log("Tag created:", data);
         const tagSelect = document.getElementById('id_tags');
+        if (!tagSelect) {
+            console.error("Tag select element not found");
+            return;
+        }
         const option = new Option(data.name, data.id, true, true);
         tagSelect.add(option);
     })
@@ -137,6 +144,11 @@ function createTag(tagName) {
 }
 
 function createCategory(categoryName) {
+    if (!categoryName) {
+        console.error("Category name is required");
+        return;
+    }
+
     fetch(`/en/admin/blog/article/create-category/`, {
         method: 'POST',
         headers: {
@@ -145,11 +157,23 @@ function createCategory(categoryName) {
         },
         body: JSON.stringify({ name: categoryName })
     })
-    .then(response => response.json())
+    .then(async response => {
+        if (!response.ok) {
+            const text = await response.text();
+            console.error('Server response:', text);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+
     .then(data => {
         console.log("Category created:", data);
         // Set the new category in the category selection
         const categorySelect = document.getElementById('id_category');
+        if (!categorySelect) {
+            console.error("Category select element not found");
+            return;
+        }
         const option = new Option(data.name, data.id, true, true);
         categorySelect.add(option);
         categorySelect.value = data.id;
@@ -161,9 +185,17 @@ function createCategory(categoryName) {
 
 function addExistingTag(tagId) {
     const select = document.getElementById('id_tags');
+    
+    if (!select) {
+        console.error('Tag select element not found');
+        return;
+    }
+    
     const option = select.querySelector(`option[value="${tagId}"]`);
     if (option) {
         option.selected = true;
+    } else {
+        console.error(`Option with tagId ${tagId} not found in the select element`);
     }
 }
 

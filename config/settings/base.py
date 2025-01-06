@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    'blog.apps.BlogConfig',
     'graphene_django',
     'corsheaders',
     'django.contrib.sitemaps',

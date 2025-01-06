@@ -30,9 +30,7 @@ pip install -r requirements.txt
 ./manage.py createsuperuser
 ./manage.py seed_data
 ./manage.py inspectdb
-./manage.py tailwind install
-./manage.py tailwind build
-./manage.py tailwind start
+
 
 ```bash
 # Run development server
