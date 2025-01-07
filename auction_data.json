@@ -1,0 +1,230 @@
+[
+  {
+    "code": "П119469",
+    "status": "Потврђивање у току",
+    "title": "Ормар",
+    "publication_date": "16. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "4.000,00",
+    "estimated_value": "8.000,00",
+    "bid_step": "400,00",
+    "details": {
+      "Опис": "Дводелни ормар",
+      "Продаја": "Друга"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119470",
+    "status": "Потврђивање у току",
+    "title": "Замрзивач",
+    "publication_date": "16. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "3.000,00",
+    "estimated_value": "6.000,00",
+    "bid_step": "300,00",
+    "details": {
+      "Опис": "Замрзивач марке “ Gorenje “",
+      "Продаја": "Друга"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119471",
+    "status": "Потврђивање у току",
+    "title": "Веш машина",
+    "publication_date": "16. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "6.000,00",
+    "estimated_value": "12.000,00",
+    "bid_step": "600,00",
+    "details": {
+      "Опис": "Веш машина марке “ Beko “",
+      "Продаја": "Друга"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119472",
+    "status": "Потврђивање у току",
+    "title": "Телевизор",
+    "publication_date": "16. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "7.500,00",
+    "estimated_value": "15.000,00",
+    "bid_step": "750,00",
+    "details": {
+      "Опис": "Телевизор марке “ LG “",
+      "Продаја": "Друга"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119546",
+    "status": "Потврђено",
+    "title": "СТАКЛЕНИ СТО",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "21.000,00",
+    "estimated_value": "30.000,00",
+    "bid_step": "2.100,00",
+    "details": {
+      "Опис": "СТАКЛЕНИ СТО",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119548",
+    "status": "Потврђено",
+    "title": "СТОЛИЦЕ",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "22.400,00",
+    "estimated_value": "32.000,00",
+    "bid_step": "2.240,00",
+    "details": {
+      "Опис": "СТОЛИЦЕ",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119549",
+    "status": "Потврђено",
+    "title": "ГАРНИТУРА ТРИ ДВОСЕДА",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "84.000,00",
+    "estimated_value": "120.000,00",
+    "bid_step": "8.400,00",
+    "details": {
+      "Опис": "ГАРНИТУРА ТРИ ДВОСЕДА",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119551",
+    "status": "Потврђено",
+    "title": "ТВ МАРКЕ LG",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "14.000,00",
+    "estimated_value": "20.000,00",
+    "bid_step": "1.400,00",
+    "details": {
+      "Опис": "ТВ МАРКЕ LG",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119553",
+    "status": "Потврђено",
+    "title": "ПОЛИЦА ЗА ТВ СА ФИОКАМА",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "14.000,00",
+    "estimated_value": "20.000,00",
+    "bid_step": "1.400,00",
+    "details": {
+      "Опис": "ПОЛИЦА ЗА ТВ СА ФИОКАМА",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119555",
+    "status": "Потврђено",
+    "title": "ВЕШ МАШИНА INDESIT",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "17.500,00",
+    "estimated_value": "25.000,00",
+    "bid_step": "1.750,00",
+    "details": {
+      "Опис": "ВЕШ МАШИНА INDESIT",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119557",
+    "status": "Потврђено",
+    "title": "МАШИНА ЗА СУДОВЕ GORENJE",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "17.500,00",
+    "estimated_value": "25.000,00",
+    "bid_step": "1.750,00",
+    "details": {
+      "Опис": "МАШИНА ЗА СУДОВЕ GORENJE",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  },
+  {
+    "code": "П119559",
+    "status": "Потврђено",
+    "title": "КЛИМА GALANZ",
+    "publication_date": "11. дец. 2024.",
+    "start_date": "08. јан. 2025. 09:00",
+    "end_date": "08. јан. 2025. 13:00",
+    "initial_price": "10.500,00",
+    "estimated_value": "15.000,00",
+    "bid_step": "1.050,00",
+    "details": {
+      "Опис": "КЛИМА GALANZ",
+      "Продаја": "Прва"
+    },
+    "location": {},
+    "tags": [],
+    "documents": [],
+    "url": "https://eaukcija.sud.rs"
+  }
+]
