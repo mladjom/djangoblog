@@ -1,1 +1,702 @@
-[]
+[
+    {
+        "code": "П119469",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ОРМАР",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119469",
+        "publication_date": "2024-12-16T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 4000.0,
+            "estimated_value": 8000.0,
+            "bidding_step": 400.0
+        },
+        "additional_info": {
+            "description": "Дводелни ормар",
+            "sale_number": "Друга",
+            "location": {
+                "municipality": "Крагујевац - град",
+                "city": "Крагујевац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Намештај",
+            "tags": [],
+            "executor": "Александар Тодоровић",
+            "documents": [
+                "Закључак о другој продаји.pdf",
+                "Закључак о првој продаји.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119470",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ЗАМРЗИВАЧ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119470",
+        "publication_date": "2024-12-16T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 3000.0,
+            "estimated_value": 6000.0,
+            "bidding_step": 300.0
+        },
+        "additional_info": {
+            "description": "Замрзивач марке “ Gorenje “",
+            "sale_number": "Друга",
+            "location": {
+                "municipality": "Крагујевац - град",
+                "city": "Крагујевац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Разна роба",
+            "tags": [],
+            "executor": "Александар Тодоровић",
+            "documents": [
+                "Закључак о другој продаји.pdf",
+                "Закључак о првој продаји.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119471",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ВЕШ МАШИНА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119471",
+        "publication_date": "2024-12-16T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 6000.0,
+            "estimated_value": 12000.0,
+            "bidding_step": 600.0
+        },
+        "additional_info": {
+            "description": "Веш машина марке “ Beko “",
+            "sale_number": "Друга",
+            "location": {
+                "municipality": "Крагујевац - град",
+                "city": "Крагујевац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Разна роба",
+            "tags": [],
+            "executor": "Александар Тодоровић",
+            "documents": [
+                "Закључак о другој продаји.pdf",
+                "Закључак о првој продаји.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119472",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ТЕЛЕВИЗОР",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119472",
+        "publication_date": "2024-12-16T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 7500.0,
+            "estimated_value": 15000.0,
+            "bidding_step": 750.0
+        },
+        "additional_info": {
+            "description": "Телевизор марке “ LG “",
+            "sale_number": "Друга",
+            "location": {
+                "municipality": "Крагујевац - град",
+                "city": "Крагујевац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Разна роба",
+            "tags": [],
+            "executor": "Александар Тодоровић",
+            "documents": [
+                "Закључак о другој продаји.pdf",
+                "Закључак о првој продаји.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119546",
+        "status": "ПОТВРЂЕНО",
+        "title": "СТАКЛЕНИ СТО",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119546",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 21000.0,
+            "estimated_value": 30000.0,
+            "bidding_step": 2100.0
+        },
+        "additional_info": {
+            "description": "СТАКЛЕНИ СТО",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119548",
+        "status": "ПОТВРЂЕНО",
+        "title": "СТОЛИЦЕ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119548",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 22400.0,
+            "estimated_value": 32000.0,
+            "bidding_step": 2240.0
+        },
+        "additional_info": {
+            "description": "СТОЛИЦЕ",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119549",
+        "status": "ПОТВРЂЕНО",
+        "title": "ГАРНИТУРА ТРИ ДВОСЕДА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119549",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 84000.0,
+            "estimated_value": 120000.0,
+            "bidding_step": 8400.0
+        },
+        "additional_info": {
+            "description": "ГАРНИТУРА ТРИ ДВОСЕДА",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119551",
+        "status": "ПОТВРЂЕНО",
+        "title": "ТВ МАРКЕ LG",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119551",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 14000.0,
+            "estimated_value": 20000.0,
+            "bidding_step": 1400.0
+        },
+        "additional_info": {
+            "description": "ТВ МАРКЕ LG",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119553",
+        "status": "ПОТВРЂЕНО",
+        "title": "ПОЛИЦА ЗА ТВ СА ФИОКАМА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119553",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 14000.0,
+            "estimated_value": 20000.0,
+            "bidding_step": 1400.0
+        },
+        "additional_info": {
+            "description": "ПОЛИЦА ЗА ТВ СА ФИОКАМА",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119555",
+        "status": "ПОТВРЂЕНО",
+        "title": "ВЕШ МАШИНА INDESIT",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119555",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 17500.0,
+            "estimated_value": 25000.0,
+            "bidding_step": 1750.0
+        },
+        "additional_info": {
+            "description": "ВЕШ МАШИНА INDESIT",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119557",
+        "status": "ПОТВРЂЕНО",
+        "title": "МАШИНА ЗА СУДОВЕ GORENJE",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119557",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 17500.0,
+            "estimated_value": 25000.0,
+            "bidding_step": 1750.0
+        },
+        "additional_info": {
+            "description": "МАШИНА ЗА СУДОВЕ GORENJE",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119559",
+        "status": "ПОТВРЂЕНО",
+        "title": "КЛИМА GALANZ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119559",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 10500.0,
+            "estimated_value": 15000.0,
+            "bidding_step": 1050.0
+        },
+        "additional_info": {
+            "description": "КЛИМА GALANZ",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119561",
+        "status": "ПОТВРЂЕНО",
+        "title": "ТРИ МАЛА СТАКЛЕНА СТОЧИЋА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119561",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 14000.0,
+            "estimated_value": 20000.0,
+            "bidding_step": 1400.0
+        },
+        "additional_info": {
+            "description": "ТРИ МАЛА СТАКЛЕНА СТОЧИЋА",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119562",
+        "status": "ПОТВРЂЕНО",
+        "title": "ВЕШ МАШИНА GORENJE",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119562",
+        "publication_date": "2024-12-11T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 17500.0,
+            "estimated_value": 25000.0,
+            "bidding_step": 1750.0
+        },
+        "additional_info": {
+            "description": "ВЕШ МАШИНА GORENJE",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Лазаревац",
+                "city": "Лазаревац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Тамара Пајковић",
+            "documents": [
+                "109-22.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П120217",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "PUTNIČKI AUTOMOBIL",
+        "url": "https://eaukcija.sud.rs/#/aukcije/120217",
+        "publication_date": "2024-12-17T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 350000.0,
+            "estimated_value": 500000.0,
+            "bidding_step": 35000.0
+        },
+        "additional_info": {
+            "description": "VOLKSWAGEN VW PASSAT,",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Шабац-град",
+                "city": "Шабац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Мила Милосављевић",
+            "documents": [
+                "iivk pom 7637-24.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П120219",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "PRIKOLICA",
+        "url": "https://eaukcija.sud.rs/#/aukcije/120219",
+        "publication_date": "2024-12-17T00:00:00",
+        "start_time": "2025-01-08T09:00:00",
+        "end_time": "2025-01-08T13:00:00",
+        "pricing": {
+            "starting_price": 42000.0,
+            "estimated_value": 60000.0,
+            "bidding_step": 4200.0
+        },
+        "additional_info": {
+            "description": "ZA TRAKTOR",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Шабац-град",
+                "city": "Шабац",
+                "cadastral_municipality": ""
+            },
+            "categories": "Покретне ствари",
+            "tags": [],
+            "executor": "Мила Милосављевић",
+            "documents": [
+                "iivk pom 7637-24.pdf"
+            ]
+        }
+    },
+    {
+        "code": "Н119402",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ШУМА 6. КЛАСЕ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119402",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 59906.7,
+            "estimated_value": 85581.0,
+            "bidding_step": 5990.67
+        },
+        "additional_info": {
+            "description": "ШУМА 6. КЛАСЕ, ПОВРШИНЕ 3055 м2, у улици КИТИЦА која се налази на кат. парцели број 4034/1 уписана у лист непокретности 815 KO КО БОВАН, у приватној својини извшног дужника, са обимом удела ½.",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Алексинац",
+                "city": "Алексинац",
+                "cadastral_municipality": "БОВАН"
+            },
+            "categories": "Шумско земљиште",
+            "tags": [],
+            "executor": "Mirjana Dimitrijević",
+            "documents": [
+                "IIV 926-2022.pdf"
+            ]
+        }
+    },
+    {
+        "code": "Н119403",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ШУМА 6. КЛАСЕ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119403",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 65650.9,
+            "estimated_value": 93787.0,
+            "bidding_step": 6565.09
+        },
+        "additional_info": {
+            "description": "ШУМА 6. КЛАСЕ, ПОВРШИНЕ 3354 м2, у улици КИТИЦА која се налази на кат. парцели број 4034/2, уписана у лист непокретности 815 KO КО БОВАН, у приватној својини извшног дужника, са обимом удела ½.",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Алексинац",
+                "city": "Алексинац",
+                "cadastral_municipality": "БОВАН"
+            },
+            "categories": "Шумско земљиште",
+            "tags": [],
+            "executor": "Mirjana Dimitrijević",
+            "documents": [
+                "IIV 926-2022.pdf"
+            ]
+        }
+    },
+    {
+        "code": "Н119406",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ЊИВА 2. КЛАСЕ, ПОВРШИНЕ 1677М² НА КП.БР. 71, СА УДЕЛОМ 1629/1677 У СВОЈИНИ ИЗВРШНОГ ДУЖНИКА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119406",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 2405697.0,
+            "estimated_value": 3436710.0,
+            "bidding_step": 240569.7
+        },
+        "additional_info": {
+            "description": "Њива 2. класе, површине 1677м² на кп.бр. 71, са правом својине извршног дужника са уделом 1629/1677, уписано у лист непокретности бр. 9839 КО Крагујевац 1",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Крагујевац - град",
+                "city": "Крагујевац",
+                "cadastral_municipality": "КРАГУЈЕВАЦ I"
+            },
+            "categories": "Парцела",
+            "tags": [],
+            "executor": "Даница Чоловић",
+            "documents": [
+                "prva elektronska prodaja ii 317 2023.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119436",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ТЕЛЕВИЗОР",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119436",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 10500.0,
+            "estimated_value": 15000.0,
+            "bidding_step": 1050.0
+        },
+        "additional_info": {
+            "description": "марке \"LG\" 32 инча, црне боје",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Краљево-град",
+                "city": "Матарушка Бања",
+                "cadastral_municipality": ""
+            },
+            "categories": "Разна роба",
+            "tags": [],
+            "executor": "Александар Павловић",
+            "documents": [
+                "ИИв 1152.21.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119437",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "УГАОНА ГАРНИТУРА+ТАБУРЕ",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119437",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 17500.0,
+            "estimated_value": 25000.0,
+            "bidding_step": 1750.0
+        },
+        "additional_info": {
+            "description": "сиве боје (платно)",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Краљево-град",
+                "city": "Матарушка Бања",
+                "cadastral_municipality": ""
+            },
+            "categories": "Намештај",
+            "tags": [],
+            "executor": "Александар Павловић",
+            "documents": [
+                "ИИв 1152.21.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119438",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "ВЕШ МАШИНА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119438",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 28000.0,
+            "estimated_value": 40000.0,
+            "bidding_step": 2800.0
+        },
+        "additional_info": {
+            "description": "марке \"VOX\"",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Краљево-град",
+                "city": "Матарушка Бања",
+                "cadastral_municipality": ""
+            },
+            "categories": "Електронска и рачунарска опрема или део",
+            "tags": [],
+            "executor": "Александар Павловић",
+            "documents": [
+                "ИИв 1152.21.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119439",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "БЛЕНДЕР",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119439",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 3500.0,
+            "estimated_value": 5000.0,
+            "bidding_step": 350.0
+        },
+        "additional_info": {
+            "description": "марке \"VOX\"",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Краљево-град",
+                "city": "Матарушка Бања",
+                "cadastral_municipality": ""
+            },
+            "categories": "Електронска и рачунарска опрема или део",
+            "tags": [],
+            "executor": "Александар Павловић",
+            "documents": [
+                "ИИв 1152.21.pdf"
+            ]
+        }
+    },
+    {
+        "code": "П119440",
+        "status": "ПОТВРЂИВАЊЕ У ТОКУ",
+        "title": "КОМОДА",
+        "url": "https://eaukcija.sud.rs/#/aukcije/119440",
+        "publication_date": "2024-12-10T00:00:00",
+        "start_time": "2025-01-09T09:00:00",
+        "end_time": "2025-01-09T13:00:00",
+        "pricing": {
+            "starting_price": 2100.0,
+            "estimated_value": 3000.0,
+            "bidding_step": 210.0
+        },
+        "additional_info": {
+            "description": "беж боје",
+            "sale_number": "Прва",
+            "location": {
+                "municipality": "Краљево-град",
+                "city": "Матарушка Бања",
+                "cadastral_municipality": ""
+            },
+            "categories": "Намештај",
+            "tags": [],
+            "executor": "Александар Павловић",
+            "documents": [
+                "ИИв 1152.21.pdf"
+            ]
+        }
+    }
+]

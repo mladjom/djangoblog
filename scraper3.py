@@ -110,88 +110,191 @@ def extract_details(auction_code):
     details = {}
     current_url = driver.current_url
     try:
-        # ... (previous code remains the same until the tab processing section)
-
-        # Extract tab content for additional information
-        additional_info = {}
-        tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav").find_elements(By.CLASS_NAME, "ant-tabs-tab")
+        # Log the start of processing
+        print(f"\nStarting to process auction {auction_code}")
         
-        for tab in tabs:
-            tab_name = tab.text.strip()
-            try:
-                # Click the tab
-                driver.execute_script("arguments[0].click();", tab)
-                time.sleep(0.5)
-                
-                # Wait for and retrieve the content of the active tab
-                tab_content_element = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active")
-                
-                # Parse tab content based on the tab name
-                if tab_name == "Детаљи":
-                    # Extract description and sale number
-                    detail_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
-                    for line in detail_lines:
-                        text = line.text.strip()
-                        if "Опис:" in text:
-                            additional_info["description"] = text.replace("Опис:", "").strip()
-                        elif "Продаја:" in text:
-                            additional_info["sale_number"] = text.replace("Продаја:", "").strip()
-                
-                elif tab_name == "Локација":
-                    # Extract location details
-                    location = {}
-                    location_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
-                    for line in location_lines:
-                        text = line.text.strip()
-                        if "Општина:" in text:
-                            location["municipality"] = text.replace("Општина:", "").strip()
-                        elif "Место:" in text:
-                            location["city"] = text.replace("Место:", "").strip()
-                        elif "Катастарска општина:" in text:
-                            location["cadastral_municipality"] = text.replace("Катастарска општина:", "").strip()
-                    additional_info["location"] = location
-                
-                elif tab_name == "Категорија":
-                    # Extract category name directly from text
-                    category_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
-                    additional_info["categories"] = category_element.text.strip()
-                
-                elif tab_name == "Тагови":
-                    # Extract tags directly from text content
-                    tags_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
-                    tags = [tag.text.strip() for tag in tags_elements if tag.text.strip()]
-                    additional_info["tags"] = tags if tags else []
-                
-                elif tab_name == "Јавни извршитељ":
-                    # Extract executor name directly from text
-                    executor_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
-                    additional_info["executor"] = executor_element.text.strip()
-                
-                elif tab_name == "Документи":
-                    # Extract document names and properly split them
-                    document_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
-                    doc_text = "".join([doc.text.strip() for doc in document_elements if doc.text.strip()])
-                    additional_info["documents"] = split_pdf_documents(doc_text)
+        # Construct and navigate to the detail URL
+        detail_url = f"https://eaukcija.sud.rs/#/aukcije/{auction_code}"
+        print(f"Navigating to URL: {detail_url}")
+        driver.get(detail_url)
+        
+        try:
+            # Wait for content to load with longer timeout
+            print("Waiting for auction-info element...")
+            wait_for_element_load(By.CLASS_NAME, "auction-info", timeout=20)
+            time.sleep(2)  # Increased wait time
             
+            # Extract basic details with individual try-except blocks
+            try:
+                print("Extracting basic details...")
+                details["code"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__code", timeout=10).text
+                print(f"Found code: {details['code']}")
             except Exception as e:
-                print(f"Error processing tab '{tab_name}': {e}")
+                print(f"Error extracting code: {e}")
+                details["code"] = auction_code
 
-        # Add additional info to details
-        details["additional_info"] = additional_info
+            try:
+                details["status"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__status", timeout=10).text
+                print(f"Found status: {details['status']}")
+            except Exception as e:
+                print(f"Error extracting status: {e}")
+                details["status"] = "Unknown"
+
+            try:
+                details["title"] = wait_for_element_load(By.CLASS_NAME, "auction-item-title", timeout=10).text
+                print(f"Found title: {details['title']}")
+            except Exception as e:
+                print(f"Error extracting title: {e}")
+                details["title"] = "Unknown"
+
+            details["url"] = detail_url
+
+            # Extract detail lines with error handling
+            print("Extracting detail lines...")
+            try:
+                detail_lines = driver.find_elements(By.CLASS_NAME, "auction-state-info__line")
+                for line in detail_lines:
+                    try:
+                        text = line.text
+                        if "Датум објаве" in text:
+                            date_str = text.split("еАукције")[1].strip()
+                            details["publication_date"] = parse_serbian_date(date_str)
+                        elif "Почетак еАукције" in text:
+                            date_str = text.split("еАукције")[1].strip()
+                            details["start_time"] = parse_serbian_date(date_str)
+                        elif "Крај еАукције" in text:
+                            date_str = text.split("еАукције")[1].strip()
+                            details["end_time"] = parse_serbian_date(date_str)
+                        elif "Почетна цена" in text:
+                            details["pricing"] = details.get("pricing", {})
+                            details["pricing"]["starting_price"] = parse_price(text.split("Почетна цена")[1].strip())
+                        elif "Процењена вредност" in text:
+                            details["pricing"]["estimated_value"] = parse_price(text.split("Процењена вредност")[1].strip())
+                        elif "Лицитациони корак" in text:
+                            details["pricing"]["bidding_step"] = parse_price(text.split("Лицитациони корак")[1].strip())
+                    except Exception as e:
+                        print(f"Error processing detail line: {e}")
+                        continue
+            except Exception as e:
+                print(f"Error finding detail lines: {e}")
+
+            # Extract tab content
+            print("Processing tabs...")
+            additional_info = {}
+            try:
+                tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav", timeout=10).find_elements(By.CLASS_NAME, "ant-tabs-tab")
+                
+                for tab in tabs:
+                    try:
+                        tab_name = tab.text.strip()
+                        print(f"\nProcessing tab: {tab_name}")
+                        
+                        # Click the tab with retry
+                        max_retries = 3
+                        for attempt in range(max_retries):
+                            try:
+                                driver.execute_script("arguments[0].click();", tab)
+                                time.sleep(1)  # Increased wait time
+                                break
+                            except Exception as e:
+                                if attempt == max_retries - 1:
+                                    print(f"Failed to click tab after {max_retries} attempts: {e}")
+                                    raise
+                                time.sleep(1)
+                        
+                        # Wait for and retrieve the content
+                        tab_content_element = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active", timeout=10)
+                        
+                        if tab_name == "Детаљи":
+                            detail_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                            for line in detail_lines:
+                                text = line.text.strip()
+                                if "Опис:" in text:
+                                    additional_info["description"] = text.replace("Опис:", "").strip()
+                                elif "Продаја:" in text:
+                                    additional_info["sale_number"] = text.replace("Продаја:", "").strip()
+                        
+                        elif tab_name == "Локација":
+                            location = {}
+                            location_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                            for line in location_lines:
+                                text = line.text.strip()
+                                if "Општина:" in text:
+                                    location["municipality"] = text.replace("Општина:", "").strip()
+                                elif "Место:" in text:
+                                    location["city"] = text.replace("Место:", "").strip()
+                                elif "Катастарска општина:" in text:
+                                    location["cadastral_municipality"] = text.replace("Катастарска општина:", "").strip()
+                            additional_info["location"] = location
+                        
+                        elif tab_name == "Категорија":
+                            try:
+                                category_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
+                                additional_info["categories"] = category_element.text.strip()
+                            except Exception as e:
+                                print(f"Error extracting category: {e}")
+                                additional_info["categories"] = ""
+                        
+                        elif tab_name == "Тагови":
+                            try:
+                                tags_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
+                                tags = [tag.text.strip() for tag in tags_elements if tag.text.strip()]
+                                additional_info["tags"] = tags if tags else []
+                            except Exception as e:
+                                print(f"Error extracting tags: {e}")
+                                additional_info["tags"] = []
+                        
+                        elif tab_name == "Јавни извршитељ":
+                            try:
+                                executor_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
+                                additional_info["executor"] = executor_element.text.strip()
+                            except Exception as e:
+                                print(f"Error extracting executor: {e}")
+                                additional_info["executor"] = ""
+                        
+                        elif tab_name == "Документи":
+                            try:
+                                document_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
+                                doc_text = "".join([doc.text.strip() for doc in document_elements if doc.text.strip()])
+                                additional_info["documents"] = split_pdf_documents(doc_text)
+                            except Exception as e:
+                                print(f"Error extracting documents: {e}")
+                                additional_info["documents"] = []
+                                
+                    except Exception as e:
+                        print(f"Error processing tab '{tab_name}': {e}")
+                        continue
+                
+            except Exception as e:
+                print(f"Error processing tabs: {e}")
+
+            # Add additional info to details
+            details["additional_info"] = additional_info
+            
+        except Exception as e:
+            print(f"Error during main content extraction: {e}")
         
-        # Return to the listing page
-        driver.get(current_url)
-        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
-        time.sleep(1)
+        finally:
+            # Always try to return to the listing page
+            print("Returning to listing page...")
+            try:
+                driver.get(current_url)
+                wait_for_element_load(By.CLASS_NAME, "auction-list-item", timeout=10)
+                time.sleep(1)
+            except Exception as e:
+                print(f"Error returning to listing page: {e}")
         
         return details
         
     except Exception as e:
-        print(f"Error extracting details for auction {auction_code}: {e}")
-        # Return to the listing page on error
-        driver.get(current_url)
-        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
-        time.sleep(1)
+        print(f"Critical error processing auction {auction_code}: {str(e)}")
+        # Try to return to the listing page
+        try:
+            driver.get(current_url)
+            wait_for_element_load(By.CLASS_NAME, "auction-list-item", timeout=10)
+            time.sleep(1)
+        except Exception as nav_error:
+            print(f"Error navigating back after critical error: {nav_error}")
         return None
 
 
