@@ -3,87 +3,180 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import time
 from selenium.webdriver.chrome.options import Options
 import json
 
 # Set up WebDriver
-service = Service("/usr/bin/chromedriver")  # Adjust the path if needed
-# options = Options()
+service = Service("/usr/bin/chromedriver")
+options = Options()
 # options.add_argument("--headless")
-# driver = webdriver.Chrome(service=service, options=options)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=options)
+driver.maximize_window()
 
-# Function to extract auction data from the current page
-def extract_data():
+def wait_for_element_load(by, selector, timeout=10):
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((by, selector))
+    )
+
+def wait_for_url_change(old_url):
+    def url_changed(driver):
+        return driver.current_url != old_url
+    WebDriverWait(driver, 10).until(url_changed)
+
+def extract_details(auction_code):
+    details = {}
+    current_url = driver.current_url
+    try:
+        # Construct and navigate to the detail URL
+        detail_url = f"https://eaukcija.sud.rs/#/aukcije/{auction_code}"
+        driver.get(detail_url)
+        
+        # Wait for content to load
+        wait_for_element_load(By.CLASS_NAME, "auction-info")
+        time.sleep(1)  # Additional wait for dynamic content
+        
+        # Extract basic details
+        details["code"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__code").text
+        details["status"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__status").text
+        details["title"] = wait_for_element_load(By.CLASS_NAME, "auction-item-title").text
+        details["url"] = detail_url
+
+        # Extract detail lines
+        detail_lines = driver.find_elements(By.CLASS_NAME, "auction-state-info__line")
+        for line in detail_lines:
+            text = line.text
+            if "Датум објаве" in text:
+                details["publication_date"] = text.split("еАукције")[1].strip()
+            elif "Почетак еАукције" in text:
+                details["start_time"] = text.split("еАукције")[1].strip()
+            elif "Крај еАукције" in text:
+                details["end_time"] = text.split("еАукције")[1].strip()
+            elif "Почетна цена" in text:
+                details["starting_price"] = text.split("Почетна цена")[1].strip()
+            elif "Процењена вредност" in text:
+                details["estimated_value"] = text.split("Процењена вредност")[1].strip()
+            elif "Лицитациони корак" in text:
+                details["bidding_step"] = text.split("Лицитациони корак")[1].strip()
+
+        # Extract tab content
+        additional_info = {}
+        tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav").find_elements(By.CLASS_NAME, "ant-tabs-tab")
+        
+        for tab in tabs:
+            tab_name = tab.text
+            try:
+                driver.execute_script("arguments[0].click();", tab)
+                time.sleep(0.5)
+                tab_content = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active").text
+                additional_info[tab_name] = tab_content
+            except Exception as e:
+                print(f"Error loading tab '{tab_name}': {e}")
+
+        details["additional_info"] = additional_info
+        
+        # Return to the listing page
+        driver.get(current_url)
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)
+        
+        return details
+        
+    except Exception as e:
+        print(f"Error extracting details for auction {auction_code}: {e}")
+        # Return to the listing page on error
+        driver.get(current_url)
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)
+        return None
+
+def extract_auctions_from_page():
     auctions = []
-    # Find all auction items
-    auction_items = driver.find_elements(By.CLASS_NAME, "auction-list-item")
-    for item in auction_items:
-        try:
-            code = item.find_element(By.CLASS_NAME, "auction-list-item__code").text
-            status = item.find_element(By.CLASS_NAME, "auction-list-item__status").text
-            title = item.find_element(By.CLASS_NAME, "auction-list-item__title").text
-            countdowns = item.find_elements(By.CLASS_NAME, "auction-list-item__countdown")
-            start_time = countdowns[0].text if len(countdowns) > 0 else None
-            end_time = countdowns[1].text if len(countdowns) > 1 else None
-            price = item.find_element(By.CLASS_NAME, "auction-list-item__price").text
-            link = item.find_element(By.TAG_NAME, "a").get_attribute("href")
-            
-            auctions.append({
-                "code": code,
-                "status": status,
-                "title": title,
-                "start_time": start_time,
-                "end_time": end_time,
-                "price": price,
-                "link": link,
-            })
-        except Exception as e:
-            print(f"Error extracting item: {e}")
-    return auctions
-
-# Function to handle pagination with a limit on the number of pages
-def scrape_pages(start_url, max_pages=5):
-    driver.get(start_url)
-    all_auctions = []
-    page_count = 0
-
-    while page_count < max_pages:
+    try:
         # Wait for auction items to load
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "auction-list-item"))
-        )
-        # Extract data from the current page
-        auctions = extract_data()
-        all_auctions.extend(auctions)
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)
+        
+        # Find all auction items
+        items = driver.find_elements(By.CLASS_NAME, "auction-list-item")
+        
+        for item in items:
+            try:
+                code = item.find_element(By.CLASS_NAME, "auction-list-item__code").text
+                numeric_code = ''.join(filter(str.isdigit, code))
+                auctions.append({"code": code, "numeric_code": numeric_code})
+            except Exception as e:
+                print(f"Error extracting item data: {e}")
+                
+        return auctions
+    except Exception as e:
+        print(f"Error finding auction items: {e}")
+        return []
 
-        # Check if the "Next" button is disabled or not
-        try:
-            next_button = driver.find_element(By.CLASS_NAME, "pagination-next")
-            if "disabled" in next_button.get_attribute("class"):
-                print("Reached the last page.")
-                break  # Exit loop if no more pages
-            else:
-                next_button.click()  # Click "Next" to go to the next page
-                time.sleep(2)  # Wait for the next page to load
-                page_count += 1
-        except Exception as e:
-            print(f"Pagination error: {e}")
-            break  # Break loop if pagination button is not found or error occurs
+def check_page_has_content():
+    try:
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        return True
+    except TimeoutException:
+        return False
 
-    return all_auctions
+def navigate_to_page(base_url, page_num):
+    page_url = f"{base_url}#/?stranica={page_num}"
+    current_url = driver.current_url
+    driver.get(page_url)
+    if current_url != page_url:
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(2)  # Wait for all items to load
+    return page_url
+
+def scrape_pages(base_url, max_pages=3):
+    all_details = []
+    processed_codes = set()
+
+    for page_num in range(1, max_pages + 1):
+        print(f"\nProcessing page {page_num}")
+        
+        # Navigate to page
+        current_page_url = navigate_to_page(base_url, page_num)
+        
+        # Check if page has content
+        if not check_page_has_content():
+            print(f"No content found on page {page_num}")
+            break
+        
+        # Get all auctions from current page
+        page_auctions = extract_auctions_from_page()
+        print(f"Found {len(page_auctions)} auctions on page {page_num}")
+        
+        if not page_auctions:
+            print("No auctions found, ending pagination")
+            break
+        
+        # Process each auction
+        for auction in page_auctions:
+            if auction["code"] not in processed_codes:
+                print(f"Processing auction {auction['code']}")
+                details = extract_details(auction["numeric_code"])
+                if details:
+                    all_details.append(details)
+                    processed_codes.add(auction["code"])
+                    print(f"Successfully extracted details for auction {auction['code']}")
+
+    return all_details
 
 # Start scraping
 try:
-    url = "https://eaukcija.sud.rs"  # Replace with the actual URL of the auctions
-    max_pages = 5  # Number of pages to scrape
-    auction_data = scrape_pages(url, max_pages=max_pages)
+    base_url = "https://eaukcija.sud.rs"
+    max_pages = 5
+    auction_details = scrape_pages(base_url, max_pages=max_pages)
 
-    # Save the data to a JSON file
-    with open("auctions.json", "w", encoding="utf-8") as file:
-        json.dump(auction_data, file, ensure_ascii=False, indent=4)
+    # Save data to JSON
+    with open("auction_details.json", "w", encoding="utf-8") as file:
+        json.dump(auction_details, file, ensure_ascii=False, indent=4)
 
-    print(f"Scraped {len(auction_data)} auction items across {max_pages} page(s). Data saved to 'auctions.json'.")
+    print(f"\nSuccessfully scraped {len(auction_details)} unique auctions.")
+    print("Data saved to 'auction_details.json'")
+
 finally:
     driver.quit()

@@ -1,203 +1,156 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import time
+from selenium.webdriver.chrome.options import Options
 import json
-import logging
-from datetime import datetime
-from urllib.parse import urljoin
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Set up WebDriver
+service = Service("/usr/bin/chromedriver")  # Adjust path as needed
+options = Options()
+# Uncomment below for headless mode
+# options.add_argument("--headless")
+driver = webdriver.Chrome(service=service, options=options)
+driver.maximize_window()  # Maximize window to ensure all elements are visible
 
-class AuctionScraper:
-    def __init__(self, base_url):
-        self.base_url = base_url.rstrip('/')
-        self.options = Options()
-        self.options.add_argument('--headless')
-        self.options.add_argument('--no-sandbox')
-        self.options.add_argument('--disable-dev-shm-usage')
-        self.driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=self.options)
-        self.wait = WebDriverWait(self.driver, 10)
+def wait_for_element_load(by, selector, timeout=10):
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((by, selector))
+    )
 
-    def parse_tab_content(self, soup):
-        """Parse all tabs content from the additional info wrapper."""
-        tabs_data = {}
+def wait_for_page_to_load(timeout=10):
+    WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "auction-item-title"))
+    )
 
-        tab_titles = [tab.text.strip() for tab in soup.select('.ant-tabs-tab')]
-        tab_panes = soup.select('.ant-tabs-tabpane')
-
-        for title, pane in zip(tab_titles, tab_panes):
-            if title == "Детаљи":
-                details = {}
-                for row in pane.select('.info-label-row'):
-                    text = row.text.strip()
-                    if ':' in text:
-                        key, value = text.split(':', 1)
-                        details[key.strip()] = value.strip()
-                tabs_data['details'] = details
-            if title == "Локација":
-                location = {}
-                for row in pane.select('.info-label-row'):
-                    if ':' in row.text:
-                        key, value = row.text.split(':', 1)
-                        location[key.strip()] = value.strip()
-                tabs_data['location'] = location
-            elif title == "Категорија":
-                category = pane.select_one('.category-name')
-                if category:
-                    tabs_data['category'] = category.text.strip()
-
-            elif title == "Тагови":
-                tags = []
-                tag_elements = pane.select('.category-name')
-                for tag in tag_elements:
-                    tags.append(tag.text.strip())
-                tabs_data['tags'] = tags
-
-            elif title == "Јавни извршитељ":
-                executor = pane.select_one('.category-name')
-                if executor:
-                    tabs_data['executor'] = executor.text.strip()
-
-            elif title == "Документи":
-                documents = [button.text.strip() for button in pane.select('.auction-form__download-button')]
-                tabs_data['documents'] = documents
-
-        return tabs_data
-
-    def parse_detail_page(self, url):
-        try:
-            # Handle fragment URLs
-            full_url = urljoin(self.base_url, url.split('#')[0])  # Remove fragments
-            logger.info(f"Parsing detail page: {full_url}")
-            
-            # Navigate to the base URL and then simulate clicking to the detail page
-            self.driver.get(full_url)
-            if '#' in url:
-                fragment = url.split('#')[-1]
-                self.driver.execute_script(f"window.location.hash='{fragment}'")
-            
-            # Wait for content to load
-            self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "content-with-side__main")))
-            
-            # Parse the page source with BeautifulSoup
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-            auction_info = {}
-
-            # Extract code and status
-            info_row = soup.select_one('.auction-list-item__info-row')
-            if info_row:
-                code_elem = info_row.select_one('.auction-list-item__code')
-                status_elem = info_row.select_one('.auction-list-item__status')
-                if code_elem:
-                    auction_info['code'] = code_elem.text.strip()
-                if status_elem:
-                    auction_info['status'] = status_elem.text.strip()
-
-            # Extract title
-            title_elem = soup.select_one('.auction-item-title')
-            if title_elem:
-                auction_info['title'] = title_elem.text.strip()
-
-            # Extract dates and prices
-            for info_line in soup.select('.auction-state-info__line'):
-                text = info_line.text.strip()
-                if 'Почетна цена' in text:
-                    auction_info['initial_price'] = text.replace('Почетна цена', '').replace('РСД', '').strip()
-                elif 'Процењена вредност' in text:
-                    auction_info['estimated_value'] = text.replace('Процењена вредност', '').replace('РСД', '').strip()
-                elif 'Лицитациони корак' in text:
-                    auction_info['bid_step'] = text.replace('Лицитациони корак', '').replace('РСД', '').strip()
-                elif 'Датум објаве' in text:
-                    auction_info['publication_date'] = text.replace('Датум објаве еАукције', '').strip()
-                elif 'Почетак еАукције' in text:
-                    auction_info['start_date'] = text.replace('Почетак еАукције', '').strip()
-                elif 'Крај еАукције' in text:
-                    auction_info['end_date'] = text.replace('Крај еАукције', '').strip()
-
-            # Parse additional info tabs
-            additional_info = self.parse_tab_content(soup.select_one('.additional-info-wrapper'))
-            auction_info.update(additional_info)
-
-            auction_info['url'] = full_url
-            return auction_info
-
-        except Exception as e:
-            logger.error(f"Error parsing detail page {url}: {e}")
-            return None
-
-    def get_total_pages(self):
-        try:
-            self.driver.get(self.base_url)
-            self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "auction-list-item")))
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-            pagination = soup.select('.pagination-pager a')
-            pages = [int(page.text) for page in pagination if page.text.strip().isdigit()]
-            return max(pages) if pages else 1
-        except Exception as e:
-            logger.error(f"Error determining total pages: {e}")
-            return 1
-
-    def scrape_page(self, page_num):
-        try:
-            url = f"{self.base_url}?page={page_num}"
-            logger.info(f"Scraping page: {url}")
-
-            self.driver.get(url)
-            self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "auction-list-item")))
-
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-            items = soup.select('.auction-list-item')
-
-            results = []
-            for item in items:
-                link = item.select_one('a')
-                if link and link.get('href'):
-                    detail_data = self.parse_detail_page(link['href'])
-                    if detail_data:
-                        results.append(detail_data)
-
-            return results
-        except Exception as e:
-            logger.error(f"Error scraping page {page_num}: {e}")
-            return []
-
-    def scrape_all(self):
-        all_results = []
-        total_pages = self.get_total_pages()
-        logger.info(f"Total pages to scrape: {total_pages}")
-
-        for page in range(1, total_pages + 1):
-            logger.info(f"Scraping page {page}/{total_pages}")
-            page_results = self.scrape_page(page)
-            all_results.extend(page_results)
-
-        return all_results
-
-    def save_results(self, results, filename):
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(results, f, ensure_ascii=False, indent=2)
-
-    def close(self):
-        self.driver.quit()
-
-
-def main():
-    base_url = "https://eaukcija.sud.rs"
-    output_file = "auction_data.json"
-
-    scraper = AuctionScraper(base_url)
+def extract_details(auction_code):
+    details = {}
     try:
-        results = scraper.scrape_all()
-        scraper.save_results(results, output_file)
-        logger.info(f"Scraping completed. Data saved to {output_file}")
-    finally:
-        scraper.close()
+        # Construct and navigate to the detail URL
+        detail_url = f"https://eaukcija.sud.rs/#/aukcije/{auction_code}"
+        driver.get(detail_url)
+        wait_for_page_to_load()
+        time.sleep(1)  # Small additional wait for dynamic content
+        
+        # Extract basic details
+        details["code"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__code").text
+        details["status"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__status").text
+        details["title"] = wait_for_element_load(By.CLASS_NAME, "auction-item-title").text
+        details["url"] = detail_url
 
+        # Extract detail lines
+        detail_lines = driver.find_elements(By.CLASS_NAME, "auction-state-info__line")
+        for line in detail_lines:
+            text = line.text
+            if "Датум објаве" in text:
+                details["publication_date"] = text.split("еАукције")[1].strip()
+            elif "Почетак еАукције" in text:
+                details["start_time"] = text.split("еАукције")[1].strip()
+            elif "Крај еАукције" in text:
+                details["end_time"] = text.split("еАукције")[1].strip()
+            elif "Почетна цена" in text:
+                details["starting_price"] = text.split("Почетна цена")[1].strip()
+            elif "Процењена вредност" in text:
+                details["estimated_value"] = text.split("Процењена вредност")[1].strip()
+            elif "Лицитациони корак" in text:
+                details["bidding_step"] = text.split("Лицитациони корак")[1].strip()
 
-if __name__ == "__main__":
-    main()
+        # Extract tab content
+        additional_info = {}
+        tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav").find_elements(By.CLASS_NAME, "ant-tabs-tab")
+        
+        for tab in tabs:
+            tab_name = tab.text
+            try:
+                driver.execute_script("arguments[0].click();", tab)
+                time.sleep(0.5)
+                tab_content = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active").text
+                additional_info[tab_name] = tab_content
+            except Exception as e:
+                print(f"Error loading tab '{tab_name}': {e}")
+
+        details["additional_info"] = additional_info
+        return details
+        
+    except Exception as e:
+        print(f"Error extracting details for auction {auction_code}: {e}")
+        return None
+
+def extract_auctions_from_page():
+    auctions = []
+    try:
+        # Wait for auction items to load
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)  # Small additional wait for dynamic content
+        
+        # Find all auction items
+        items = driver.find_elements(By.CLASS_NAME, "auction-list-item")
+        
+        for item in items:
+            try:
+                code = item.find_element(By.CLASS_NAME, "auction-list-item__code").text
+                numeric_code = ''.join(filter(str.isdigit, code))
+                auctions.append({"code": code, "numeric_code": numeric_code})
+            except Exception as e:
+                print(f"Error extracting item data: {e}")
+                
+        return auctions
+    except Exception as e:
+        print(f"Error finding auction items: {e}")
+        return []
+
+def check_page_has_content():
+    try:
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        return True
+    except TimeoutException:
+        return False
+
+def scrape_pages(base_url, max_pages=3):
+    all_details = []
+    processed_codes = set()
+
+    for page_num in range(1, max_pages + 1):
+        page_url = f"{base_url}#/?stranica={page_num}"
+        print(f"\nProcessing page {page_num}")
+        
+        driver.get(page_url)
+        time.sleep(2)  # Wait for page load
+        
+        if not check_page_has_content():
+            print(f"No content found on page {page_num}")
+            break
+        
+        page_auctions = extract_auctions_from_page()
+        print(f"Found {len(page_auctions)} auctions on page {page_num}")
+        
+        if not page_auctions:
+            print("No auctions found, ending pagination")
+            break
+        
+        for auction in page_auctions:
+            if auction["code"] not in processed_codes:
+                print(f"Processing auction {auction['code']}")
+                details = extract_details(auction["numeric_code"])
+                if details:
+                    all_details.append(details)
+                    processed_codes.add(auction["code"])
+
+    return all_details
+
+# Start scraping
+try:
+    base_url = "https://eaukcija.sud.rs"
+    max_pages = 5
+    auction_details = scrape_pages(base_url, max_pages=max_pages)
+
+    with open("auction_details.json", "w", encoding="utf-8") as file:
+        json.dump(auction_details, file, ensure_ascii=False, indent=4)
+
+    print(f"\nSuccessfully scraped {len(auction_details)} unique auctions.")
+    print("Data saved to 'auctions.json'")
+finally:
+    driver.quit()
