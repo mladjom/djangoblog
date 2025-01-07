@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import time
 from selenium.webdriver.chrome.options import Options
 import json
+from datetime import datetime
 
 # Set up WebDriver
 service = Service("/usr/bin/chromedriver")
@@ -24,6 +25,76 @@ def wait_for_url_change(old_url):
     def url_changed(driver):
         return driver.current_url != old_url
     WebDriverWait(driver, 10).until(url_changed)
+
+def parse_price(price_str):
+    # Remove currency and extra spaces
+    price_str = price_str.replace("РСД", "").strip()
+    # Replace thousands separator (dot) and decimal separator (comma) with period
+    price_str = price_str.replace(".", "").replace(",", ".")
+    # Convert to float
+    try:
+        return float(price_str)
+    except ValueError:
+        print(f"Error converting price: {price_str}")
+        return None
+
+def parse_serbian_date(date_str):
+    """
+    Parse Serbian date strings into datetime objects.
+    Handles formats like:
+    - "16. дец. 2024."
+    - "08. јан. 2025. 09:00"
+    
+    Args:
+        date_str (str): Serbian date string to parse
+    
+    Returns:
+        datetime: Parsed datetime object
+    """
+    # Serbian month abbreviations mapping
+    serbian_months = {
+        'јан': '01', 'феб': '02', 'мар': '03', 'апр': '04',
+        'мај': '05', 'јун': '06', 'јул': '07', 'авг': '08',
+        'сеп': '09', 'окт': '10', 'нов': '11', 'дец': '12'
+    }
+    
+    # Clean up the input string
+    date_str = date_str.strip().lower()
+    
+    # Remove trailing dot if present
+    if date_str.endswith('.'):
+        date_str = date_str[:-1]
+        
+    # Split into components
+    parts = [p.strip() for p in date_str.split('.') if p.strip()]
+    
+    # Extract day, month, year, and time if present
+    day = parts[0].zfill(2)
+    month = serbian_months[parts[1].strip()]
+    year = parts[2]
+    
+    # Check if time is included
+    time_str = "00:00"
+    if len(parts) > 3:
+        time_str = parts[3]
+    
+    # Construct datetime string in standard format
+    datetime_str = f"{year}-{month}-{day} {time_str}"
+    
+    # Parse and return datetime object
+    return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
+
+# Example usage with your data:
+dates = {
+    "publication_date": "16. дец. 2024.",
+    "start_time": "08. јан. 2025. 09:00",
+    "end_time": "08. јан. 2025. 13:00"
+}
+
+parsed_dates = {
+    key: parse_serbian_date(value) for key, value in dates.items()
+}
+
 
 def extract_details(auction_code):
     details = {}
@@ -43,37 +114,91 @@ def extract_details(auction_code):
         details["title"] = wait_for_element_load(By.CLASS_NAME, "auction-item-title").text
         details["url"] = detail_url
 
-        # Extract detail lines
+        # Extract detail lines (for publication date, start time, end time, prices)
         detail_lines = driver.find_elements(By.CLASS_NAME, "auction-state-info__line")
         for line in detail_lines:
             text = line.text
             if "Датум објаве" in text:
-                details["publication_date"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["publication_date"] = parse_serbian_date(date_str)
             elif "Почетак еАукције" in text:
-                details["start_time"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["start_time"] = parse_serbian_date(date_str)
             elif "Крај еАукције" in text:
-                details["end_time"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["end_time"] = parse_serbian_date(date_str)
             elif "Почетна цена" in text:
-                details["starting_price"] = text.split("Почетна цена")[1].strip()
+                details["pricing"] = details.get("pricing", {})
+                details["pricing"]["starting_price"] = parse_price(text.split("Почетна цена")[1].strip())
             elif "Процењена вредност" in text:
-                details["estimated_value"] = text.split("Процењена вредност")[1].strip()
+                details["pricing"]["estimated_value"] = parse_price(text.split("Процењена вредност")[1].strip())
             elif "Лицитациони корак" in text:
-                details["bidding_step"] = text.split("Лицитациони корак")[1].strip()
+                details["pricing"]["bidding_step"] = parse_price(text.split("Лицитациони корак")[1].strip())
+        
 
-        # Extract tab content
+        # Extract tab content for additional information (category, executor, description, sale number, tags)
         additional_info = {}
         tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav").find_elements(By.CLASS_NAME, "ant-tabs-tab")
         
         for tab in tabs:
-            tab_name = tab.text
+            tab_name = tab.text.strip()
             try:
+                # Click the tab
                 driver.execute_script("arguments[0].click();", tab)
                 time.sleep(0.5)
-                tab_content = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active").text
-                additional_info[tab_name] = tab_content
+                
+                # Wait for and retrieve the content of the active tab
+                tab_content_element = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active")
+                tab_content = tab_content_element.get_attribute("innerHTML").strip()
+                
+                # Parse tab content based on the tab name
+                if tab_name == "Детаљи":
+                    # Extract description and sale number
+                    detail_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                    for line in detail_lines:
+                        text = line.text.strip()
+                        if "Опис:" in text:
+                            additional_info["description"] = text.replace("Опис:", "").strip()
+                        elif "Продаја:" in text:
+                            additional_info["sale_number"] = text.replace("Продаја:", "").strip()
+                
+                elif tab_name == "Локација":
+                    # Extract location details
+                    location = {}
+                    location_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                    for line in location_lines:
+                        text = line.text.strip()
+                        if "Општина:" in text:
+                            location["municipality"] = text.replace("Општина:", "").strip()
+                        elif "Место:" in text:
+                            location["city"] = text.replace("Место:", "").strip()
+                        elif "Катастарска општина:" in text:
+                            location["cadastral_municipality"] = text.replace("Катастарска општина:", "").strip()
+                    additional_info["location"] = location
+                
+                elif tab_name == "Категорија":
+                    # Extract category name
+                    category_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
+                    additional_info["categories"] = category_element.text.strip()
+                
+                elif tab_name == "Тагови":
+                    # Extract tags
+                    additional_info["tags"] = tab_content
+                
+                elif tab_name == "Јавни извршитељ":
+                    # Extract executor
+                    additional_info["executor"] = tab_content
+                
+                elif tab_name == "Документи":
+                    # Extract document names
+                    document_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
+                    additional_info["documents"] = [doc.text.strip() for doc in document_elements if doc.text.strip()]
+            
             except Exception as e:
-                print(f"Error loading tab '{tab_name}': {e}")
+                print(f"Error processing tab '{tab_name}': {e}")
 
+
+        # Add additional info to details
         details["additional_info"] = additional_info
         
         # Return to the listing page
@@ -90,6 +215,7 @@ def extract_details(auction_code):
         wait_for_element_load(By.CLASS_NAME, "auction-list-item")
         time.sleep(1)
         return None
+
 
 def extract_auctions_from_page():
     auctions = []
@@ -168,7 +294,7 @@ def scrape_pages(base_url, max_pages=3):
 # Start scraping
 try:
     base_url = "https://eaukcija.sud.rs"
-    max_pages = 5
+    max_pages = 1
     auction_details = scrape_pages(base_url, max_pages=max_pages)
 
     # Save data to JSON

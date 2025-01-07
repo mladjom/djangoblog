@@ -4,36 +4,99 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-import time
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+import time
 import json
+from json import JSONEncoder
+
+class DateTimeEncoder(JSONEncoder):
+    """Custom JSON Encoder that handles datetime objects by converting them to ISO format strings"""
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return super().default(obj)
 
 # Set up WebDriver
-service = Service("/usr/bin/chromedriver")  # Adjust path as needed
+service = Service("/usr/bin/chromedriver")
 options = Options()
-# Uncomment below for headless mode
-# options.add_argument("--headless")
+#options.add_argument("--headless")
 driver = webdriver.Chrome(service=service, options=options)
-driver.maximize_window()  # Maximize window to ensure all elements are visible
+driver.maximize_window()
 
 def wait_for_element_load(by, selector, timeout=10):
     return WebDriverWait(driver, timeout).until(
         EC.presence_of_element_located((by, selector))
     )
 
-def wait_for_page_to_load(timeout=10):
-    WebDriverWait(driver, timeout).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "auction-item-title"))
-    )
+def wait_for_url_change(old_url):
+    def url_changed(driver):
+        return driver.current_url != old_url
+    WebDriverWait(driver, 10).until(url_changed)
+
+def parse_price(price_str):
+    # Remove currency and extra spaces
+    price_str = price_str.replace("РСД", "").strip()
+    # Replace thousands separator (dot) and decimal separator (comma) with period
+    price_str = price_str.replace(".", "").replace(",", ".")
+    # Convert to float
+    try:
+        return float(price_str)
+    except ValueError:
+        print(f"Error converting price: {price_str}")
+        return None
+
+def parse_serbian_date(date_str):
+    """
+    Parse Serbian date strings into datetime objects.
+    Handles formats like:
+    - "16. дец. 2024."
+    - "08. јан. 2025. 09:00"
+    """
+    # Serbian month abbreviations mapping
+    serbian_months = {
+        'јан': '01', 'феб': '02', 'мар': '03', 'апр': '04',
+        'мај': '05', 'јун': '06', 'јул': '07', 'авг': '08',
+        'сеп': '09', 'окт': '10', 'нов': '11', 'дец': '12'
+    }
+    
+    # Clean up the input string
+    date_str = date_str.strip().lower()
+    
+    # Remove trailing dot if present
+    if date_str.endswith('.'):
+        date_str = date_str[:-1]
+        
+    # Split into components
+    parts = [p.strip() for p in date_str.split('.') if p.strip()]
+    
+    # Extract day, month, year, and time if present
+    day = parts[0].zfill(2)
+    month = serbian_months[parts[1].strip()]
+    year = parts[2]
+    
+    # Check if time is included
+    time_str = "00:00"
+    if len(parts) > 3:
+        time_str = parts[3]
+    
+    # Construct datetime string in standard format
+    datetime_str = f"{year}-{month}-{day} {time_str}"
+    
+    # Parse and return datetime object
+    return datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
 
 def extract_details(auction_code):
     details = {}
+    current_url = driver.current_url
     try:
         # Construct and navigate to the detail URL
         detail_url = f"https://eaukcija.sud.rs/#/aukcije/{auction_code}"
         driver.get(detail_url)
-        wait_for_page_to_load()
-        time.sleep(1)  # Small additional wait for dynamic content
+        
+        # Wait for content to load
+        wait_for_element_load(By.CLASS_NAME, "auction-info")
+        time.sleep(1)  # Additional wait for dynamic content
         
         # Extract basic details
         details["code"] = wait_for_element_load(By.CLASS_NAME, "auction-list-item__code").text
@@ -41,42 +104,104 @@ def extract_details(auction_code):
         details["title"] = wait_for_element_load(By.CLASS_NAME, "auction-item-title").text
         details["url"] = detail_url
 
-        # Extract detail lines
+        # Extract detail lines (for publication date, start time, end time, prices)
         detail_lines = driver.find_elements(By.CLASS_NAME, "auction-state-info__line")
         for line in detail_lines:
             text = line.text
             if "Датум објаве" in text:
-                details["publication_date"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["publication_date"] = parse_serbian_date(date_str)
             elif "Почетак еАукције" in text:
-                details["start_time"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["start_time"] = parse_serbian_date(date_str)
             elif "Крај еАукције" in text:
-                details["end_time"] = text.split("еАукције")[1].strip()
+                date_str = text.split("еАукције")[1].strip()
+                details["end_time"] = parse_serbian_date(date_str)
             elif "Почетна цена" in text:
-                details["starting_price"] = text.split("Почетна цена")[1].strip()
+                details["pricing"] = details.get("pricing", {})
+                details["pricing"]["starting_price"] = parse_price(text.split("Почетна цена")[1].strip())
             elif "Процењена вредност" in text:
-                details["estimated_value"] = text.split("Процењена вредност")[1].strip()
+                details["pricing"]["estimated_value"] = parse_price(text.split("Процењена вредност")[1].strip())
             elif "Лицитациони корак" in text:
-                details["bidding_step"] = text.split("Лицитациони корак")[1].strip()
+                details["pricing"]["bidding_step"] = parse_price(text.split("Лицитациони корак")[1].strip())
 
-        # Extract tab content
+        # Extract tab content for additional information
         additional_info = {}
         tabs = wait_for_element_load(By.CLASS_NAME, "ant-tabs-nav").find_elements(By.CLASS_NAME, "ant-tabs-tab")
         
         for tab in tabs:
-            tab_name = tab.text
+            tab_name = tab.text.strip()
             try:
+                # Click the tab
                 driver.execute_script("arguments[0].click();", tab)
                 time.sleep(0.5)
-                tab_content = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active").text
-                additional_info[tab_name] = tab_content
+                
+                # Wait for and retrieve the content of the active tab
+                tab_content_element = wait_for_element_load(By.CLASS_NAME, "ant-tabs-tabpane-active")
+                tab_content = tab_content_element.get_attribute("innerHTML").strip()
+                
+                # Parse tab content based on the tab name
+                if tab_name == "Детаљи":
+                    # Extract description and sale number
+                    detail_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                    for line in detail_lines:
+                        text = line.text.strip()
+                        if "Опис:" in text:
+                            additional_info["description"] = text.replace("Опис:", "").strip()
+                        elif "Продаја:" in text:
+                            additional_info["sale_number"] = text.replace("Продаја:", "").strip()
+                
+                elif tab_name == "Локација":
+                    # Extract location details
+                    location = {}
+                    location_lines = tab_content_element.find_elements(By.CLASS_NAME, "info-label-row")
+                    for line in location_lines:
+                        text = line.text.strip()
+                        if "Општина:" in text:
+                            location["municipality"] = text.replace("Општина:", "").strip()
+                        elif "Место:" in text:
+                            location["city"] = text.replace("Место:", "").strip()
+                        elif "Катастарска општина:" in text:
+                            location["cadastral_municipality"] = text.replace("Катастарска општина:", "").strip()
+                    additional_info["location"] = location
+                
+                elif tab_name == "Категорија":
+                    # Extract category name
+                    category_element = tab_content_element.find_element(By.CLASS_NAME, "category-name")
+                    additional_info["categories"] = category_element.text.strip()
+                
+                elif tab_name == "Тагови":
+                    # Extract tags
+                    additional_info["tags"] = tab_content.strip()
+                
+                elif tab_name == "Јавни извршитељ":
+                    # Extract executor
+                    additional_info["executor"] = tab_content.strip()
+                
+                elif tab_name == "Документи":
+                    # Extract document names
+                    document_elements = tab_content_element.find_elements(By.CLASS_NAME, "category-name")
+                    additional_info["documents"] = [doc.text.strip() for doc in document_elements if doc.text.strip()]
+            
             except Exception as e:
-                print(f"Error loading tab '{tab_name}': {e}")
+                print(f"Error processing tab '{tab_name}': {e}")
 
+        # Add additional info to details
         details["additional_info"] = additional_info
+        
+        # Return to the listing page
+        driver.get(current_url)
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)
+        
         return details
         
     except Exception as e:
         print(f"Error extracting details for auction {auction_code}: {e}")
+        # Return to the listing page on error
+        driver.get(current_url)
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(1)
         return None
 
 def extract_auctions_from_page():
@@ -84,7 +209,7 @@ def extract_auctions_from_page():
     try:
         # Wait for auction items to load
         wait_for_element_load(By.CLASS_NAME, "auction-list-item")
-        time.sleep(1)  # Small additional wait for dynamic content
+        time.sleep(1)
         
         # Find all auction items
         items = driver.find_elements(By.CLASS_NAME, "auction-list-item")
@@ -109,21 +234,31 @@ def check_page_has_content():
     except TimeoutException:
         return False
 
+def navigate_to_page(base_url, page_num):
+    page_url = f"{base_url}#/?stranica={page_num}"
+    current_url = driver.current_url
+    driver.get(page_url)
+    if current_url != page_url:
+        wait_for_element_load(By.CLASS_NAME, "auction-list-item")
+        time.sleep(2)  # Wait for all items to load
+    return page_url
+
 def scrape_pages(base_url, max_pages=3):
     all_details = []
     processed_codes = set()
 
     for page_num in range(1, max_pages + 1):
-        page_url = f"{base_url}#/?stranica={page_num}"
         print(f"\nProcessing page {page_num}")
         
-        driver.get(page_url)
-        time.sleep(2)  # Wait for page load
+        # Navigate to page
+        current_page_url = navigate_to_page(base_url, page_num)
         
+        # Check if page has content
         if not check_page_has_content():
             print(f"No content found on page {page_num}")
             break
         
+        # Get all auctions from current page
         page_auctions = extract_auctions_from_page()
         print(f"Found {len(page_auctions)} auctions on page {page_num}")
         
@@ -131,6 +266,7 @@ def scrape_pages(base_url, max_pages=3):
             print("No auctions found, ending pagination")
             break
         
+        # Process each auction
         for auction in page_auctions:
             if auction["code"] not in processed_codes:
                 print(f"Processing auction {auction['code']}")
@@ -138,19 +274,44 @@ def scrape_pages(base_url, max_pages=3):
                 if details:
                     all_details.append(details)
                     processed_codes.add(auction["code"])
+                    print(f"Successfully extracted details for auction {auction['code']}")
 
     return all_details
 
-# Start scraping
-try:
-    base_url = "https://eaukcija.sud.rs"
-    max_pages = 5
-    auction_details = scrape_pages(base_url, max_pages=max_pages)
+def save_auction_details(auction_details, filename="auction_details.json"):
+    """Save auction details to a JSON file with proper datetime handling"""
+    with open(filename, "w", encoding="utf-8") as file:
+        json.dump(auction_details, file, 
+                 cls=DateTimeEncoder,
+                 ensure_ascii=False, 
+                 indent=4)
 
-    with open("auction_details.json", "w", encoding="utf-8") as file:
-        json.dump(auction_details, file, ensure_ascii=False, indent=4)
+def load_auction_details(filename="auction_details.json"):
+    """Load auction details from JSON file and convert date strings back to datetime objects"""
+    with open(filename, "r", encoding="utf-8") as file:
+        data = json.load(file)
+        # Convert ISO datetime strings back to datetime objects
+        for auction in data:
+            if "publication_date" in auction:
+                auction["publication_date"] = datetime.fromisoformat(auction["publication_date"])
+            if "start_time" in auction:
+                auction["start_time"] = datetime.fromisoformat(auction["start_time"])
+            if "end_time" in auction:
+                auction["end_time"] = datetime.fromisoformat(auction["end_time"])
+        return data
 
-    print(f"\nSuccessfully scraped {len(auction_details)} unique auctions.")
-    print("Data saved to 'auctions.json'")
-finally:
-    driver.quit()
+# Main execution
+if __name__ == "__main__":
+    try:
+        base_url = "https://eaukcija.sud.rs"
+        max_pages = 7  # Adjust this value to scrape more pages
+        auction_details = scrape_pages(base_url, max_pages=max_pages)
+
+        # Save data using the new function
+        save_auction_details(auction_details)
+
+        print(f"\nSuccessfully scraped {len(auction_details)} unique auctions.")
+        print("Data saved to 'auction_details.json'")
+
+    finally:
+        driver.quit()
